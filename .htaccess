@@ -1,0 +1,98 @@
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteBase /
+
+#     # Set PHP version to 8.1 for all PHP files
+#     AddHandler application/x-httpd-php81 .php 
+
+#     # Handle Authorization Header
+#     RewriteCond %{HTTP:Authorization} .
+#     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+#     # Redirect Trailing Slashes If Not A Folder...
+#     RewriteCond %{REQUEST_FILENAME} !-d
+#     RewriteCond %{REQUEST_URI} (.+)/$
+#     RewriteRule ^ %1 [L,R=301]
+
+#     # Send Requests To Front Controller...
+#     RewriteCond %{REQUEST_FILENAME} !-d
+#     RewriteCond %{REQUEST_FILENAME} !-f
+#     RewriteRule ^sladmin/(.*)$ /sladmin/$1 [L]
+#     RewriteRule ^ index.php [L]
+# </IfModule>
+
+# # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+# PassengerAppRoot "/home/u515548606/domains/scoliolife.com/public_html/sladmin"
+# PassengerBaseURI "/"
+# PassengerNodejs "/home/u515548606/domains/scoliolife.com/public_html/sladmin/bin/node"
+# PassengerAppType node
+# PassengerStartupFile app.js
+# # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+# # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+# <IfModule Litespeed>
+# </IfModule>
+# # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
+
+
+
+
+
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteBase /
+
+#     # Set PHP version to 8.1 for all PHP files
+#     AddHandler application/x-httpd-php81 .php 
+
+#     # Handle Authorization Header
+#     RewriteCond %{HTTP:Authorization} .
+#     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+#     # Redirect Trailing Slashes If Not A Folder...
+#     RewriteCond %{REQUEST_FILENAME} !-d
+#     RewriteCond %{REQUEST_URI} (.+)/$
+#     RewriteRule ^ %1 [L,R=301]
+
+#     # Send Requests To Front Controller...
+#     RewriteCond %{REQUEST_FILENAME} !-d
+#     RewriteCond %{REQUEST_FILENAME} !-f
+#     RewriteRule ^sladmin/(.*)$ /sladmin/$1 [L]
+#     RewriteRule ^ index.php [L]
+# </IfModule>
+
+# # Commented out Passenger configurations for local setup
+# # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+# # PassengerAppRoot "/home/u515548606/domains/scoliolife.com/public_html/sladmin"
+# # PassengerBaseURI "/"
+# # PassengerNodejs "/home/u515548606/domains/scoliolife.com/public_html/sladmin/bin/node"
+# # PassengerAppType node
+# # PassengerStartupFile app.js
+# # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+# # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+# <IfModule Litespeed>
+# </IfModule>
+# # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
+
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>

@@ -1,0 +1,56 @@
+<?php
+
+return [
+    'dashboard' => 'Dashboard',
+    'template' => [
+        'banner' => 'Vielen Dank für Ihre Bestellung',
+        'hi' => 'Hallo :name,',
+        'let' => 'Nur zur Information — wir haben Ihre Bestellung :orderNo erhalten und bearbeiten sie jetzt:',
+        'order' => 'Bestellung :orderNo (:orderDate)',
+    ],
+    'table' => [
+        'Product' => 'Produkt',
+        'Quantity' => 'Menge',
+        'Price' => 'Preis',
+        'Subtotal' => 'Zwischensumme',
+        'Discount' => 'Rabatt',
+        'Shipping Name' => 'Versandname',
+        'PayemntMethod' => 'Zahlungsmethode',
+        'Shipping Price' => 'Versandpreis',
+        'Tax' => 'Steuer',
+        'Total' => 'Gesamt',
+        'Billing address' => 'Rechnungsadresse',
+    ],
+    'thanks' => 'Vielen Dank für die Nutzung',
+    'admin' => [
+        'welcome' => 'Willkommen bei ScolioLife!',
+        'userCreated' => 'Benutzer wurde erstellt: :userName',
+        'thank you' => 'Vielen Dank',
+    ],
+    'registration' => [
+        'welcome' => 'Willkommen bei ScolioLife!',
+        'hello' => 'Hallo und willkommen in der ScolioLife-Community! Wir freuen uns, dass Sie sich uns auf Ihrer Reise zu einer besseren Skoliose-Management und verbesserten Wohlbefinden anschließen. Bei ScolioLife widmen wir uns der Bereitstellung der besten Ressourcen, Unterstützung und Informationen, um Ihnen zu helfen, die Herausforderungen der Skoliose zu bewältigen.',
+        'expect' => [
+            'index' => 'Das können Sie als Mitglied erwarten:',
+            'one' => '1) Personalisierte Ressourcen: Zugriff auf Artikel, Anleitungen und Videos, die auf Ihre spezifischen Bedürfnisse und Ihr Zustand zugeschnitten sind.',
+            'two' => '2) Gemeinschaftliche Unterstützung: Verbinden Sie sich mit anderen Mitgliedern, die ähnliche Erfahrungen teilen, tauschen Sie Tipps aus und finden Sie Unterstützung in unseren Foren.',
+            'three' => '3) Expertenrat: Erhalten Sie Einblicke und Ratschläge von führenden Skoliose-Spezialisten und bleiben Sie über die neuesten Forschungen und Behandlungsoptionen informiert.',
+            'four' => '4) Exklusive Angebote: Profitieren Sie von speziellen Rabatten auf Produkte und Dienstleistungen, die darauf ausgelegt sind, Ihre Skoliose-Betreuung zu unterstützen.',
+        ],
+        'gift' => 'Als Willkommensgeschenk bieten wir Ihnen einen 15% Rabattcode für Ihren ersten Einkauf in unserem Online-Shop an. Verwenden Sie einfach den Code NEW15% an der Kasse, um von diesem besonderen Angebot zu profitieren.',
+        'support' => 'Ihre Gesundheit und Ihr Wohlbefinden stehen bei uns an erster Stelle, und wir unterstützen Sie auf jedem Schritt Ihres Weges. Wenn Sie Fragen haben oder Unterstützung benötigen, zögern Sie bitte nicht, sich an unser freundliches Support-Team zu wenden.',
+        'thank you' => 'Vielen Dank, dass Sie sich für ScolioLife entschieden haben. Wir freuen uns darauf, ein Teil Ihrer Reise zu einem gesünderen und aktiveren Leben zu sein.',
+        'regards' => 'Herzliche Grüße,',
+        'scoliolife' => 'Das ScolioLife Team',
+    ],
+    'myEmail' => [
+        'thank you' => 'Vielen Dank für Ihre E-Mail',
+        'contact' => 'Kontaktanfrage',
+        'Name' => 'Name',
+        'Email' => 'E-Mail',
+        'Contact Number' => 'Telefonnummer',
+        'Country' => 'Land',
+        'Your Message' => 'Ihre Nachricht',
+        'Image' => 'Bild',
+    ],
+];

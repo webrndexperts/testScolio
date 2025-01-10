@@ -1,0 +1,56 @@
+<?php
+
+return [
+    'dashboard' => '仪表板',
+    'template' => [
+        'banner' => '感谢您的订单',
+        'hi' => '您好 :name,',
+        'let' => '通知您——我们已收到您的订单 :orderNo，现在正在处理:',
+        'order' => '订单 :orderNo (:orderDate)',
+    ],
+    'table' => [
+        'Product' => '产品',
+        'Quantity' => '数量',
+        'Price' => '价格',
+        'Subtotal' => '小计',
+        'Discount' => '折扣',
+        'Shipping Name' => '运送名称',
+        'PayemntMethod' => '支付方式',
+        'Shipping Price' => '运费',
+        'Tax' => '税',
+        'Total' => '总计',
+        'Billing address' => '账单地址',
+    ],
+    'thanks' => '感谢使用',
+    'admin' => [
+        'welcome' => '欢迎来到ScolioLife！',
+        'userCreated' => '用户已创建：:userName',
+        'thank you' => '谢谢',
+    ],
+    'registration' => [
+        'welcome' => '欢迎来到ScolioLife！',
+        'hello' => '您好，欢迎加入ScolioLife社区！我们很高兴您能加入我们，共同迈向更好的脊柱侧弯管理和改善健康。在ScolioLife，我们致力于为您提供最好的资源、支持和信息，帮助您应对脊柱侧弯的挑战。',
+        'expect' => [
+            'index' => '作为会员，您可以期待以下内容：',
+            'one' => '1) 个性化资源：获取针对您特定需求和病情的文章、指南和视频。',
+            'two' => '2) 社区支持：与其他有类似经历的会员联系，交换经验分享，在我们的论坛中找到鼓励和支持。',
+            'three' => '3) 专家建议：从领先的脊柱侧弯专家获取见解和建议，并了解最新的研究和治疗选择。',
+            'four' => '4) 独家优惠：享受特别折扣，购买专为支持您脊柱侧弯护理而设计的产品和服务。',
+        ],
+        'gift' => '作为欢迎礼物，我们很高兴为您提供首次在线商店购买的15%折扣优惠码。在结账时使用代码NEW15%即可享受此特别优惠。',
+        'support' => '您的健康和幸福是我们的首要任务，我们将全程支持您。如果您有任何问题或需要帮助，请随时联系我们友好的支持团队。',
+        'thank you' => '感谢您选择ScolioLife。期待与您共同迈向更健康、更积极的生活。',
+        'regards' => '此致，',
+        'scoliolife' => 'ScolioLife团队',
+    ],
+    'myEmail' => [
+        'thank you' => '感谢您的邮件',
+        'contact' => '联系查询',
+        'Name' => '姓名',
+        'Email' => '电子邮件',
+        'Contact Number' => '联系电话',
+        'Country' => '国家',
+        'Your Message' => '您的留言',
+        'Image' => '图片',
+    ],
+];

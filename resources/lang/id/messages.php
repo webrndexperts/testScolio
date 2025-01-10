@@ -1,0 +1,56 @@
+<?php
+
+return [
+    'dashboard' => 'Dasbor',
+    'template' => [
+        'banner' => 'Terima kasih atas pesanan Anda',
+        'hi' => 'Halo :name,',
+        'let' => 'Hanya ingin memberi tahu Anda - kami telah menerima pesanan Anda :orderNo, dan sekarang sedang diproses:',
+        'order' => 'Pesanan :orderNo (:orderDate)',
+    ],
+    'table' => [
+        'Product' => 'Produk',
+        'Quantity' => 'Kuantitas',
+        'Price' => 'Harga',
+        'Subtotal' => 'Subtotal',
+        'Discount' => 'Diskon',
+        'Shipping Name' => 'Nama Pengiriman',
+        'PayemntMethod' => 'Metode Pembayaran',
+        'Shipping Price' => 'Harga Pengiriman',
+        'Tax' => 'Pajak',
+        'Total' => 'Total',
+        'Billing address' => 'Alamat Penagihan',
+    ],
+    'thanks' => 'Terima kasih telah menggunakan',
+    'admin' => [
+        'welcome' => 'Selamat datang di Scoliolife!',
+        'userCreated' => 'Pengguna telah dibuat adalah: :userName',
+        'thank you' => 'Terima kasih',
+    ],
+    'registration' => [
+        'welcome' => 'Selamat datang di ScolioLife!',
+        'hello' => 'Halo dan selamat datang di komunitas ScolioLife! Kami sangat senang Anda bergabung dengan kami dalam perjalanan Anda menuju pengelolaan skoliosis yang lebih baik dan kesejahteraan yang ditingkatkan. Di ScolioLife, kami berkomitmen untuk memberikan sumber daya terbaik, dukungan, dan informasi untuk membantu Anda menghadapi tantangan skoliosis.',
+        'expect' => [
+            'index' => 'Berikut yang dapat Anda harapkan sebagai anggota:',
+            'one' => '1) Sumber daya yang dipersonalisasi: Akses artikel, panduan, dan video yang disesuaikan dengan kebutuhan dan kondisi Anda.',
+            'two' => '2) Dukungan komunitas: Terhubung dengan anggota lain yang memiliki pengalaman serupa, bertukar tips, dan temukan dukungan dalam forum kami.',
+            'three' => '3) Saran dari ahli: Dapatkan wawasan dan saran dari para spesialis skoliosis terkemuka dan tetap terkini dengan riset dan pilihan pengobatan terbaru.',
+            'four' => '4) Penawaran eksklusif: Nikmati diskon khusus untuk produk dan layanan yang dirancang untuk mendukung perawatan skoliosis Anda.',
+        ],
+        'gift' => 'Sebagai hadiah selamat datang, kami senang menawarkan kode diskon 15% untuk pembelian pertama Anda dari toko online kami. Cukup gunakan kode NEW15% saat checkout untuk memanfaatkan penawaran spesial ini.',
+        'support' => 'Kesehatan dan kesejahteraan Anda adalah prioritas utama bagi kami, dan kami ada di sini untuk mendukung Anda setiap langkahnya. Jika Anda memiliki pertanyaan atau membutuhkan bantuan, jangan ragu untuk menghubungi tim dukungan kami yang ramah.',
+        'thank you' => 'Terima kasih telah memilih ScolioLife. Kami berharap dapat menjadi bagian dari perjalanan Anda menuju kehidupan yang lebih sehat dan aktif.',
+        'regards' => 'Salam hangat,',
+        'scoliolife' => 'Tim ScolioLife',
+    ],
+    'myEmail' => [
+        'thank you' => 'Terima kasih atas email Anda',
+        'contact' => 'Permintaan Kontak',
+        'Name' => 'Nama',
+        'Email' => 'Email',
+        'Contact Number' => 'Nomor Kontak',
+        'Country' => 'Negara',
+        'Your Message' => 'Pesan Anda',
+        'Image' => 'Gambar',
+    ],
+];

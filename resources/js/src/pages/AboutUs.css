@@ -1,0 +1,129 @@
+.inner-banner {
+    height: 300px;
+    background-repeat: no-repeat;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    color: #fff;
+}
+.inner-banner h1 {
+    font-weight: 700;
+}
+.post-content-dv{
+    color: red;
+}
+.kevin-about img {
+    width: 100%;
+    }
+    .kevin-text {
+    background: #5f5f5f;
+    padding: 30px;
+    }
+    .kevin-text {
+    background: #5f5f5f;
+    padding: 30px;
+    height: 528px;
+    display: flex;
+    align-items: center;
+    }
+    .about {
+        width: 75%;
+        float: right;
+        margin: 40px 0;
+    }
+    .kevin-text p {
+    font-size: 16px;
+    color: #fff;
+    line-height: 29px;
+    }
+    .about img {
+    width: 100%;
+    }
+    .about h2 {
+    color: #f4922d;
+    padding: 20px 0;
+    font-size: 40px;
+    font-weight: 700;
+    }
+    .photo img {
+    width: 100%;
+    }
+    li.list-item img {
+    max-width: 34px;
+    }
+    li.list-item {
+    display: flex;
+    align-items: center;
+    list-style:none;
+    }
+    .text img {
+    width: 100px;
+    }
+    .text-1 {
+    background-color: #F4922D;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+    padding: 20px;
+    color: #fff;
+    }
+    .pron_inner_col {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    }
+    .text-1 h3 {
+    font-size: 15px;
+    font-weight: 400;
+    }
+    .about p {
+    font-size: 16px;
+    line-height: 30px;
+    font-size: 400;
+    }
+    p.custom-To-inspire {
+        font-size: 20px;
+    }
+    button#scolio_pronounci_btn {
+    background: #ef7821;
+    border-radius: 10px;
+    padding: 7px 15px;
+    font-size: 18px;
+    border: none;
+    color: #fff;
+    }
+    .text {
+    padding-top: 20px;
+    }
+    .video iframe {
+    width: 100%;
+    }
+    .list-item span {
+    font-size: 16px;
+    padding-left: 10px;
+    font-weight: 500;
+    margin: 10px 0;
+    color: #222222;
+    font-size: 500 !important;
+    }
+    .about ul {
+    padding: 20px 0 0 0;
+    margin: 0;
+    }
+    h6.dr-kevin {
+    font-size: 16px;
+    color: #F4922D;
+    margin-top: 14px;
+    }
+    .text-2 h4 {
+    color: #F4922D;
+    font-size: 24px;
+    }
+    @media screen and (max-width: 767px) {
+    .about {
+    width: 100% !important;
+    }
+    .about h2 {
+    font-size: 30px !important;
+    }
+    }

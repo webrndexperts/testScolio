@@ -1,0 +1,355 @@
+{
+    "banner": {
+        "straightenSpine": "不需手術，矯正您的脊椎",
+        "sayGoodbye": "我們屢獲殊榮的診所以突破性的非侵入性方法為您告別脊柱側彎。",
+        "treatScoliosis": "立即治療您的脊柱側彎"
+    },
+    "newsletter-section": {
+        "para": "訂閱 ScolioLife 的通訊，獲取最新的脊柱側彎研究和文章，並獲得任何產品的 10% 折扣碼。",
+        "subs": "訂閱",
+        "email": "在此輸入您的電子郵件...",
+        "We Are Featured In": "我們被特色於",
+        "The benefits of the world-class scoliosis treatment at ScolioLife™Clinic include": "在 ScolioLife™ 診所提供的世界級脊柱側彎治療的好處包括"
+    },
+    "footer-section": {
+        "contact": "聯繫信息",
+        "address": "302 Orchard Road #10-02A Tong Building, 新加坡 238862",
+        "telephone": "電話",
+        "opening": "營業時間",
+        "facebook": "在 Facebook 上關注我們"
+    },
+    "bottom-footer": {
+        "quick_link": "快速鏈接",
+        "para": "本網站僅供教育和信息目的，不構成提供醫療建議或專業服務。這些信息並非在醫療保健提供者和患者之間的專業關係過程中提供的。它不打算成為，也不應該用作，醫療專業人員的醫療治療替代品。個人結果可能因您的情況而異。"
+    },
+    "top-header": {
+        "para": "首次購買網店所有產品可享 10% 折扣。優惠代碼：FIRST10%",
+        "Subscribe": "訂閱",
+        "Book Consultation": "預約諮詢",
+        "Shop": "購物",
+        "Your email here....": "在此輸入您的電子郵件..."
+    },
+    "main-nav": {
+        "Home": "首頁",
+        "Articles": "文章",
+        "Contact us": "聯繫我們",
+        "Login/Register": "登入/註冊",
+        "ARTICLES": "文章",
+        "X-RAY BEFORE & AFTER": "X光前後對比",
+        "PATIENTS WORLDWIDE": "全球患者",
+        "TESTIMONIALS": "證言",
+        "MY ACCOUNT": "我的帳戶",
+        "CART": "購物車",
+        "CHECKOUT": "結帳",
+        "Cart": "購物車",
+        "My Account": "我的帳戶",
+        "Checkout": "結帳",
+        "Logout": "登出"
+    },
+    "product-detail": {
+        "select-some-product": "哦！ 不要忘記在添加購物車之前選擇一些選項。"
+    },
+    "form": {
+        "GENERAL ENQUIRY": "一般查詢",
+        "Please enter your name": "請輸入您的姓名",
+        "Please enter your email": "請輸入您的電子郵件",
+        "Please enter your phone number": "請輸入您的電話號碼",
+        "Please enter your country": "請輸入您的國家",
+        "Select Option": "選擇選項",
+        "General Enquiry": "一般查詢",
+        "Scoliosis Program Enquiry": "脊柱側彎計劃查詢",
+        "Existing Patient Enquiry": "現有患者查詢",
+        "Media Enquiry": "媒體查詢",
+        "Others": "其他",
+        "Please select your enquiry": "請選擇您的查詢",
+        "Name": "姓名",
+        "Email": "電子郵件",
+        "contactNumber": "聯繫電話",
+        "Country": "國家",
+        "Your Message": "您的消息",
+        "Send": "發送",
+        "Frequently Asked Question": "常見問題",
+        "General Information Request": "一般信息請求",
+        "Online Appointment Form": "線上預約表格",
+        "Online Appointment:": "線上預約：",
+        "Contact Number": "聯繫電話",
+        "fileType": "附著你的X射綫",
+        "size": "最大尺寸 2mb/文件",
+        "newsletter": "請注冊我參加新聞通訊！ - 不",
+        "add_more": "添加更多文件",
+        "close": "靠近",
+        "chooseImage": "選擇圖像。",
+        "noImage": "沒有選擇文件。",
+        "error": {
+            "emailType": "請輸入有效的電子郵件地址。",
+            "phoneType": "請輸入有效的電話號碼。",
+            "phoneMinLength": "電話號碼必須大於8位數。"
+        },
+        "To inspire innovative solutions and promote strategies that creates health independence for scoliosis sufferers..": "激發創新解決方案，促進為脊柱側彎患者創造健康獨立的策略.."
+    },
+    "contactUs": {
+        "CONTACT US": "聯繫我們",
+        "Main Office": "總辦公室",
+        "Call Today": "今天致電",
+        "Business Hours": "辦公時間"
+    },
+    "sidebar": {
+        "Consultation": "諮詢",
+        "Scoliosis Books": "脊柱側彎書籍",
+        "Scoliosis Equipments": "脊柱側彎設備",
+        "Scoliosis Videos": "脊柱側彎視頻",
+        "Supplement": "補充品",
+        "Top rated products": "最高評價產品",
+        "ScolioPosture™ Corrector": "脊柱姿勢™ 矯正器",
+        "Rated": "評分",
+        "out of": "最多"
+    },
+
+    "loginReg": {
+        "Log In": "登入",
+        "Register": "註冊",
+        "no-account": "沒有賬戶。",
+        "Log in to continue in our website": "登入以繼續使用我們的網站",
+        "Username or Email": "使用者名稱或電子郵件",
+        "Please enter your username or email.": "請輸入您的使用者名稱或電子郵件。",
+        "Password": "密碼",
+        "Please enter your password.": "請輸入您的密碼。",
+        "Remember Me": "記住我",
+        "Login": "登入",
+        "Register for an Account": "註冊帳戶",
+        "Username": "使用者名稱",
+        "Please enter your username": "請輸入您的使用者名稱",
+        "Email": "電子郵件",
+        "Please enter your email": "請輸入您的電子郵件",
+        "Subscribe to our newsletter to unlock the latest deals and access to high quality scoliosis articles.": "訂閱我們的通訊以解鎖最新優惠並訪問高品質的脊柱側彎文章。",
+        "This field is required": "此為必填欄位",
+        "Send these credentials via email.": "將這些憑據通過電子郵件發送。"
+    },
+    "order_Information": {
+        "order_number": "訂單號碼",
+        "order_details": "訂單詳情",
+        "date": "日期",
+        "order_email": "電子郵件",
+        "order_billing_address": "帳單地址",
+        "address": "地址",
+        "Address1": "地址1",
+        "Address2": "地址2",
+        "aaaaaaaaaaaaa ":"Dirección 1",
+        "Address_two ":"Dirección 2",
+        "View": "五",
+        "your_order": "您的訂單",
+        "msg" : "您的訂單將在工作日內24小時內處理。我們將在您的訂單發貨後通過電子郵件通知您。"
+    },
+    "custom_Order_info" : {
+        "cus_address":"地址"
+    },
+    "checkOut": {
+        "Returning customer?": "回頭客？",
+        "Click here to login": "點擊這裡登入",
+        "If you have shopped with us before, please enter yourdetails below. If you are a new customer, please proceed to the Billing section.": "如果您之前曾在我們這裡購物，請在下方輸入您的詳細資料。如果您是新客戶，請繼續前往結算部分。",
+        "Username Or Email": "使用者名稱或電子郵件",
+        "Please enter your username or email.": "請輸入您的使用者名稱或電子郵件。",
+        "Password": "密碼",
+        "Please enter your password.": "請輸入您的密碼。",
+        "Remember me": "記住我",
+        "Login": "登入",
+        "Lost your password?": "忘記密碼？",
+        "Have a coupon?": "有優惠券嗎？",
+        "Click here to enter your code": "點擊這裡輸入您的代碼",
+        "If you have a coupon code, please apply it below.": "如果您有優惠券代碼，請在下方應用。",
+        "Please enter your coupon code": "請輸入您的優惠券代碼",
+        "Apply coupon": "應用優惠券",
+        "First Name": "名字",
+        "Please enter your first name.": "請輸入您的名字。",
+        "Last Name": "姓氏",
+        "Please enter your last name.": "請輸入您的姓氏。",
+        "Company Name": "公司名稱",
+        "Optional": "選填",
+        "Country / Region": "國家 / 地區",
+        "Please enter your country.": "請輸入您的國家。",
+        "Street Address": "街道地址",
+        "Please enter your street address.": "請輸入您的街道地址。",
+        "Town / City": "城鎮 / 城市",
+        "Please enter your town / city.": "請輸入您的城鎮 / 城市。",
+        "State / County": "州 / 縣",
+        "Please select your state / county.": "請選擇您的州 / 縣。",
+        "Postcode / ZIP": "郵政編碼 / 郵遞區號",
+        "Please enter your postcode / ZIP.": "請輸入您的郵政編碼 / 郵遞區號。",
+        "Phone": "電話",
+        "Please enter your phone.": "請輸入您的電話。",
+        "Additional information": "其他資訊",
+        "Order Notes": "訂單備註",
+        "Please enter your email.": "請輸入您的電子郵件。",
+        "Email Address": "電子郵件地址",
+        "Ship To A Different Address": "運送至不同地址？"
+    },
+    "widget-title": {
+        "PRODUCT CATEGORIES": "产品类别",
+        "scolfoloio_heading": "脊柱側彎結果"
+    },
+    "single_product_tabs":{
+        "description_tabs" : "描述",
+        "additional_info_tabs" : "附加信息",
+        "ratings_tabs" : "评级"
+    },
+    "product_dropdown":{
+        "customized_report" : "定製報告。",
+        "varition_language" : "語言",
+        "choose_an_option" : "選擇一個選擇。",
+        "support_knee_guard_size" : "支持膝關節衛隊大小。",
+        "scolio_posture_corrector_size": "斯科里奥姿势矫正器尺寸",
+
+        "gender" : "性彆",
+        "Male": "男性",
+        "Female": "女性",
+        "weight" : "重量",
+        "tool" : "工具",
+        "height" : "高度",
+        "size" : "尺寸",
+        "upload_an_image:" : "上傳圖片：",
+        "add_to_cart" : "加入購物車。",
+        "buy_now": "立即购买",
+        "contact_us" : "聯係我們",
+        "consultation": "谘詢類型。",
+        "consultationOption": {
+            "First Private Teleconsultation (Zoom or Meet)": "首次私人远程咨询（Zoom或Meet）",
+            "Follow Up Teleconsultation (Zoom or Meet)": "跟进远程咨询（Zoom或Meet）"
+        },
+        "wishlist": {
+            "title": "我的愿望清单",
+            "need-login": "您需要登录才能查看列表",
+            "empty": "您需要将商品添加到您的愿望清单",
+            "unauth": "您需要登录才能将产品添加到愿望清单中。",
+            "added_date": "添加于",
+            "price": "价格",
+            "review": "评论",
+            "add_all": "全部添加到购物车"
+        }
+    },
+    "media-a": {
+        "PRINT-APPEARANCES": "補充療法 – Vol. 2, Issue 5 2009",
+        "MEDIA-PERONALITIES": "Ezyhealth & Beauty - 2010年3月",
+        "Berita Harian Mars 2010": "2010年3月 Berita Harian",
+        "Todays Parents Avril 2010": "2010年4月 Todays Parents",
+        "Lianhe Zaobao Avril 2010": "2010年4月 Lianhe Zaobao",
+        "Lifestyle NTUC Mai 2010": "2010年5月 Lifestyle NTUC",
+        "Lifestyle NTUC Mai 2010.": "2010年5月 Lifestyle NTUC。",
+        "Lianhe Zaobao Août 2010": "2010年8月 Lianhe Zaobao",
+        "DC Product Review Septembre 2010": "2010年9月 DC 產品評論",
+        "Shape Novembre 2010": "2010年11月 Shape",
+        "The American Chiropractor March 2012 ": "2012年3月 The American Chiropractor ",
+        "The American Chiropractor March 2012": "2012年3月 The American Chiropractor",
+        "Bebe Battsetseg Miss Mongolia 2009": "2009年 Bebe Battsetseg 蒙古小姐",
+        "Stanley Leong And Pamela Ho 983Live": "Stanley Leong 和 Pamela Ho 983Live",
+        "Steven Chia And Yvonne Yong Primetime Morning": "Steven Chia 和 Yvonne Yong Primetime Morning",
+        "Bernard Tay President Automobile Association Of Singapore": "Bernard Tay 新加坡汽車協會會長",
+        "Laura Jane International Model": "Laura Jane 國際模特",
+        "Darren Stephen Lim Et Jason Chee Personal Trainers Cleo Most Eligible Bachelor 2009 Singapore Calendar Guys 2010 Winner": "Darren Stephen Lim 和 Jason Chee 個人教練 Cleo 2009年最佳單身男士 2010年新加坡日曆男子冠軍",
+        "Michelle Goh Actress": "Michelle Goh 女演員",
+        "Jakub Koniar International Model": "Jakub Koniar 國際模特",
+        "Peter Tong Model And Actor": "Peter Tong 模特兼演員",
+        "Olya Dzuba International Model": "Olya Dzuba 國際模特",
+        "Richard Garcia Professional Footballer For Premiere League For Hull City And Internationally For Australia ": "Richard Garcia 為Hull City英超聯賽專業足球運動員，也是澳大利亞的國際球員",
+        "Paul Foster Actor, Model And Host": "Paul Foster 演員、模特和主持人",
+        "Antonino Russo International Model": "Antonino Russo 國際模特",
+        "Jayce Izuma International Model": "Jayce Izuma 國際模特",
+        "Julian Low Acteur, Mannequin, Hôte": "Julian Low 演員、模特、主持人",
+        "Patrick Holford Nutritionist And Author": "Patrick Holford 營養師和作家",
+        "Yohan Passos International Model": "Yohan Passos 國際模特",
+        "Melody Reilly International Model": "Melody Reilly 國際模特",
+        "Jee Choi International Model": "Jee Choi 國際模特",
+        "Jason Chee International Model": "Jason Chee 國際模特",
+        "Monika Zimaniova International Model": "Monika Zimaniova 國際模特",
+        "Hossan Leong Actor": "Hossan Leong 演員",
+        "Ekaterina Ilyukhina International Model": "Ekaterina Ilyukhina 國際模特",
+        "Natalia Gandina International Model": "Natalia Gandina 國際模特",
+        "Ekaterina Nushtaeva International Model": "Ekaterina Nushtaeva 國際模特",
+        "Irina LysiukInternational Model": "Irina Lysiuk 國際模特",
+        "Ekaterina Shaydurova International Model": "Ekaterina Shaydurova 國際模特",
+        "Marina Vorobeva International Model": "Marina Vorobeva 國際模特",
+        "Michael TetsuoInternational Model": "Michael Tetsuo 國際模特",
+        "Ambassador Seychelles": "塞舌爾大使"
+    },
+    "media-ap": {
+        "MEDIA APPEARANCES": "媒體露面",
+        "RADIO & TV INTERVIEWS WITH DR KEVIN LAU": "與Dr. Kevin Lau的廣播和電視訪談",
+        "PRINT APPEARANCES": "印刷露面",
+        "MEDIA PERONALITIES": "媒體人物",
+        "article1": "a+ 雜誌: 童年羈絆如何引導劉博士創造尖端的脊柱側彎護理",
+        "article2": "Robb Report: 劉博士開創突破性的非手術脊柱側彎治療",
+        "article3": "ScolioLife®的Kevin Lau博士在迪拜獲得國際脊柱側彎護理卓越獎。"
+    },
+    "CART12": {
+        "Quantity": "數量",
+        "Remove": "移除",
+        "APPLY COUPON CODE": "應用優惠券代碼",
+        "Apply Coupon Code": "應用優惠券代碼",
+        "CART TOTALS": "購物車總計",
+        "Subtotal": "小計",
+        "Enter Shipping": "輸入運費",
+        "Change address": "更改地址",
+        "Country": "國家",
+        "State/Country": "州/國家",
+        "Town/City": "城鎮/城市",
+        "Postcode/ZIP": "郵遞區號/郵政編碼",
+        "UPDATE": "更新",
+        "Tax": "稅金",
+        "estimated": "估計。 ??",
+        "Total": "總計",
+        "Proceed to checkout": "前往結帳",
+        "Product": "產品",
+        "Shipping": "運費"
+    },
+    "whatsApp": {
+        "title": "在WhatsApp上與我們聊天！",
+        "description": "你好，我們怎麼能幫助你？"
+    },
+    "results": {
+        "empty": "沒有與您的搜索匹配的記錄。"
+    },
+    "passwords": {
+        "forgot": {
+            "title": "忘記密碼。",
+            "submit": "提交",
+            "noUser": "請檢查您輸入的電子郵件。",
+            "failed": "無法發送重置密碼電子郵件。",
+            "thanks_message": "請查看您的電子郵件 <b>{x}</b> 以重新設置密碼鏈接。"
+        },
+        "reset": {
+            "title": "重置密碼。",
+            "confirm_password": "請輸入您的確認密碼。",
+            "confirm_required": "密碼不匹配。",
+            "not_match": "密碼不匹配。",
+            "failed": "無法生成密碼。",
+            "invalid": "此密碼重置令牌無效。",
+            "expired": "代幣已經過期。",
+            "thanks_message": "您的密碼已被重置。 請登錄以檢查事情。"
+        }
+    },
+    "payments": {
+        "stripe": "信用卡。",
+        "paypal": "PayPal",
+        "card": "卡號碼。",
+        "expiry": "到期日期。",
+        "cvv": "CVV代碼。",
+        "error": "無法産生付款。",
+        "paypalText": "點擊“用PayPal付款”後，您將被重定嚮到PayPal，以安全完成您的購買。"
+    },
+    "toast": {
+        "coupon": {
+            "applied": "優惠券成功應用。",
+            "invalid": "不是有效的優惠券。",
+            "already": "您添加的優惠券代碼已經使用。",
+            "expired": "這個優惠券代碼已經過期。"
+        },
+        "payment": {
+            "error": "無法完成付款。"
+        },
+        "validate": {
+            "login": "請先登錄。"
+        }
+    },
+    "page":{
+        "online-booking": "网上预订"
+    }
+}

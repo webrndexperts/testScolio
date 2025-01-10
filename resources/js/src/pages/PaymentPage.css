@@ -1,0 +1,27 @@
+/* PaymentPage.css */
+
+.container-payment {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .pay-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .pay-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  

@@ -1,0 +1,56 @@
+<?php
+
+return [
+    'dashboard' => 'Tableau de bord',
+    'template' => [
+        'banner' => 'Merci pour votre commande',
+        'hi' => 'Bonjour :name,',
+        'let' => 'Juste pour vous informer - nous avons reçu votre commande :orderNo, et elle est en cours de traitement :',
+        'order' => 'Commande :orderNo (:orderDate)',
+    ],
+    'table' => [
+        'Product' => 'Produit',
+        'Quantity' => 'Quantité',
+        'Price' => 'Prix',
+        'Subtotal' => 'Sous-total',
+        'Discount' => 'Remise',
+        'Shipping Name' => 'Nom de l\'expédition',
+        'PayemntMethod' => 'Méthode de paiement',
+        'Shipping Price' => 'Prix de l\'expédition',
+        'Tax' => 'Taxe',
+        'Total' => 'Total',
+        'Billing address' => 'Adresse de facturation',
+    ],
+    'thanks' => 'Merci d\'utiliser',
+    'admin' => [
+        'welcome' => 'Bienvenue chez Scoliolife !',
+        'userCreated' => 'L\'utilisateur a été créé est : :userName',
+        'thank you' => 'Merci',
+    ],
+    'registration' => [
+        'welcome' => 'Bienvenue chez ScolioLife !',
+        'hello' => 'Bonjour et bienvenue dans la communauté ScolioLife ! Nous sommes ravis de vous accueillir dans votre parcours vers une meilleure gestion de la scoliose et un bien-être amélioré. Chez ScolioLife, nous nous engageons à vous fournir les meilleurs ressources, soutien et informations pour vous aider à surmonter les défis de la scoliose.',
+        'expect' => [
+            'index' => 'Voici ce que vous pouvez attendre en tant que membre :',
+            'one' => '1) Ressources personnalisées : Accédez à des articles, guides et vidéos adaptés à vos besoins spécifiques et votre condition.',
+            'two' => '2) Support communautaire : Connectez-vous avec d\'autres membres partageant des expériences similaires, échangez des conseils et trouvez du soutien dans nos forums.',
+            'three' => '3) Conseils d\'experts : Obtenez des perspectives et des conseils des spécialistes de renom en scoliose et restez informé des dernières recherches et options de traitement.',
+            'four' => '4) Offres exclusives : Profitez de réductions spéciales sur les produits et services conçus pour soutenir votre prise en charge de la scoliose.',
+        ],
+        'gift' => 'En guise de bienvenue, nous sommes ravis de vous offrir un code de réduction de 15% pour votre premier achat sur notre boutique en ligne. Utilisez simplement le code NEW15% lors du paiement pour bénéficier de cette offre spéciale.',
+        'support' => 'Votre santé et votre bien-être sont notre priorité absolue, et nous sommes là pour vous soutenir à chaque étape. Si vous avez des questions ou avez besoin d\'assistance, n\'hésitez pas à contacter notre équipe de support sympathique.',
+        'thank you' => 'Merci d\'avoir choisi ScolioLife. Nous sommes impatients de faire partie de votre parcours vers une vie plus saine et active.',
+        'regards' => 'Cordialement,',
+        'scoliolife' => 'L\'équipe ScolioLife',
+    ],
+    'myEmail' => [
+        'thank you' => 'Merci pour votre email',
+        'contact' => 'Demande de contact',
+        'Name' => 'Nom',
+        'Email' => 'Email',
+        'Contact Number' => 'Numéro de contact',
+        'Country' => 'Pays',
+        'Your Message' => 'Votre message',
+        'Image' => 'Image',
+    ],
+];

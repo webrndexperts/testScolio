@@ -1,0 +1,56 @@
+<?php
+
+return [
+    'dashboard' => '儀表板',
+    'template' => [
+        'banner' => '感謝您的訂單',
+        'hi' => '您好 :name,',
+        'let' => '通知您——我們已收到您的訂單 :orderNo，現在正在處理中：',
+        'order' => '訂單 :orderNo (:orderDate)',
+    ],
+    'table' => [
+        'Product' => '產品',
+        'Quantity' => '數量',
+        'Price' => '價格',
+        'Subtotal' => '小計',
+        'Discount' => '折扣',
+        'Shipping Name' => '運送名稱',
+        'PayemntMethod' => '支付方式',
+        'Shipping Price' => '運費',
+        'Tax' => '稅',
+        'Total' => '總計',
+        'Billing address' => '帳單地址',
+    ],
+    'thanks' => '感謝使用',
+    'admin' => [
+        'welcome' => '歡迎來到 Scoliolife!',
+        'userCreated' => '用戶已創建是：:userName',
+        'thank you' => '謝謝',
+    ],
+    'registration' => [
+        'welcome' => '歡迎來到 ScolioLife！',
+        'hello' => '您好，歡迎加入 ScolioLife 社群！我們很高興您能加入我們，一同踏上改善脊柱側彎管理及提升健康的旅程。在 ScolioLife，我們致力為您提供最佳的資源、支援和資訊，協助您應對脊柱側彎的挑戰。',
+        'expect' => [
+            'index' => '作為會員，您可以期待以下內容：',
+            'one' => '1) 個性化資源：存取針對您特定需求和情況量身訂製的文章、指南和影片。',
+            'two' => '2) 社群支援：與其他有類似經歷的會員聯繫，交流貼士，在我們的論壇中找到鼓勵。',
+            'three' => '3) 專家建議：從領先的脊柱側彎專家獲取見解和建議，並了解最新的研究和治療選擇。',
+            'four' => '4) 獨家優惠：享受針對支援您脊柱側彎護理的產品和服務的特別折扣。',
+        ],
+        'gift' => '作為歡迎禮物，我們很高興為您提供首次在我們網上商店購物的85折優惠碼。結帳時只需使用代碼 NEW15% 即可享受此特別優惠。',
+        'support' => '您的健康和福祉是我們的首要任務，我們將全程支持您。如果您有任何問題或需要協助，請隨時聯繫我們友善的支援團隊。',
+        'thank you' => '感謝您選擇 ScolioLife。期待與您攜手追尋更健康、更積極的生活。',
+        'regards' => '此致敬意，',
+        'scoliolife' => 'ScolioLife 團隊',
+    ],
+    'myEmail' => [
+        'thank you' => '感謝您的郵件',
+        'contact' => '聯繫查詢',
+        'Name' => '姓名',
+        'Email' => '電郵',
+        'Contact Number' => '聯絡電話',
+        'Country' => '國家',
+        'Your Message' => '您的訊息',
+        'Image' => '圖片',
+    ],
+];

@@ -1,0 +1,414 @@
+{
+    "banner": {
+        "straightenSpine": "Redressez votre colonne vertébrale sans chirurgie",
+        "sayGoodbye": "Adoptez une vie sans scoliose: découvrez l'innovation des solutions non invasives de notre clinique primée.",
+        "treatScoliosis": "Traitez votre scoliose dès aujourd'hui"
+    },
+    "newsletter-section": {
+        "para": "Abonnez-vous à notre newsletter ScolioLife pour recevoir les dernières recherches et articles sur la scoliose, et obtenez un code de réduction de 15% sur tous les produits de notre boutique en ligne.",
+        "subs": "S'abonner",
+        "email": "Votre e-mail ici....",
+        "We Are Featured In": "Nous sommes présentés dans",
+        "The benefits of the world-class scoliosis treatment at ScolioLife™Clinic include": "Les avantages du traitement de la scoliose de niveau international proposé par la clinique ScolioLife™ comprennent :"
+    },
+    "footer-section": {
+        "contact": "Coordonnées",
+        "address": "Tong Building 302 Orchard Road #10-02ASingapore 238862",
+        "telephone": "Téléphone",
+        "opening": "Heures d'ouverture",
+        "facebook": "Suivez-nous sur Facebook"
+    },
+    "specials": {
+        "treated": "Cas de scoliose traités",
+        "braced": "Scolioalign contreventé",
+        "oversea_treated": "Patients étrangers traités",
+        "product_sold": "Produits pour la scoliose vendus"
+    },
+    "Patients": {
+        "praise": "Éloges des patients",
+        "read_more": "En savoir plus",
+        "read_less": "Lire moins"
+    },
+    "bottom-footer": {
+        "quick_link":"LIENS RAPIDES",
+        "para": "Ce site Web est fourni à des fins éducatives et informatives uniquement et ne constitue pas la fourniture de conseils médicaux ou de services professionnels. Ces informations ne sont pas fournies dans le cadre d'une relation professionnelle entre un prestataire de soins de santé et un patient. Elles ne sont pas destinées à être utilisées comme substitut à un traitement médical par un professionnel de la santé. Les résultats individuels peuvent varier en fonction de votre situation."
+    },
+    "top-header": {
+        "para": "10% de réduction sur tous les produits de la boutique en ligne lors de votre premier achat. Code coupon : FIRST10%",
+        "Subscribe": "S'abonner",
+        "Book Consultation": "Prendre rendez-vous",
+        "Shop": "Acheter",
+        "Your email here....": "Votre e-mail ici...."
+    },
+    "main-nav": {
+        "Home": "Accueil",
+        "Articles": "Articles",
+        "Contact us": "Contactez-nous",
+        "Login/Register": "Connexion/inscription",
+        "ARTICLES": "ARTICLES",
+        "X-RAY BEFORE & AFTER":"RADIO AVANT & APRÈS",
+        "PATIENTS WORLDWIDE":"PATIENTS DANS LE MONDE",
+        "TESTIMONIALS":"TÉMOIGNAGES",
+        "MY ACCOUNT":"MON COMPTE",
+        "CART":"PANIER",
+        "CHECKOUT":"PAIEMENT",
+        "Cart": "Panier",
+        "My Account" : "Mon Compte",
+        "Checkout" : "Paiement",
+        "Logout": "Déconnexion"
+    },
+    "form": {
+        "GENERAL ENQUIRY": "DEMANDE GÉNÉRALE",
+        "Please enter your name": "Veuillez entrer votre nom",
+        "Please enter your email": "Veuillez entrer votre adresse e-mail",
+        "Please enter your phone number": "Veuillez entrer votre numéro de téléphone",
+        "Please enter your country": "Veuillez entrer votre pays",
+        "Select Option": "Sélectionner une option",
+        "General Enquiry": "Demande générale",
+        "Scoliosis Program Enquiry": "Demande de programme de scoliose",
+        "Existing Patient Enquiry": "Demande de patient existant",
+        "Media Enquiry": "Demande média",
+        "Others": "Autres",
+        "Please select your enquiry": "Veuillez sélectionner votre demande",
+        "Name": "Nom",
+        "Email": "E-mail",
+        "contactNumber": "Numéro de téléphone",
+        "Country": "Pays",
+        "Your Message": "Votre message",
+        "Send": "Envoyer",
+        "Frequently Asked Question": "Questions fréquemment posées",
+        "General Information Request":"Demande d'informations générales",
+        "Online Appointment Form":"Formulaire de rendez-vous en ligne",
+        "book_an_appointment":"FR Book AN Appointment",
+        "Online Appointment:":"Rendez-vous en ligne :",
+        "Contact Number":"Numéro de téléphone",
+        "fileType": "Attachez vos rayons X",
+        "size": "taille max 2mb/fichier",
+        "newsletter": "Inscrivez-moi à la newsletter !",
+        "add_more": "Ajouter plus de fichier",
+        "close": "Fermez",
+        "chooseImage": "Choisissez Image",
+        "noImage": "Pas de fichier choisi",
+        "error": {
+            "emailType": "Veuillez entrer une adresse e-mail valide.",
+            "phoneType": "Veuillez entrer un numéro de téléphone valide.",
+            "phoneMinLength": "Le numéro de téléphone doit être supérieur à 8 chiffres."
+        },
+        "To inspire innovative solutions and promote strategies that creates health independence for scoliosis sufferers..":"Inspirer des solutions innovantes et promouvoir des stratégies qui créent l'indépendance sanitaire pour les personnes souffrant de scoliose.."
+    },
+    "contactUs": {
+        "CONTACT US": "Contactez-nous",
+        "Main Office": "Bureau Principal",
+        "Call Today": "Appelez aujourd'hui",
+        "Business Hours": "Heures d'ouverture"
+    },
+    "sidebar":{
+          "Consultation":"Consultation",
+          "Scoliosis Books":"Livres sur la scoliose",
+          "Scoliosis Equipments":"Équipements de scoliose",
+          "Scoliosis Videos":"Vidéos sur la scoliose",
+          "Supplement":"Supplément",
+          "Top rated products":"Produits les mieux notés",
+          "ScolioPosture™ Corrector":"Correcteur de posture ScolioPosture™",
+          "Rated":"Noté",
+          "out of":"sur"
+    },
+    "loginReg":{
+      "Log In":"Connexion",
+      "Register":"S'inscrire",
+        "no-account": "N'ai pas de compte.",
+      "Log in to continue in our website":"Connectez-vous pour continuer sur notre site Web",
+      "Username or Email":"Nom d'utilisateur ou e-mail",
+      "Please enter your username or email.":"Veuillez entrer votre nom d'utilisateur ou votre e-mail.",
+      "Password":"Mot de passe",
+      "Please enter your password.":"Veuillez entrer votre mot de passe.",
+      "Remember Me":"Se souvenir de moi",
+      "Login":"Connexion",
+      "Register for an Account":"S'inscrire pour un compte",
+      "Username":"Nom d'utilisateur",
+      "Please enter your username":"Veuillez entrer votre nom d'utilisateur",
+      "Email":"E-mail",
+      "Please enter your email":"Veuillez entrer votre adresse e-mail",
+      "Subscribe to our newsletter to unlock the latest deals and access to high quality scoliosis articles.":"Abonnez-vous à notre newsletter pour débloquer les dernières offres et accéder à des articles de haute qualité sur la scoliose.",
+      "This field is required":"Ce champ est obligatoire",
+      "Send these credentials via email.":"Envoyez ces informations d'identification par e-mail.",
+      "forgotPassword": "Mot de passe oublié?"
+    },
+    "order_Information": {
+        "Dashboard":"Tableau de bord",
+        "Log out":"Se déconnecter",
+        "Account details":"Détails du compte",
+        "Orders":"Ordres",
+        "Loading":"chargement...",
+        "No orders found":"Aucune commande trouvée ",
+        "Order ID":"numéro de commande",
+        "Name":"Nom",
+        "Total":"Totale",
+        "Payment Method":"Mode de paiement",
+        "Actions":"Actions",
+        "Additional":"Données supplémentaires pour l'ID de commande",
+        "First Name":"Prénom",
+        "Last Name":"Nom de famille",
+        "Email":"E-mail",
+        "Phone":"téléphone",
+        "Country":"Pays",
+        "Post Code":"Code postal",
+        "Payment Status ":"Statut de paiement",
+        "Status ":"Statut ",
+        "Total ":"Totale ",
+        "Address1 ":"Adresse 1",
+        "Address2 ":"Adresse 2",
+        "Subtotal":"Total",
+        "Discount":"rabais",
+        "Tax":"impôt",
+        "order_number": "NUMÉRO DE COMMANDE",
+        "Thank you":"Merci. Votre commande a été <br/>reçue.",
+        "order_details": "Détails de la commande",
+        "date": "date",
+        "order_email": "E-MAIL",
+        "order_billing_address": "Adresse de facturation",
+        "View": "Vue",
+        "your_order": "Vos Commandes",
+        "msg" : "Votre commande sera traitée dans les 24 heures pendant les jours ouvrables. Nous vous informerons par e-mail dès que votre commande aura été expédiée."
+     },
+     "custom_Order_info" : {
+        "cus_address":"Adresse"
+    },
+    "checkOut":{
+        "Shipping_to" : "Expédition à",
+        "Shipping_method":"Mode de livraison",
+        "Forgot Password":"Mot de passe oublié ",
+        "send email":"Entrez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+        "Message":"Message",
+        "Apartment, suite, unit, etc. (optional)":"Appartement, suite, unité, etc. (facultatif)",
+        "Please check the terms and conditions":"Veuillez vérifier les termes et conditions",
+        "terms and conditions":"termes et conditions",
+        "website":"J'ai lu et j'accepte le site",
+        "Express Checkout":"Paiement express",
+        "or":"ou",
+        "Contact":"Contact",
+        "Billing Address":"adresse de facturation",
+        "Information":"Enregistrez les informations de paiement sur mon compte pour de futurs achats.",
+        "Returning customer?":"Client de retour ?",
+        "Click here to login":"Cliquez ici pour vous connecter",
+        "If you have shopped with us before, please enter yourdetails below. If you are a new customer, please proceed to the Billing section.":"Si vous avez déjà fait des achats chez nous, veuillez saisir vos coordonnées ci-dessous. Si vous êtes un nouveau client, veuillez passer à la section Facturation.",
+        "Username Or Email":"Nom d'utilisateur ou e-mail",
+        "Please enter your username or email.":"Veuillez entrer votre e-mail.",
+        "Password":"Mot de passe",
+        "Please enter your password.":"Veuillez entrer votre mot de passe.",
+        "Remember me":"Se souvenir de moi",
+        "Login":"Connexion",
+        "Lost your password?":"Mot de passe perdu ?",
+        "Have a coupon?":"Avez-vous un coupon ?",
+        "Click here to enter your code":"Cliquez ici pour saisir votre code",
+        "If you have a coupon code, please apply it below.":"Si vous avez un code coupon, veuillez l'appliquer ci-dessous.",
+        "Please enter your coupon code":"Veuillez saisir votre code coupon",
+        "Apply coupon":"Appliquer le coupon",
+        "First Name":"Prénom",
+        "Please enter your first name.":"Veuillez entrer votre prénom.",
+        "Last Name":"Nom de famille",
+        "Please enter your last name.":"Veuillez entrer votre nom de famille.",
+        "Company Name":"Nom de l'entreprise",
+        "Optional":"Facultatif",
+        "Country / Region":"Pays / Région",
+        "Please enter your country.":"Veuillez entrer votre pays.",
+        "Street Address":"Adresse",
+        "Please enter your street address.":"Veuillez entrer votre adresse.",
+        "Town / City":"Ville",
+        "Please enter your town / city.":"Veuillez entrer votre ville.",
+        "State / County":"État / Comté",
+        "Please select your state / county.":"Veuillez sélectionner votre état / comté.",
+        "Postcode / ZIP":"Code postal / ZIP",
+        "Please enter your postcode / ZIP.":"Veuillez entrer votre code postal / ZIP.",
+        "Phone":"Téléphone",
+        "Please enter your phone.":"Veuillez entrer votre numéro de téléphone.",
+        "Additional information":"Informations supplémentaires",
+        "Order Notes":"Remarques sur la commande",
+        "Please enter your email.":"Veuillez entrer votre adresse e-mail.",
+        "Email Address":"Adresse e-mail",
+        "Ship To A Different Address" : "Expédier à une adresse différente?"
+    },
+    "widget-title":{
+        "PRODUCT CATEGORIES" :  "CATÉGORIES DE PRODUIT",
+        "scolfoloio_heading" :  "RÉSULTATS DE LA SCOLIOSE"
+    },
+    "single_product_tabs":{
+        "description_tabs" : "Description",
+        "additional_info_tabs" : "Informations supplémentaires",
+        "ratings_tabs" : "Évaluations"
+    },
+    "product_dropdown":{
+        "customized_report" : "Rapport personnalisé",
+        "varition_language" : "Langue",
+        "choose_an_option" : "Choisis une option",
+        "support_knee_guard_size" : "Taille de la genouillère de soutien",
+        "scolio_posture_corrector_size": "Taille du Correcteur de Posture Scolio",
+        "gender" : "Genre",
+        "Male": "Masculin",
+        "Female": "Féminin",
+        "weight" : "Poids",
+        "tool" : "Outil",
+        "height" : "Hauteur",
+        "size" : "Taille",
+        "upload_an_image:" : "Télécharger une image:",
+        "add_to_cart" : "Ajouter au panier",
+        "buy_now": "Acheter maintenant",
+        "contact_us" : "Contactez-nous",
+        "consultation": "Type de consultation",
+        "consultationOption": {
+            "First Private Teleconsultation (Zoom or Meet)": "Première téléconsultation privée (Zoom ou Meet)",
+            "Follow Up Teleconsultation (Zoom or Meet)": "Téléconsultation de suivi (Zoom ou Meet)"
+        },
+        "wishlist": {
+            "title": "Mes listes de souhaits",
+            "need-login": "Vous devez vous connecter pour voir la liste",
+            "empty": "Vous devez ajouter des articles à votre liste de souhaits",
+            "unauth": "Vous devez vous connecter pour ajouter un produit à la liste de souhaits.",
+            "added_date": "Ajouté",
+            "price": "Prix",
+            "review": "Commentaires",
+            "add_all": "Tout ajouter au panier"
+        }
+    },
+    "product-detail": {
+        "Episode": "du Dr Kevin Lau | Épisode",
+        "Buy": "Acheter",
+        "episodes": "plus d'épisodes",
+        "Duration": "Durée",
+        "available": "Cette vidéo n'est disponible que dans le cadre de la série.",
+        "select-some-product": "Oups ! N'oubliez pas de choisir quelques options avant d'ajouter au panier.",
+        "more episodes": "plus d'épisodes",
+        "Choose Product": "Choisir un produit",
+        "Select an option": "Choisir une option ",
+        "Stream Scoliosis Exercises": "Exercices en streaming sur la scoliose",
+        "Stream": "Diffusez un rapport personnalisé sur les exercices de scoliose",
+        "option": "Veuillez sélectionner une option",
+        "Upload an image": "Télécharger une image :",
+        "Upload": "Veuillez sélectionner l'image à télécharger :",
+        "Customized": "Diffusez un rapport personnalisé sur les exercices de scoliose",
+        "Confused": "Vous ne savez pas quel exercice ou quel côté du corps vous devez entraîner ? Choisissez le plan Stream pour télécharger vos dernières radiographies et le Dr Kevin Lau vous aidera à personnaliser les exercices en fonction de votre scoliose."
+    },
+    "media-ap": {
+        "MEDIA APPEARANCES": "APPARITIONS MÉDIATIQUES",
+        "RADIO & TV INTERVIEWS WITH DR KEVIN LAU": "INTERVIEWS RADIO & TV AVEC LE DR KEVIN LAU",
+        "PRINT APPEARANCES": "APPARITIONS DANS LES MAGAZINES",
+        "MEDIA PERONALITIES": "PERSONNALITÉS MÉDIATIQUES",
+        "article1": "a+ Magazine: Comment un lien d'enfance a conduit le Dr Kevin Lau à créer un traitement révolutionnaire pour la scoliose",
+        "article2": "Robb Report: Le Dr Kevin Lau révolutionne le traitement non chirurgical de la scoliose",
+        "article3": "Le Dr Kevin Lau de ScolioLife® remporte le prix international pour l'excellence des soins de la scoliose à Dubaï."
+    },
+    "CART12" :{
+        "Your cart is currently empty" : "Votre carte est actuellement vide",
+        "Return to shop" : "Retour à la boutique",
+         "Please enter your coupon code" : "Veuillez entrer votre code promo ",
+        "Quantity" : "Quantité",
+        "Remove" : "Supprimer",
+        "APPLY COUPON CODE" : "APPLIQUER LE CODE DE COUPON",
+        "Apply Coupon Code" : "Appliquer le code de coupon",
+        "item_added_successfully" : "Fr Item Added Successfully",
+        "CART TOTALS" : "TOTAL DU PANIER",
+        "Subtotal" : "Sous-total",
+        "Enter Shipping" : "Saisir l'expédition",
+        "Change address" : "Modifier l'adresse",
+        "Country" : "Pays",
+        "State/Country":  "État/Pays",
+        "Town/City" :  "Ville",
+        "Postcode/ZIP" :   "Code postal/ZIP",
+        "UPDATE" : "METTRE À JOUR",
+        "Tax" : "Taxe",
+        "estimated" : "estimé pour ??",
+        "Total" : "Total",
+        "Proceed to checkout" : "Passer à la caisse",
+        "Product": "Produit",
+        "Coupon": "Coupon:",
+        "Shipping" : "l'expédition"
+    },
+    "whatsApp": {
+        "title": "Chattez avec nous sur WhatsApp !",
+        "description": "Bonjour, comment pouvons-nous vous aider ?"
+    },
+    "results": {
+        "empty": "Il n'y a aucun enregistrement correspondant à votre recherche."
+    },
+    "product": {
+        "Sort_By_Order": "Trier par commande",
+        "Sort_by_latest": "Trier par dernier",
+        "Sort_by_price": "Trier par prix : du plus bas au plus élevé",
+        "high_to_low": "Trier par prix : du haut au bas",
+        "show_results": "Affichage ?? résultats",
+        "related": "Produits connexes ",
+        "add_a_review": "Ajouter un commentaire",
+        "your_review": "Votre avis",
+        "your_ratting": "VOTRE NOTE",
+        "enter_review": "Veuillez entrer votre avis",
+        "website_comment": "Enregistrez mon nom, mon adresse e-mail et mon site Web dans ce navigateur pour la prochaine fois que je commenterai.",
+        "marked_message": "Votre adresse email ne sera pas publiée. les champs requis sont indiqués",
+        "name": "Nom",
+        "email": "E-mail ",
+        "error": {
+            "name": "S'il vous plaît entrez votre nom",
+            "email": "Veuillez entrer votre email"
+        },
+        "information": "Informations Complémentaires",
+        "weights": "Poids",
+        "dimensions": "Dimensions",
+        "reviews": " Avis pour ",
+        "customer_reviews": "  Avis des clients ",
+        "category": "Catégorie"
+    },
+    "passwords": {
+        "forgot": {
+            "title": "Mot de passe oublié",
+            "submit": "Soumettre",
+            "noUser": "Veuillez vérifier l'email que vous avez entré.",
+            "failed": "Impossible d'envoyer un e-mail de réinitialisation du mot de passe.",
+            "thanks_message": "Veuillez vérifier votre email <b>{x}</b> pour réinitialiser le lien de mot de passe."
+        },
+        "reset": {
+            "title": "Réinitialiser le mot de passe",
+            "confirm_password": "Confirmez le mot de passe",
+            "confirm_required": "Veuillez entrer votre mot de passe de confirmation.",
+            "not_match": "Les mots de passe ne correspondaient pas.",
+            "failed": "Impossible de générer un mot de passe.",
+            "invalid": "Ce jeton de réinitialisation du mot de passe est invalide.",
+            "expired": "Le jeton a expiré.",
+            "thanks_message": "Votre mot de passe a été réinitialisé. S'il vous plaît connectez-vous pour vérifier les choses."
+        }
+    },
+    "payments": {
+        "stripe": "Carte de crédit",
+        "paypal": "PayPal",
+        "card": "Numéro de carte",
+        "expiry": "Date d'expiration",
+        "cvv": "Code CVV",
+        "error": "Impossible de générer des paiements",
+        "paypalText": "Après avoir cliqué sur \"Payer avec PayPal\", vous serez redirigé vers PayPal pour compléter votre achat en toute sécurité."
+    },
+    "toast": {
+        "coupon": {
+            "applied": "Coupon appliqué avec succès.",
+            "invalid": "Pas un coupon valide.",
+            "already": "Le code coupon que vous avez ajouté est déjà utilisé.",
+            "expired": "Ce code de coupon a déjà expiré."
+        },
+        "payment": {
+            "error": "Impossible de compléter le paiement."
+        },
+        "validate": {
+            "login": "Veuillez vous connecter d'abord."
+        }
+    },
+    "page":{
+        "online-booking": "Reservation en ligne"
+    }
+}
+
+
+
+
+
+
+
+
+
+

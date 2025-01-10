@@ -1,0 +1,46 @@
+# Options -MultiViews
+# RewriteEngine On
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^ ./index.html [QSA,L]
+
+
+
+# Options +SymLinksIfOwnerMatch
+# RewriteEngine On
+
+# # Allow Installatron requests
+# RewriteCond %{REQUEST_FILENAME} deleteme\.\w+\.php
+# RewriteRule (.*) - [L] 
+
+# RewriteRule ^ index.php [L]
+
+
+
+Options +SymLinksIfOwnerMatch
+RewriteEngine On
+
+# Allow Installatron requests
+RewriteCond %{REQUEST_FILENAME} deleteme\.\w+\.php
+RewriteRule (.*) - [L] 
+
+# Remove trailing slash, but only for requests that aren't files or directories
+RewriteCond %{REQUEST_URI} /(.+)/$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+# Redirect everything except requests that already start with /public/
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)$ /public/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /public/$1 [L]
+
+
+# Redirect all other requests to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(/)?$ public/index.php [L] 
