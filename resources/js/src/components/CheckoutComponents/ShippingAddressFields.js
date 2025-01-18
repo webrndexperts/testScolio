@@ -191,12 +191,7 @@ const ShippingAddressFields = (props) => {
 	                            	}
 	                        	})}
                             />
-
-                            {billingError.shippingPhone && (
-								<p className="validations">
-									{t("checkOut.Please enter your phone.")}
-								</p>
-							)}
+							
 							{(billingError.shippingPhone && billingError.shippingPhone.type == "required") && (
 								<p className="validations">
 									{t("form.Please enter your phone number")}

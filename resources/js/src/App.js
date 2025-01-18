@@ -116,6 +116,7 @@ const App = () => {
 
         // AOS.refresh();
     }, []);
+
     if (loading) {
         return (
             <>
@@ -186,6 +187,8 @@ const App = () => {
                             element={<OnlineBooking />}
                         />
                         <Route path="/wishlists" element={<WishlistView />} />
+
+                        <Route  path="/en_US/*" element={<Navigate to="/" replace />} />
                         <Route path="*" element={<NotFoundPage />} />
                         {/* Protected Routes */}
                         <Route element={<RequireAuth />}></Route>
