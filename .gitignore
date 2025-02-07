@@ -14,3 +14,4 @@ vendor
 scoliolife.com_latest.zip
 public/uploads
 resources/js/src/providers/constants.js
+storage/logs/laravel.log

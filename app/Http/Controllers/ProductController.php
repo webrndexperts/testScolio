@@ -92,6 +92,8 @@ class ProductController extends Controller
 		 $product_type = !empty($data['product_type']) ? $data['product_type'] : '';
 		 $price = !empty($data['price']) ? $data['price'] : 0;
 		 $discount = !empty($data['discount']) ? $data['discount'] : '';
+         $malaysian_price = !empty($data['malaysian_price']) ? $data['malaysian_price'] : 0;
+         $indonesian_price = !empty($data['indonesian_price']) ? $data['indonesian_price'] : 0;
 		 $condition = !empty($data['condition']) ? $data['condition'] : '';
 		 // $stock = !empty($data['stock']) ? $data['stock'] : '';
 		 $status_data = !empty($data['status']) ? $data['status'] : 'active';
@@ -155,6 +157,8 @@ class ProductController extends Controller
 					'dimension_height' => $dimension_height,
 					'attributes' => $attributes,
 					'price' => $price,
+                    'malaysian_price' => $malaysian_price ?? null,
+                    'indonesian_price' => $indonesian_price ?? null,
 					'discount' => $discount,
                     'lang'  => $code,
                     'status'  => $status_data,
@@ -361,6 +365,8 @@ class ProductController extends Controller
             'amazon_image_link' => !empty($request->amazon_image_link) ? $request->amazon_image_link : $product->amazon_image_link,
             'product_sku' => !empty($request->product_sku) ? $request->product_sku : $product->product_sku,
             'price' => !empty($request->price) ? $request->price : $product->price,
+            'malaysian_price' => !empty($request->malaysian_price) ? $request->malaysian_price : $product->malaysian_price,
+            'indonesian_price' => !empty($request->indonesian_price) ? $request->indonesian_price : $product->indonesian_price,
             'discount' => !empty($request->discount) ? $request->discount : $product->discount,
             'stock' => !empty($request->stock) ? $request->stock : $product->stock,
 			'featured_video_url' => !empty($request->featured_video_url) ? $request->featured_video_url : $product->featured_video_url,

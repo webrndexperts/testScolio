@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Cart;
 class Product extends Model
 {
-    protected $fillable=['title','slug','summary','description','cat_id','price','discount','status','photo','stock','is_featured','condition','lang','product_parent_id','product_gallery','featured_video_url','product_type','attributes','seo_meta_title','seo_meta_description','seo_meta_tag','product_actual_weight','dimension_length','dimension_weight','dimension_height','amazon_link','amazon_image_link','product_sku','attribute_json','created_at','updated_at'];
+    protected $fillable=['title','slug','summary','description','cat_id','price','discount','status','photo','stock','is_featured','condition','lang','product_parent_id','product_gallery','featured_video_url','product_type','attributes','seo_meta_title','seo_meta_description','seo_meta_tag','product_actual_weight','dimension_length','dimension_weight','dimension_height','amazon_link','amazon_image_link','product_sku','attribute_json','created_at','updated_at','malaysian_price','indonesian_price'];
 
 
     protected $appends = ['wishlist'];

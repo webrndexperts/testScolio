@@ -26,7 +26,7 @@ class Post extends Model
     }
 
     public static function getAllPostByLanguageApi($lang='en_SG'){
-        return Post::with(['cat_info','author_info'])->where('lang',$lang)->orderBy('id','DESC')->get();
+        return Post::with(['cat_info','author_info'])->where('lang',$lang)->orderBy('post_parent_id','DESC')->where('status','active')->get();
     }
     // public function get_comments(){
     //     return $this->hasMany('App\Models\PostComment','post_id','id');

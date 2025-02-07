@@ -84,7 +84,7 @@ class ContactFormController extends Controller
 			// $ccEmail = ['drkevinlau@scoliolife.com', 'shibashishoo007@gmail.com'];
 			$ccEmail = 'drkevinlau@scoliolife.com';
 
-			$recipientEmail = ($request->lang == 'en_MY') ? 'clinic.my@scoliolife.com' : ($request->lang == 'id_ID') ? 'clinic.id@scoliolife.com' : $settings->email;
+			$recipientEmail = (($request->lang == 'en_MY') ? 'clinic.my@scoliolife.com' : ($request->lang == 'id_ID') )? 'clinic.id@scoliolife.com' : $settings->email;
 			//$recipientEmail = 'webdev20222@gmail.com';
 			//$recipientEmail = 'shibashishoo007@gmail.com';
 			$sent_mail = Mail::to($user_email)->send(new MyMail($details));
@@ -125,32 +125,38 @@ class ContactFormController extends Controller
 
 	}
 	public function subsrcibe_mailchimp(Request $request)
-	{
-
-		if (!Newsletter::isSubscribed($request->subsrcibe_email)) {
-			$status = Newsletter::subscribe($request->subsrcibe_email);
-
-			if ($status) {
-				$response = [
-					'success' => true,
-					'message' => 'Subscribe saved successfully'
-				];
-				return response()->json($response, 201);
+	{	
+		try {
+			if (!Newsletter::hasMember($request->subsrcibe_email)) {
+				$status = Newsletter::subscribe($request->subsrcibe_email);
+				// dd($status,Newsletter::isSubscribed($request->subsrcibe_email));
+				// dd(Newsletter::getLastError());
+				if ($status) {
+					$response = [
+						'success' => true,
+						'message' => 'Subscribe saved successfully'
+					];
+					return response()->json($response, 201);
+				} else {
+					$response = [
+						'success' => false,
+						'message' => 'Failed to save subscription'
+					];
+					return response()->json($response, 500);
+				}
 			} else {
 				$response = [
 					'success' => false,
-					'message' => 'Failed to save subscription'
+					'message' => 'Already subscribed with this email',
+					'data' => ''
 				];
-				return response()->json($response, 500);
+				return response()->json($response, 400); // You can use a different HTTP status code, like 400 Bad Request, to indicate that the request was invalid.
 			}
-		} else {
-			$response = [
-				'success' => false,
-				'message' => 'Already subscribed with this email',
-				'data' => ''
-			];
-			return response()->json($response, 400); // You can use a different HTTP status code, like 400 Bad Request, to indicate that the request was invalid.
+		} catch (\Throwable $th) {
+			return response()->json(['error' => $th->getMessage()], 500);
 		}
+
+		
 
 	}
 

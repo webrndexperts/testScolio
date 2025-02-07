@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { paypalLiveSecret, paypalLive, paypalApiUrl, paypalSandbox, paypalSandboxUrl, paypalSandboxSecret} from '../../providers/constants';
+import { toast } from 'react-toastify';
 
 const PaypalButton = (props) => {
-	const { paypalRef, paypalPaymentApprove, totalPrice, t, currency = 'SGD', paypalPaymentFailed } = props;
+	const { paypalRef, paypalPaymentApprove, totalPrice, t, currency = 'SGD', paypalPaymentFailed ,authData} = props;
+	const isLoggedIn = () => authData && authData.id;
+
+	const [isButtonDisabled, setIsButtonDisabled] = useState(!isLoggedIn());
+	const [error, setError] = useState(false);
+
+		
+	useEffect(() => {
+		setIsButtonDisabled(!isLoggedIn());
+	}, [authData,authData?.id]);
+
 	const apiUrl = paypalApiUrl;
 	// const apiUrl = paypalSandboxUrl;
 	
@@ -53,11 +64,24 @@ const PaypalButton = (props) => {
 		var orderData = await capturePayment(data.orderID);
 		paypalPaymentApprove(orderData)
 	}
+	const handlePayPalClick = (data, actions) => {
+        if (!isLoggedIn()) {
+            toast.error(t("toast.validate.login"), {
+                className: "full-red-alert",
+                autoClose: 5000,
+            });
+			setError(!isLoggedIn());
+            return actions.reject(); // Stop the PayPal flow
+        }
+		setError(!isLoggedIn());
+        return actions.resolve(); // Proceed normally
+    };
 
 	return (
 		<PayPalScriptProvider options={initialOptions}>
         	<PayPalButtons
             	ref={paypalRef}
+				key={authData?.id}
             	style={{ layout: "horizontal", label: "pay", tagline: false, shape: 'pill' }}
             	createOrder={(data, actions) => {
 					return actions.order.create({
@@ -71,7 +95,14 @@ const PaypalButton = (props) => {
             	// onApprove={paypalPaymentApprove}
 				onApprove={onApprovePayment}
             	onError={paypalPaymentFailed}
+				onClick={handlePayPalClick}
+				disabled={isButtonDisabled}
         	/>
+			{error && (
+				<div className="text-center">
+					<p className="text-danger">{t("toast.validate.login")}</p>
+				</div>
+			)}
     	</PayPalScriptProvider>
 	)
 }

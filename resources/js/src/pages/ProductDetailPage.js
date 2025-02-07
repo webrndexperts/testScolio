@@ -105,7 +105,7 @@ const ProductDetailPage = () => {
 
   
   const handleSelectSize = (size, name) => {
-    debugger
+  
     if (name == "tool") {
       setTool(size);
 

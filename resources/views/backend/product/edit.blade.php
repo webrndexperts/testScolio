@@ -172,6 +172,14 @@
           <label for="price" class="col-form-label">Price($)</label>
           <input id="price" type="text" name="price"  value="{{$product->price}}" class="form-control">
         </div>
+        <div class="form-group">
+          <label for="indonesian_price" class="col-form-label">Indonesian Price(Rp)</label>
+          <input id="indonesian_price" type="text" name="indonesian_price"  value="{{$product->indonesian_price}}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="malaysian_price" class="col-form-label">Malaysian Price(RM)</label>
+          <input id="malaysian_price" type="text" name="malaysian_price"  value="{{$product->malaysian_price}}" class="form-control">
+        </div>
 
         <div class="form-group" style="display:none;">
           <label for="discount" class="col-form-label">Discount(%)</label>

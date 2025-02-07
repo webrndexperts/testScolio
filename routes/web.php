@@ -125,6 +125,9 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
 	//Route::get('/posts/{languageSlug}', 'PostController@showMenu')->name('posts.index');
 	
     Route::resource('/post','PostController');
+    Route::prefix('latest')->group(function () {
+        Route::resource('latestpost', 'PostTestController');
+    });    
     // Page
     Route::resource('/page','PageController');
 

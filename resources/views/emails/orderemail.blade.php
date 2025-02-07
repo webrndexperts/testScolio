@@ -45,13 +45,20 @@
         <tr>
             <th scope="col" style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align: left">{{__('messages.table.Product')}}</th>
             <th scope="col" style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align: left">{{__('messages.table.Quantity')}}</th>
+            <th scope="col" style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align: left">Size</th>
+            <th scope="col" style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align: left">Language</th>
             <th scope="col" style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align: left">{{__('messages.table.Price')}}</th>
         </tr>
     </thead>
     <tbody>
 	
-	@foreach ($details['ordermailProducts'] as $orderItemInfo)
-					
+	@foreach ($details['ordermailProducts'] as $index => $orderItemInfo)
+        @php
+        // Get the corresponding grouped_product_attributes for this product
+        $groupedAttributes = $details['grouped_product_attributes'][$index] ?? null;
+        $size = $groupedAttributes['Size'] ?? '';
+        $lang = $groupedAttributes['Language'] ?? '';
+        @endphp		
 
             <tr>
     <td style="color:#636363;border:1px solid #e5e5e5;padding:12px;word-wrap:break-word">
@@ -59,6 +66,12 @@
     <!--img src="https://ci3.googleusercontent.com/meips/ADKq_NaWoXPRGp_muQHIlnf5SKQ0wgeuGmjGiX3CR7naQBhq2DwVXoQOA-sL4CsQikasWFqQcIhn0vuPCH9DXXNDzCd5MMaZ4c01pwmmECTd=s0-d-e1-ft#https://s.w.org/images/core/emoji/14.0.0/72x72/2122.png" alt="™" style="height:1em;max-height:1em"-->	
 	</td>
     <td style="color:#636363;border:1px solid #e5e5e5;padding:12px">  {{ $orderItemInfo->quantity }}		</td>
+    <td style="color:#636363;border:1px solid #e5e5e5;padding:12px">
+        {{ $size }}
+    </td>
+    <td style="color:#636363;border:1px solid #e5e5e5;padding:12px">
+        {{ $lang }}
+    </td>
     <td style="color:#636363;border:1px solid #e5e5e5;padding:12px">
         <span><span>$</span>{{number_format($orderItemInfo->product->price,2)}} SGD</span>		</td>
 </tr>
@@ -68,45 +81,45 @@
     </tbody>
     <tfoot style="color:#636363;text-align: left !important;font-size: 14px">
                 <tr>
-				<th scope="row" colspan="2" style="border:1px solid #e5e5e5;padding:12px;border-top-width:4px">{{__('messages.table.Subtotal')}}:</th>
+				<th scope="row" colspan="4" style="border:1px solid #e5e5e5;padding:12px;border-top-width:4px">{{__('messages.table.Subtotal')}}:</th>
 				 <td style="color:#636363;border:1px solid #e5e5e5;padding:12px;border-top-width:4px"><span><span>$</span>{{number_format($details['total_amount'],2)}} SGD</span></td>
 			   </tr>
 				
 				@if(isset($details['coupon_discount']) && $details['coupon_discount'] > 0)
 					<tr>
-						<th scope="row" colspan="2" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Discount')}}:</th>
+						<th scope="row" colspan="4" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Discount')}}:</th>
 						<td style="border:1px solid #e5e5e5;padding:12px"><span><span>$</span>{{ number_format($details['coupon_discount'], 2) }} SGD</span></td>
 					</tr>
 				@endif
 
 				@if(isset($details['shipping_method_name']) && !empty($details['shipping_method_name']))
 					<tr>
-						<th scope="row" colspan="2" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Shipping Name')}}:</th>
+						<th scope="row" colspan="4" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Shipping Name')}}:</th>
 						<td style="border:1px solid #e5e5e5;padding:12px">{{ $details['shipping_method_name'] }} </td>
 					</tr>
 				@endif
 				@if(isset($details['payment_method']) && !empty($details['payment_method']))
 					<tr>
-						<th scope="row" colspan="2" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.PayemntMethod')}}:</th>
+						<th scope="row" colspan="4" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.PayemntMethod')}}:</th>
 						<td style="border:1px solid #e5e5e5;padding:12px">{{ $details['payment_method'] }} </td>
 					</tr>
 				@endif
 				
 				@if(isset($details['shipping_price']) && !empty($details['shipping_price']))
 			    <tr>
-                    <th scope="row" colspan="2" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Shipping Price')}}:</th>
+                    <th scope="row" colspan="4" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Shipping Price')}}:</th>
                     <td style="border:1px solid #e5e5e5;padding:12px">${{number_format($details['shipping_price'],2)}} SGD </td>
                 </tr>
 				@endif
 				@if(isset($details['gst_tax']) && !empty($details['gst_tax']))
                 <tr>
-                    <th scope="row" colspan="2" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Tax')}}:</th>
+                    <th scope="row" colspan="4" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Tax')}}:</th>
                     <td style="border:1px solid #e5e5e5;padding:12px;"><span><span>$</span>{{number_format($details['gst_tax'],2)}} SGD</span></td>
                 </tr>
 				@endif
 				@if(isset($details['total_price']) && !empty($details['total_price']))
                  <tr>
-                    <th scope="row" colspan="2" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Total')}}:</th>
+                    <th scope="row" colspan="4" style="border:1px solid #e5e5e5;padding:12px">{{__('messages.table.Total')}}:</th>
                     <td style="border:1px solid #e5e5e5;padding:12px"><span><span>$</span>{{number_format($details['total_price'],2)}} SGD</span></td>
                 </tr>
 				@endif

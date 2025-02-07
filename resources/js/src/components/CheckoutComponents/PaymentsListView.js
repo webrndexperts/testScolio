@@ -12,7 +12,7 @@ import amex from '../../images/amex.svg'
 import ReCAPTCHA from 'react-google-recaptcha';
 
 const PaymentsListView = (props) => {
-	const { setPaymentType, stripeProps, t ,onCaptchaChange} = props;
+	const { setPaymentType, stripeProps, t ,onCaptchaChange,captchaErr,paymentType} = props;
 	return (
 		<div className="Credit_Card">
 			<div className="row">
@@ -22,7 +22,7 @@ const PaymentsListView = (props) => {
 						<div className="accordion-item mb-3">
 							<h2 className="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
 								<div className="form-check collapsed" data-bs-toggle="collapse" data-bs-target="#collapseCC" aria-expanded="false" onClick={() => setPaymentType('stripe')}>
-									<input className="form-check-input" type="radio" name="payment" id="payment1" />
+									<input className="form-check-input" type="radio" name="payment" id="payment1" checked={paymentType == 'stripe' ? true : false}/>
 									<label className="form-check-label pt-1" for="payment1">
 										{t('payments.stripe')}
 									</label>
@@ -42,6 +42,7 @@ const PaymentsListView = (props) => {
 									sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY} // Replace with your reCAPTCHA Enterprise site key
 									onChange={onCaptchaChange}
                   					/>
+									{captchaErr && <span className="text-danger">Verify Captcha !</span>}
 								</div>
 							</div>
 						</div>
@@ -50,7 +51,7 @@ const PaymentsListView = (props) => {
 							<div className="accordion-item mb-3 border pp">
 							<h2 className="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
 								<div className="form-check w-100 collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePP" aria-expanded="false" onClick={() => setPaymentType('paypal')}>
-									<input className="form-check-input" type="radio" name="payment" id="payment2" />
+									<input className="form-check-input" type="radio" name="payment" id="payment2" checked={paymentType == 'paypal' ? true : false}/>
 									<label className="form-check-label pt-1" for="payment2">
 										{t('payments.paypal')}
 									</label>

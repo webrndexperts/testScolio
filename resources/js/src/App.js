@@ -104,6 +104,18 @@ const App = () => {
         if (i18n) {
             setCheckLanguage(i18n.language == "en_US" ? false : true);
         }
+
+        if (currentLanguage == 'en_MY') {
+            document.body.classList.add("my-header");
+            document.body.classList.remove("id-header");
+        } else if (currentLanguage == 'id_ID') {
+            document.body.classList.add("id-header");
+            document.body.classList.remove("my-header");
+        } else {
+            document.body.classList.remove("my-header");
+            document.body.classList.remove("id-header");
+        }
+
     }, [i18n, currentLanguage]);
     useEffect(() => {
         // AOS.init();
@@ -116,6 +128,7 @@ const App = () => {
 
         // AOS.refresh();
     }, []);
+
     if (loading) {
         return (
             <>
@@ -186,6 +199,11 @@ const App = () => {
                             element={<OnlineBooking />}
                         />
                         <Route path="/wishlists" element={<WishlistView />} />
+
+                        <Route
+                            path="/en_US/*"
+                            element={<Navigate to="/" replace />}
+                        />
                         <Route path="*" element={<NotFoundPage />} />
                         {/* Protected Routes */}
                         <Route element={<RequireAuth />}></Route>

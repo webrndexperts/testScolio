@@ -17,7 +17,7 @@ import { GoMail } from "react-icons/go";
 import { CiLocationOn } from "react-icons/ci";
 import { appointmentCalander } from "../providers/constants";
 import { useSelector } from "react-redux";
-import { selectLanguage } from "../reducers/languageSlice";
+import { selectLanguage,selectUrlLanguage } from "../reducers/languageSlice";
 
 export default function MainHeader() {
   const [ urlLanguage] = ApiHook();
@@ -25,6 +25,7 @@ export default function MainHeader() {
   const { contactData } = useSelector((state) => state.cart);
   const [scolioContact, setscolioContact] = useState(null);
     const currentLanguage = useSelector(selectLanguage);
+    const currentUrlLanguage = useSelector(selectUrlLanguage);
   useEffect(() => {
     if (contactData && contactData.id) {
       setscolioContact(contactData);
@@ -183,7 +184,7 @@ export default function MainHeader() {
                   </div>
                 </div>
                 <Link
-                  to={`${urlLanguage}/shop`}
+                  to={`${currentUrlLanguage}/shop`}
                   className="shop-btn"
                   onClick={scrollToTop}
                 >

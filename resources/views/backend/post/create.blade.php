@@ -62,7 +62,7 @@
 		
 	  <div class="main-seo-setting">
 			<h4> SEO Setting: </h4>
-			<div class="form-group">
+			{{-- <div class="form-group">
 			  <label for="inputTitle" class="col-form-label">Meta Title</label>
 			  <input type="text" name="post[{{ $code }}][seo_meta_title]" placeholder="Enter Meta Title"  class="form-control">
 			</div> 
@@ -70,7 +70,7 @@
 			<div class="form-group">
 			  <label for="inputTitle" class="col-form-label">Meta Description</label>
 			  <input type="text" name="post[{{ $code }}][seo_meta_description]" placeholder="Enter Meta Description"  class="form-control">
-			</div> 
+			</div>  --}}
 			
 			<div class="form-group">
 			  <label for="inputTitle" class="col-form-label">Meta Keywords</label>
@@ -98,7 +98,25 @@
             $(document).ready(function() {
               $('.description').summernote({
                   tabsize: 2,
-                  height: 150
+                  height: 150,
+                  styleTags: [
+                    { title: 'Paragraph', tag: 'p', value: 'p' },
+                    { title: 'H1', tag: 'h1', value: 'h1' , className: 'orange' },
+                    { title: 'H2', tag: 'h2', value: 'h2' , className: 'orange' },
+                    { title: 'H3', tag: 'h3', value: 'h3' , className: 'orange' },
+                    { title: 'H4', tag: 'h4', value: 'h4' , className: 'orange' },
+                    { title: 'H5', tag: 'h5', value: 'h5' , className: 'orange' },
+                    { title: 'H6', tag: 'h6', value: 'h6' , className: 'orange' },
+                    { title: 'Block Quote', tag: 'blockquote', className: 'blockquote', value: 'blockquote' },
+                    { title: 'Code Block', tag: 'pre', className: 'code-block', value: 'pre' }
+                    ],
+      
+                    emptyPara: '',
+                    callbacks: {
+      onInit: function () {
+        $('.note-editable').html(''); 
+      },
+    },
               });
             });
             // $('select').selectpicker();
@@ -151,6 +169,9 @@
 @push('styles')
 <link rel="stylesheet" href="{{asset('backend/summernote/summernote.min.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<style> 
+  .orange { color:#E97132 !important;mso-themecolor:accent2; }
+  </style>
 @endpush
 @push('scripts')
 <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>

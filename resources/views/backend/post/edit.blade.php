@@ -5,6 +5,11 @@
 .main-seo-setting {
     border: 1px solid #5555;
     padding: 20px;
+    }
+
+  
+  .orange { color:#E97132 !important;mso-themecolor:accent2; }
+  
 </style>
 <div class="card">
     <h5 class="card-header">Edit Post</h5>
@@ -156,7 +161,18 @@
       $('#description').summernote({
         placeholder: "Write detail description.....",
           tabsize: 2,
-          height: 150
+          height: 150,
+          styleTags: [
+                    { title: 'Paragraph', tag: 'p', value: 'p' },
+                    { title: 'H1', tag: 'h1', value: 'h1' , className: 'orange' },
+                    { title: 'H2', tag: 'h2', value: 'h2' , className: 'orange' },
+                    { title: 'H3', tag: 'h3', value: 'h3' , className: 'orange' },
+                    { title: 'H4', tag: 'h4', value: 'h4' , className: 'orange' },
+                    { title: 'H5', tag: 'h5', value: 'h5' , className: 'orange' },
+                    { title: 'H6', tag: 'h6', value: 'h6' , className: 'orange' },
+                    { title: 'Block Quote', tag: 'blockquote', className: 'blockquote', value: 'blockquote' },
+                    { title: 'Code Block', tag: 'pre', className: 'code-block', value: 'pre' }
+                    ],
       });
     });
 </script>

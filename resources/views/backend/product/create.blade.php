@@ -331,6 +331,20 @@ table th, table td
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
+		<div class="form-group">
+          <label for="price" class="col-form-label">Indonesian Price(Rp) <span class="text-danger">*</span></label>
+          <input id="indonesian_price" type="number" name="indonesian_price" placeholder="Enter Indonesian price"  value="{{old('indonesian_price')}}" class="form-control">
+          @error('indonesian_price')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+		<div class="form-group">
+          <label for="price" class="col-form-label">Malaysian Price(RM) <span class="text-danger">*</span></label>
+          <input id="malaysian_price" type="number" name="malaysian_price" placeholder="Enter Malaysian price"  value="{{old('malesian_price')}}" class="form-control">
+          @error('malaysian_price')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
 		
         <div class="form-group" style="display:none;">
           <label for="discount" class="col-form-label">Discount(%)</label>

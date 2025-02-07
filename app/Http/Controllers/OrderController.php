@@ -343,11 +343,11 @@ class OrderController extends Controller
 		try {
 			//code...
 			// $admin_sent_mail = Mail::to('shibashishoo007@gmail.com')->send(new OrderEMail($order_information_mail));
-			$admin_sent_mail = Mail::to($recipientEmail)->cc($ccEmail)->send(new OrderEMail($order_information_mail));
+			// $admin_sent_mail = Mail::to($recipientEmail)->cc($ccEmail)->send(new OrderEMail($order_information_mail));
 			$user_sent_mail = Mail::to($user_email)->send(new OrderEMail($order_information_mail));
 		} catch (\Exception $th) {
 			//throw $th;
-			Log::error('Mail sending Failed ', $th->getMessage());
+			Log::error('Mail sending Failed ', [$th->getMessage()]);
 		}
 	    // if (!Newsletter::isSubscribed($user_email)) { 'clinic.sg@scoliolife.com
 	     // $check_mailchimp_user = Newsletter::subscribe($user_email);
@@ -711,8 +711,7 @@ class OrderController extends Controller
     // Income chart
     public function incomeChart(Request $request){
         $year=\Carbon\Carbon::now()->year;
-        // dd($year);
-        $items=Order::with(['cart_info'])->whereYear('created_at',$year)->where('status','delivered')->get()
+        $items=Order::with(['cart_info'])->whereYear('created_at',$year)->where('status','completed')->get()
             ->groupBy(function($d){
                 return \Carbon\Carbon::parse($d->created_at)->format('m');
             });
@@ -720,8 +719,8 @@ class OrderController extends Controller
         $result=[];
         foreach($items as $month=>$item_collections){
             foreach($item_collections as $item){
-                $amount=$item->cart_info->sum('amount');
-                // dd($amount);
+				// dd($item);
+                $amount=$item->sum('total_amount');
                 $m=intval($month);
                 // return $m;
                 isset($result[$m]) ? $result[$m] += $amount :$result[$m]=$amount;

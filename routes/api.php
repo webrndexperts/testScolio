@@ -28,6 +28,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\GoogleReviewsController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use Illuminate\Support\Facades\Http;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -47,7 +48,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::get('endpoint', [PostController::class, 'index']);
     Route::get('number/get', [NumberController::class,'getNumber']);
-  	
+
+    Route::get('/currency-rates/{currency}', function ($currency) {
+        $url = "https://open.er-api.com/v6/latest/{$currency}";
+        $response = Http::get($url);
+    
+        return response()->json($response->json());
+    });
     /*
 	|--------------------------------------------------------------------------
 	| Reset Passwords Api's
