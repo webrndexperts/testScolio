@@ -47,4 +47,10 @@
 }
 
 
-.orange { color:#E97132 !important; }
+/* .orange { color:#E97132 !important; } */
+.orange-h1 { color: #E97132; font-size: 22px; }
+.orange-h2 { color: #E97132; font-size: 20px; } 
+.orange-h3 { color: #E97132; font-size: 18px; } 
+.orange-h4 { color: #E97132; font-size: 16px; } 
+.orange-h5 { color: #E97132; font-size: 14px; } 
+.orange-h6 { color: #E97132; font-size: 12px; } 

@@ -1,1 +1,178 @@
-var __defProp=Object.defineProperty,__getOwnPropSymbols=Object.getOwnPropertySymbols,__hasOwnProp=Object.prototype.hasOwnProperty,__propIsEnum=Object.prototype.propertyIsEnumerable,__defNormalProp=(e,t,r)=>t in e?__defProp(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r,__spreadValues=(e,t)=>{for(var r in t||(t={}))__hasOwnProp.call(t,r)&&__defNormalProp(e,r,t[r]);if(__getOwnPropSymbols)for(var r of __getOwnPropSymbols(t))__propIsEnum.call(t,r)&&__defNormalProp(e,r,t[r]);return e};(self.webpackChunk=self.webpackChunk||[]).push([[121],{1972:(e,t,r)=>{var s,o=Object.create,a=Object.defineProperty,l=Object.getOwnPropertyDescriptor,n=Object.getOwnPropertyNames,p=Object.getPrototypeOf,i=Object.prototype.hasOwnProperty,u=(e,t,r,s)=>{if(t&&"object"==typeof t||"function"==typeof t)for(let o of n(t))i.call(e,o)||o===r||a(e,o,{get:()=>t[o],enumerable:!(s=l(t,o))||s.enumerable});return e},c=(e,t,r)=>(((e,t,r)=>{t in e?a(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r})(e,"symbol"!=typeof t?t+"":t,r),r),y={};((e,t)=>{for(var r in t)a(e,r,{get:t[r],enumerable:!0})})(y,{default:()=>P}),e.exports=(s=y,u(a({},"__esModule",{value:!0}),s));var h=((e,t,r)=>(r=null!=e?o(p(e)):{},u(!t&&e&&e.__esModule?r:a(r,"default",{value:e,enumerable:!0}),e)))(r(7294)),b=r(8045),d=r(1776);const f="https://connect.facebook.net/en_US/sdk.js",m="fbAsyncInit";class P extends h.Component{constructor(){super(...arguments),c(this,"callPlayer",b.callPlayer),c(this,"playerID",this.props.config.playerId||`facebook-player-${(0,b.randomString)()}`),c(this,"mute",(()=>{this.callPlayer("mute")})),c(this,"unmute",(()=>{this.callPlayer("unmute")}))}componentDidMount(){this.props.onMount&&this.props.onMount(this)}load(e,t){t?(0,b.getSDK)(f,"FB",m).then((e=>e.XFBML.parse())):(0,b.getSDK)(f,"FB",m).then((e=>{e.init({appId:this.props.config.appId,xfbml:!0,version:this.props.config.version}),e.Event.subscribe("xfbml.render",(e=>{this.props.onLoaded()})),e.Event.subscribe("xfbml.ready",(e=>{"video"===e.type&&e.id===this.playerID&&(this.player=e.instance,this.player.subscribe("startedPlaying",this.props.onPlay),this.player.subscribe("paused",this.props.onPause),this.player.subscribe("finishedPlaying",this.props.onEnded),this.player.subscribe("startedBuffering",this.props.onBuffer),this.player.subscribe("finishedBuffering",this.props.onBufferEnd),this.player.subscribe("error",this.props.onError),this.props.muted?this.callPlayer("mute"):this.callPlayer("unmute"),this.props.onReady(),document.getElementById(this.playerID).querySelector("iframe").style.visibility="visible")}))}))}play(){this.callPlayer("play")}pause(){this.callPlayer("pause")}stop(){}seekTo(e,t=!0){this.callPlayer("seek",e),t||this.pause()}setVolume(e){this.callPlayer("setVolume",e)}getDuration(){return this.callPlayer("getDuration")}getCurrentTime(){return this.callPlayer("getCurrentPosition")}getSecondsLoaded(){return null}render(){const{attributes:e}=this.props.config;return h.default.createElement("div",__spreadValues({style:{width:"100%",height:"100%"},id:this.playerID,className:"fb-video","data-href":this.props.url,"data-autoplay":this.props.playing?"true":"false","data-allowfullscreen":"true","data-controls":this.props.controls?"true":"false"},e))}}c(P,"displayName","Facebook"),c(P,"canPlay",d.canPlay.facebook),c(P,"loopOnEnded",!0)}}]);
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["reactPlayerFacebook"], {
+  /***/
+  "./node_modules/react-player/lib/players/Facebook.js": (
+    /*!***********************************************************!*\
+      !*** ./node_modules/react-player/lib/players/Facebook.js ***!
+      \***********************************************************/
+    /***/
+    (module, __unused_webpack_exports, __webpack_require__) => {
+      var __create = Object.create;
+      var __defProp2 = Object.defineProperty;
+      var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+      var __getOwnPropNames = Object.getOwnPropertyNames;
+      var __getProtoOf = Object.getPrototypeOf;
+      var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+      var __defNormalProp2 = (obj, key, value) => key in obj ? __defProp2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+      var __export = (target, all) => {
+        for (var name in all)
+          __defProp2(target, name, { get: all[name], enumerable: true });
+      };
+      var __copyProps = (to, from, except, desc) => {
+        if (from && typeof from === "object" || typeof from === "function") {
+          for (let key of __getOwnPropNames(from))
+            if (!__hasOwnProp2.call(to, key) && key !== except)
+              __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        }
+        return to;
+      };
+      var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+        // If the importer is in node compatibility mode or this is not an ESM
+        // file that has been converted to a CommonJS file using a Babel-
+        // compatible transform (i.e. "__esModule" has not been set), then set
+        // "default" to the CommonJS "module.exports" for node compatibility.
+        isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
+        mod
+      ));
+      var __toCommonJS = (mod) => __copyProps(__defProp2({}, "__esModule", { value: true }), mod);
+      var __publicField = (obj, key, value) => {
+        __defNormalProp2(obj, typeof key !== "symbol" ? key + "" : key, value);
+        return value;
+      };
+      var Facebook_exports = {};
+      __export(Facebook_exports, {
+        default: () => Facebook
+      });
+      module.exports = __toCommonJS(Facebook_exports);
+      var import_react = __toESM(__webpack_require__(
+        /*! react */
+        "./node_modules/react/index.js"
+      ));
+      var import_utils = __webpack_require__(
+        /*! ../utils */
+        "./node_modules/react-player/lib/utils.js"
+      );
+      var import_patterns = __webpack_require__(
+        /*! ../patterns */
+        "./node_modules/react-player/lib/patterns.js"
+      );
+      const SDK_URL = "https://connect.facebook.net/en_US/sdk.js";
+      const SDK_GLOBAL = "FB";
+      const SDK_GLOBAL_READY = "fbAsyncInit";
+      const PLAYER_ID_PREFIX = "facebook-player-";
+      class Facebook extends import_react.Component {
+        constructor() {
+          super(...arguments);
+          __publicField(this, "callPlayer", import_utils.callPlayer);
+          __publicField(this, "playerID", this.props.config.playerId || `${PLAYER_ID_PREFIX}${(0, import_utils.randomString)()}`);
+          __publicField(this, "mute", () => {
+            this.callPlayer("mute");
+          });
+          __publicField(this, "unmute", () => {
+            this.callPlayer("unmute");
+          });
+        }
+        componentDidMount() {
+          this.props.onMount && this.props.onMount(this);
+        }
+        load(url, isReady) {
+          if (isReady) {
+            (0, import_utils.getSDK)(SDK_URL, SDK_GLOBAL, SDK_GLOBAL_READY).then((FB) => FB.XFBML.parse());
+            return;
+          }
+          (0, import_utils.getSDK)(SDK_URL, SDK_GLOBAL, SDK_GLOBAL_READY).then((FB) => {
+            FB.init({
+              appId: this.props.config.appId,
+              xfbml: true,
+              version: this.props.config.version
+            });
+            FB.Event.subscribe("xfbml.render", (msg) => {
+              this.props.onLoaded();
+            });
+            FB.Event.subscribe("xfbml.ready", (msg) => {
+              if (msg.type === "video" && msg.id === this.playerID) {
+                this.player = msg.instance;
+                this.player.subscribe("startedPlaying", this.props.onPlay);
+                this.player.subscribe("paused", this.props.onPause);
+                this.player.subscribe("finishedPlaying", this.props.onEnded);
+                this.player.subscribe("startedBuffering", this.props.onBuffer);
+                this.player.subscribe("finishedBuffering", this.props.onBufferEnd);
+                this.player.subscribe("error", this.props.onError);
+                if (this.props.muted) {
+                  this.callPlayer("mute");
+                } else {
+                  this.callPlayer("unmute");
+                }
+                this.props.onReady();
+                document.getElementById(this.playerID).querySelector("iframe").style.visibility = "visible";
+              }
+            });
+          });
+        }
+        play() {
+          this.callPlayer("play");
+        }
+        pause() {
+          this.callPlayer("pause");
+        }
+        stop() {
+        }
+        seekTo(seconds, keepPlaying = true) {
+          this.callPlayer("seek", seconds);
+          if (!keepPlaying) {
+            this.pause();
+          }
+        }
+        setVolume(fraction) {
+          this.callPlayer("setVolume", fraction);
+        }
+        getDuration() {
+          return this.callPlayer("getDuration");
+        }
+        getCurrentTime() {
+          return this.callPlayer("getCurrentPosition");
+        }
+        getSecondsLoaded() {
+          return null;
+        }
+        render() {
+          const { attributes } = this.props.config;
+          const style = {
+            width: "100%",
+            height: "100%"
+          };
+          return /* @__PURE__ */ import_react.default.createElement(
+            "div",
+            __spreadValues({
+              style,
+              id: this.playerID,
+              className: "fb-video",
+              "data-href": this.props.url,
+              "data-autoplay": this.props.playing ? "true" : "false",
+              "data-allowfullscreen": "true",
+              "data-controls": this.props.controls ? "true" : "false"
+            }, attributes)
+          );
+        }
+      }
+      __publicField(Facebook, "displayName", "Facebook");
+      __publicField(Facebook, "canPlay", import_patterns.canPlay.facebook);
+      __publicField(Facebook, "loopOnEnded", true);
+    }
+  )
+}]);

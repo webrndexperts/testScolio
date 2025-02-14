@@ -193,12 +193,43 @@
                         <link rel="stylesheet" href="{{ asset('backend/summernote/summernote.min.css') }}">
                     @endpush
                     @push('scripts')
-                        <script src="{{ asset('backend/summernote/summernote.min.js') }}"></script>
+                        
+<!-- Place the first <script> tag in your HTML's <head> -->
+    {{-- <script src="https://cdn.tiny.cloud/1/sz7uct0l3k449es9dqu5kn1e8bm563h0u8mj8og80wf94an5/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script> --}}
+
+    <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+    {{-- <script>
+      tinymce.init({
+        selector: 'textarea.description',
+        plugins: [
+          // Core editing features
+          'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+          // Your account includes a free trial of TinyMCE premium features
+          // Try the most popular premium features until Feb 28, 2025:
+          'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+        ],
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        fontsize_formats: "10px 12px 14px 16px 18px 20px 22px 24px 26px 28px 30px 32px 36px 40px 48px 60px 72px",
+        font_size_input_default_unit: 'px',
+        mergetags_list: [
+          { value: 'First.Name', title: 'First Name' },
+          { value: 'Email', title: 'Email' },
+        ],
+        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+      });
+      tinyMCE.activeEditor.dom.addClass(tinyMCE.activeEditor.dom.select('h1'), 'orange-h1');
+
+    </script> --}}
+                    <script src="{{ asset('backend/summernote/summernote.min.js') }}"></script>
                         <script>
                             $(document).ready(function() {
                                 $('.excerpt').summernote({
                                     tabsize: 2,
-                                    height: 100
+                                    height: 100,
+                                    fontSizes: ['8', '10', '12', '14', '16', '18', '20', '24', '28', '32', '36', '40'],
+
                                 });
                             });
 
@@ -206,7 +237,17 @@
                                 $('.description').summernote({
                                     tabsize: 2,
                                     height: 150,
-
+                                    fontSizes: ['8', '10', '12', '14', '16', '18', '20', '24', '28', '32', '36', '40'],
+                                    toolbar: [
+                                            ['style', ['style']],
+                                            ['font', ['bold', 'italic', 'underline', 'clear']],
+                                            ['fontsize', ['fontsize']],  // Enable Font Size option
+                                            ['color', ['color']],
+                                            ['para', ['ul', 'ol', 'paragraph']],
+                                            ['height', ['height']],
+                                            ['insert', ['link', 'picture', 'video']],
+                                            ['view', ['fullscreen', 'codeview', 'help']]
+                                        ],
                                     styleTags: [{
                                             title: 'Paragraph',
                                             tag: 'p',
@@ -264,7 +305,7 @@
                                     ],
                                     codemirror: { // codemirror options
                                         theme: 'monokai'
-                                    }
+                                    },
                                 });
                             });
                             // $('select').selectpicker();

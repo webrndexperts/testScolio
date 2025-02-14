@@ -1,20 +1,40 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState, forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const ReadMorePopup = (props) => {
-    const { item = "", words = 200 } = props;
+    const {
+        item = "", words = 200, slidable = false, caseIndex, toogleSliderModel, showImage, toogleImageModel
+    } = props;
     const [heading, setHeading] = useState("");
     const [text, setText] = useState("");
     const [description, setDescription] = useState("");
     const [show, setShow] = useState(true);
     const [open, setOpen] = useState(false);
     const { t } = useTranslation();
+    const imageRef = useRef(null);
 
     const toggleModal = () => {
-        setOpen(!open);
+        if(slidable) {
+            toogleSliderModel(item, caseIndex);
+        } else {
+            setOpen(!open);
+        }
     };
+
+    const handleImageClick = (e) => {
+        toggleModal()
+    }
+
+    const manageCustomScript = () => {
+        let doc = imageRef?.current,
+        image = doc.querySelector('img');
+
+        if(image && typeof image != "undefined") {
+            image.addEventListener("click", handleImageClick);
+        }
+    }
 
     const triggerCheck = () => {
         var _txt =
@@ -34,33 +54,44 @@ const ReadMorePopup = (props) => {
             triggerCheck();
         }
     }, [item]);
+
+    useEffect(() => {
+        if (text && showImage) {
+            manageCustomScript();
+        }
+    }, [text, showImage]);
+
     return (
         <Fragment>
-            {text.includes("<img ") ? (
-                <div
-                    dangerouslySetInnerHTML={{
-                        __html: text,
-                    }}
-                />
-            ) : (
-                <div>
-                    {item?.photo && (
-                        <p>
-                            <img
-                                src={item?.photo}
-                                alt={item?.slug}
-                                className="alignleft size-full"
-                            />
-                        </p>
-                    )}
+            <MainContainer ref={imageRef}>
+                {text.includes("<img ") ? (
                     <div
+                        className="trigger-image"
                         dangerouslySetInnerHTML={{
-                            __html: text,
+                            __html: text?.replaceAll('<br>',  ''),
                         }}
                     />
-                </div>
-            )}
-            {show ? (
+                ) : (
+                    <div className="trigger-image">
+                        {item?.photo && (
+                            <p>
+                                <img
+                                    src={item?.photo}
+                                    alt={item?.slug}
+                                    className="alignleft size-full"
+                                />
+                            </p>
+                        )}
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: text?.replaceAll('<br>',  ''),
+                            }}
+                        />
+                    </div>
+                )}
+            </MainContainer>
+
+            {(show && !slidable) ? (
                 <Fragment>
                     <Link onClick={toggleModal}>
                         {" "}
@@ -80,7 +111,7 @@ const ReadMorePopup = (props) => {
                             {description.includes("<img ") ? (
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: description,
+                                        __html: description?.replaceAll('<br>',  ''),
                                     }}
                                 />
                             ) : (
@@ -96,17 +127,33 @@ const ReadMorePopup = (props) => {
                                     )}
                                     <div
                                         dangerouslySetInnerHTML={{
-                                            __html: description,
+                                            __html: description?.replaceAll('<br>',  ''),
                                         }}
                                     />
                                 </div>
                             )}
                         </ModalBody>
+                        <ModalFooter></ModalFooter>
                     </Modal>
                 </Fragment>
-            ) : null}
+            ) : (
+                (slidable) ? (
+                <Link onClick={toggleModal}>
+                    {" "}
+                    {t("Patients.read_more")}
+                </Link>
+                ) : null
+            )}
         </Fragment>
     );
 };
+
+const MainContainer = forwardRef((props, ref) => {
+    return (
+        <div className="result-contect" ref={ref} {...props}>
+            {props.children}
+        </div>
+    );
+});
 
 export default ReadMorePopup;

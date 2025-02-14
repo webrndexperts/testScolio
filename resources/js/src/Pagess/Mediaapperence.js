@@ -224,7 +224,7 @@ const MediaA = () => {
                   <div class="print-img">
                     <img src="/assets/images/media-appearance/article2.webp" alt="" />
                     <a
-                      href="https://www.robbreport.com.sg/dr-kevin-lau-scoliolife-scoliosis-spine-correction-clinic/"
+                      href="https://www.forbesindia.com/article/brand-connect/celebrating-excellence-in-health-amp-wellness-forttuna-global-excellence-award-winners/94866/1"
                       target="_blank"
                     >
                       {t('media-ap.article2')}

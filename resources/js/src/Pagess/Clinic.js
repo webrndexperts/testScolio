@@ -8,6 +8,7 @@ import Sidebar from '../components/Sidebar';
 import ImageRotator from '../components/ImageRotator';
 import TopBanner from '../components/TopBanner';
 import useDynamicTitle from '../hooks/useDynamicTitle';
+import ClinicTour from '../components/ClinicTour';
 
 
 function Clinic() {
@@ -224,6 +225,9 @@ function Clinic() {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="row">
+                                <ClinicTour currentLanguage={currentLanguage}/>
                             </div>
                         </div>
                     </div>

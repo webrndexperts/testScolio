@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\NumberController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\UsersController;
@@ -131,7 +132,8 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     // Page
     Route::resource('/page','PageController');
 
-	Route::post('/summer-note/uploadimage', 'PageController@summernoteUploadImage')->name('upload.image');
+	Route::post('/summer-note/uploadimage', [PageController::class, 'summernoteUploadImage'])->name('upload.image');
+	Route::post('/editor/uploadimage', [PageController::class, 'editorUploadImage'])->name('editor.upload');
 	
 	// Menu
 	Route::get('/menu', [MenuItemController::class, 'index'])->name('menu.index');

@@ -1,1 +1,171 @@
-var __defProp=Object.defineProperty,__getOwnPropSymbols=Object.getOwnPropertySymbols,__hasOwnProp=Object.prototype.hasOwnProperty,__propIsEnum=Object.prototype.propertyIsEnumerable,__defNormalProp=(e,t,r)=>t in e?__defProp(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r,__spreadValues=(e,t)=>{for(var r in t||(t={}))__hasOwnProp.call(t,r)&&__defNormalProp(e,r,t[r]);if(__getOwnPropSymbols)for(var r of __getOwnPropSymbols(t))__propIsEnum.call(t,r)&&__defNormalProp(e,r,t[r]);return e};(self.webpackChunk=self.webpackChunk||[]).push([[888],{6596:(e,t,r)=>{var a,o=Object.create,s=Object.defineProperty,l=Object.getOwnPropertyDescriptor,n=Object.getOwnPropertyNames,p=Object.getPrototypeOf,i=Object.prototype.hasOwnProperty,y=(e,t,r,a)=>{if(t&&"object"==typeof t||"function"==typeof t)for(let o of n(t))i.call(e,o)||o===r||s(e,o,{get:()=>t[o],enumerable:!(a=l(t,o))||a.enumerable});return e},u=(e,t,r)=>(((e,t,r)=>{t in e?s(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r})(e,"symbol"!=typeof t?t+"":t,r),r),d={};((e,t)=>{for(var r in t)s(e,r,{get:t[r],enumerable:!0})})(d,{default:()=>m}),e.exports=(a=d,y(s({},"__esModule",{value:!0}),a));var h=((e,t,r)=>(r=null!=e?o(p(e)):{},y(!t&&e&&e.__esModule?r:s(r,"default",{value:e,enumerable:!0}),e)))(r(7294)),c=r(8045),_=r(1776);class m extends h.Component{constructor(){super(...arguments),u(this,"callPlayer",c.callPlayer),u(this,"mute",(()=>{this.setVolume(0)})),u(this,"unmute",(()=>{null!==this.props.volume&&this.setVolume(this.props.volume)})),u(this,"ref",(e=>{this.container=e}))}componentDidMount(){this.props.onMount&&this.props.onMount(this)}load(e){const{playing:t,config:r,onError:a,onDuration:o}=this.props,s=e&&e.match(_.MATCH_URL_VIDYARD)[1];this.player&&this.stop(),(0,c.getSDK)("https://play.vidyard.com/embed/v4.js","VidyardV4","onVidyardAPI").then((e=>{this.container&&(e.api.addReadyListener(((e,t)=>{this.player||(this.player=t,this.player.on("ready",this.props.onReady),this.player.on("play",this.props.onPlay),this.player.on("pause",this.props.onPause),this.player.on("seek",this.props.onSeek),this.player.on("playerComplete",this.props.onEnded))}),s),e.api.renderPlayer(__spreadValues({uuid:s,container:this.container,autoplay:t?1:0},r.options)),e.api.getPlayerMetadata(s).then((e=>{this.duration=e.length_in_seconds,o(e.length_in_seconds)})))}),a)}play(){this.callPlayer("play")}pause(){this.callPlayer("pause")}stop(){window.VidyardV4.api.destroyPlayer(this.player)}seekTo(e,t=!0){this.callPlayer("seek",e),t||this.pause()}setVolume(e){this.callPlayer("setVolume",e)}setPlaybackRate(e){this.callPlayer("setPlaybackSpeed",e)}getDuration(){return this.duration}getCurrentTime(){return this.callPlayer("currentTime")}getSecondsLoaded(){return null}render(){const{display:e}=this.props,t={width:"100%",height:"100%",display:e};return h.default.createElement("div",{style:t},h.default.createElement("div",{ref:this.ref}))}}u(m,"displayName","Vidyard"),u(m,"canPlay",_.canPlay.vidyard)}}]);
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["reactPlayerVidyard"], {
+  /***/
+  "./node_modules/react-player/lib/players/Vidyard.js": (
+    /*!**********************************************************!*\
+      !*** ./node_modules/react-player/lib/players/Vidyard.js ***!
+      \**********************************************************/
+    /***/
+    (module, __unused_webpack_exports, __webpack_require__) => {
+      var __create = Object.create;
+      var __defProp2 = Object.defineProperty;
+      var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+      var __getOwnPropNames = Object.getOwnPropertyNames;
+      var __getProtoOf = Object.getPrototypeOf;
+      var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+      var __defNormalProp2 = (obj, key, value) => key in obj ? __defProp2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+      var __export = (target, all) => {
+        for (var name in all)
+          __defProp2(target, name, { get: all[name], enumerable: true });
+      };
+      var __copyProps = (to, from, except, desc) => {
+        if (from && typeof from === "object" || typeof from === "function") {
+          for (let key of __getOwnPropNames(from))
+            if (!__hasOwnProp2.call(to, key) && key !== except)
+              __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        }
+        return to;
+      };
+      var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+        // If the importer is in node compatibility mode or this is not an ESM
+        // file that has been converted to a CommonJS file using a Babel-
+        // compatible transform (i.e. "__esModule" has not been set), then set
+        // "default" to the CommonJS "module.exports" for node compatibility.
+        isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
+        mod
+      ));
+      var __toCommonJS = (mod) => __copyProps(__defProp2({}, "__esModule", { value: true }), mod);
+      var __publicField = (obj, key, value) => {
+        __defNormalProp2(obj, typeof key !== "symbol" ? key + "" : key, value);
+        return value;
+      };
+      var Vidyard_exports = {};
+      __export(Vidyard_exports, {
+        default: () => Vidyard
+      });
+      module.exports = __toCommonJS(Vidyard_exports);
+      var import_react = __toESM(__webpack_require__(
+        /*! react */
+        "./node_modules/react/index.js"
+      ));
+      var import_utils = __webpack_require__(
+        /*! ../utils */
+        "./node_modules/react-player/lib/utils.js"
+      );
+      var import_patterns = __webpack_require__(
+        /*! ../patterns */
+        "./node_modules/react-player/lib/patterns.js"
+      );
+      const SDK_URL = "https://play.vidyard.com/embed/v4.js";
+      const SDK_GLOBAL = "VidyardV4";
+      const SDK_GLOBAL_READY = "onVidyardAPI";
+      class Vidyard extends import_react.Component {
+        constructor() {
+          super(...arguments);
+          __publicField(this, "callPlayer", import_utils.callPlayer);
+          __publicField(this, "mute", () => {
+            this.setVolume(0);
+          });
+          __publicField(this, "unmute", () => {
+            if (this.props.volume !== null) {
+              this.setVolume(this.props.volume);
+            }
+          });
+          __publicField(this, "ref", (container) => {
+            this.container = container;
+          });
+        }
+        componentDidMount() {
+          this.props.onMount && this.props.onMount(this);
+        }
+        load(url) {
+          const { playing, config, onError, onDuration } = this.props;
+          const id = url && url.match(import_patterns.MATCH_URL_VIDYARD)[1];
+          if (this.player) {
+            this.stop();
+          }
+          (0, import_utils.getSDK)(SDK_URL, SDK_GLOBAL, SDK_GLOBAL_READY).then((Vidyard2) => {
+            if (!this.container)
+              return;
+            Vidyard2.api.addReadyListener((data, player) => {
+              if (this.player) {
+                return;
+              }
+              this.player = player;
+              this.player.on("ready", this.props.onReady);
+              this.player.on("play", this.props.onPlay);
+              this.player.on("pause", this.props.onPause);
+              this.player.on("seek", this.props.onSeek);
+              this.player.on("playerComplete", this.props.onEnded);
+            }, id);
+            Vidyard2.api.renderPlayer(__spreadValues({
+              uuid: id,
+              container: this.container,
+              autoplay: playing ? 1 : 0
+            }, config.options));
+            Vidyard2.api.getPlayerMetadata(id).then((meta) => {
+              this.duration = meta.length_in_seconds;
+              onDuration(meta.length_in_seconds);
+            });
+          }, onError);
+        }
+        play() {
+          this.callPlayer("play");
+        }
+        pause() {
+          this.callPlayer("pause");
+        }
+        stop() {
+          window.VidyardV4.api.destroyPlayer(this.player);
+        }
+        seekTo(amount, keepPlaying = true) {
+          this.callPlayer("seek", amount);
+          if (!keepPlaying) {
+            this.pause();
+          }
+        }
+        setVolume(fraction) {
+          this.callPlayer("setVolume", fraction);
+        }
+        setPlaybackRate(rate) {
+          this.callPlayer("setPlaybackSpeed", rate);
+        }
+        getDuration() {
+          return this.duration;
+        }
+        getCurrentTime() {
+          return this.callPlayer("currentTime");
+        }
+        getSecondsLoaded() {
+          return null;
+        }
+        render() {
+          const { display } = this.props;
+          const style = {
+            width: "100%",
+            height: "100%",
+            display
+          };
+          return /* @__PURE__ */ import_react.default.createElement("div", { style }, /* @__PURE__ */ import_react.default.createElement("div", { ref: this.ref }));
+        }
+      }
+      __publicField(Vidyard, "displayName", "Vidyard");
+      __publicField(Vidyard, "canPlay", import_patterns.canPlay.vidyard);
+    }
+  )
+}]);

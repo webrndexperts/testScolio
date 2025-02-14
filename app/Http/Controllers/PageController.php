@@ -63,6 +63,18 @@ class PageController extends Controller
 		return response()->json(['location' => $get_image_url]);
 		
 	}
+    public function editorUploadImage(Request $request)
+	{
+		$image = $request->file('file');
+		$imageName = $image->getClientOriginalName();
+		//$imageName = time() . '.' . $image->getClientOriginalExtension();
+		$image->move(public_path('editor-images'), $imageName);
+		
+		$get_image_url = asset('editor-images/' . $imageName);
+
+		return response()->json(['link' => $get_image_url]);
+		
+	}
  
 	 
 	 

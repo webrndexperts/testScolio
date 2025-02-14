@@ -2194,6 +2194,16 @@ th.coupon_name {
         max-width: 180px;
         margin-bottom: 30px;
     }
+
+    .result-modal .help-text {
+        top: 242px !important;
+    }
+    .result-modal .img-wrapper .expand-icon {
+        display: none !important;
+    }
+    .result-modal .img-wrapper .shrink-icon {
+        display: none !important;
+    }
 }
 
 @media (min-width: 1920px) {
@@ -2224,6 +2234,48 @@ th.coupon_name {
 }
 
 @media only screen and (max-width: 767px) {
+    .read-more-popup img {
+        width: 100% !important;
+        padding: 0;
+    }
+    .result-modal .help-text {
+        display: none !important;
+    }
+    .result-modal .img-wrapper .shrink-icon {
+        display: none !important;
+    }
+    .modal-dialog.custom-image-popup {
+        height: 100vh;
+    }
+    .read-more-popup.result-box-clicked {
+        max-width: 100% !important;
+    }
+    .modal-dialog.read-more-popup.custom-slider-popup button.next.btn.btn-secondary,.modal-dialog.read-more-popup.custom-slider-popup button.prev.btn.btn-secondary {
+        position: inherit !important;
+    }
+    .custom-slider-popup .slide-btns {
+        align-items: flex-end !important;
+        justify-content: center !important;
+        position: relative !important;
+        top: -14px !important;
+    }
+    /* .modal-dialog.read-more-popup.custom-slider-popup button.prev.btn.btn-secondary {
+        left: 0px !important;
+    }
+    .modal-dialog.read-more-popup.custom-slider-popup button.next.btn.btn-secondary {
+        right: 0px;
+    } */
+
+    .modal-dialog.read-more-popup.custom-slider-popup button.next.btn.btn-secondary {
+        right: -15px !important;
+    }
+
+
+    body .modal-dialog.read-more-popup.custom-slider-popup button.prev.btn.btn-secondary {
+        left: -15px !important;
+    }
+
+
     .videos {
         margin-top: 25px;
     }
@@ -8670,7 +8722,8 @@ h2#testi-singa,h2.blacktxt,.products-design h2,h2.twocolors  {
     margin-right: 18px;
 }
 .read-more-popup {
-    max-width: 800px;
+    /* max-width: 800px; */
+    max-width: 867px;
     display: flex;
     align-items: center;
     height: 100vh;
@@ -8686,6 +8739,12 @@ h2#testi-singa,h2.blacktxt,.products-design h2,h2.twocolors  {
     align-items: center;
 }
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .modal-dialog.custom-image-popup {
+        height: 100vh;
+    }
+    .read-more-popup {
+    max-width: 653px !important;
+} 
     .middle-header .col-sm-6 {
         width: 100%;
     }
@@ -9022,6 +9081,9 @@ body ul.sub-menu ul.sub-menus a {
 }
 .dropdown-menu.sm-menu-parent-services a.nav-link.dropdown-toggle {
     padding-left: 25px !important;
+}
+.result-modal .help-text {
+    top: 234px !important;
 }
    }
 li.url-footer.footer_a a {
@@ -9994,6 +10056,9 @@ h5.Shipping-infos {
     left: -15px;
 }
 @media only screen and (max-width: 767px) {
+    .modal-dialog.custom-image-popup {
+        height: 100vh;
+    }
     .oder-infos {
         display: block !important;
     }
@@ -10082,3 +10147,197 @@ h5.Shipping-infos {
     animation: none !important;
 }
 
+.clinic-info .image-container.text-center {
+    border: 2px solid #fba700;
+    padding: 12px;
+    border-radius: 10px;
+}
+.clinic-info h3.text-center.mb-4 {
+    color: #f4922d;
+    padding: 20px 0 10px;
+    font-size: 40px;
+    font-weight: 700;
+}
+.clinic-info h5 {
+    padding-top: 10px;
+    color: #000;
+}
+
+.clinic-modal .modal-content {
+    height: fit-content !important;
+}
+
+.clinic-modal h5.modal-title {
+    color: #f4922d;
+}
+
+
+
+
+
+
+.custom-slider-popup .slide-btns {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    left: 0;
+    right: 0;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-slider-popup .modal-dialog.read-more-popup.custom-slider-popup {
+    position: relative;
+}
+
+.custom-slider-popup .slide-btns .btn.btn-secondary {
+    background: #ef7821 ;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.custom-slider-popup .main-data {
+    z-index: 9999;
+    position: relative;
+    text-align: justify;
+}
+
+.custom-slider-popup h5.modal-title {
+    color: #ef7821;
+}
+.modal-dialog.read-more-popup.custom-slider-popup button.next.btn.btn-secondary {
+    position: absolute;
+    right: -40px;
+}
+.custom-slider-popup .modal-header {
+    z-index: 9999;
+    position: relative;
+}
+.modal-dialog.read-more-popup.custom-slider-popup button.prev.btn.btn-secondary {
+    left: -40px;
+    position: absolute;
+}
+
+.custom-image-popup h5.modal-title{
+    color: #ef7821;
+}
+.modal-dialog.custom-image-popup {
+    display: flex;
+    align-items: center;
+    max-width: 800px;
+}
+.result-contect img{
+    cursor: pointer;
+}
+
+
+
+
+/* Default styles for images */
+.result-modal img {
+    transition: transform 0.3s ease-in-out;
+    cursor: zoom-in;
+    margin-bottom: 10px !important;
+}
+
+/* Enlarged styles when image is clicked */
+.result-modal img.result-img-clicked {
+    width: 100%;
+    cursor: zoom-out;
+    margin-bottom: 25px;
+}
+
+.result-contect .trigger-image img {
+    margin: 0 0 15px 0 !important;
+    padding: 0 !important;
+}
+.results-sections h2 {
+    padding: 0 !important;
+}
+.read-more-popup img {
+    margin-right: 0 !important;
+}
+
+.results-sections h2 {
+    margin:10px 0 !important;
+    padding: 0 !important;
+} 
+.modal-content {
+    height: 600px;
+}
+
+.result-modal .img-wrapper {
+    display: block; /* Makes it a block element */
+    text-align: center; /* Centers content inside */
+    margin-bottom: 15px; /* Adds space below */
+    position: relative;
+}
+
+.result-modal .help-text {
+    font-size: 14px;
+    color: #ef7821;
+    display: block;
+    margin-bottom: 5px; /* Adds space between help text and image */
+    width: 50%;
+    position: absolute;
+    top: 325px;
+
+}
+
+.result-modal .img-wrapper .expand-icon {
+    position: absolute;
+    bottom: -310px;
+    right: 430px;
+    color: #fff;
+    background: rgba(0,0,0,0.6);
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 18px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: display 0.3s;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.result-modal .img-wrapper .shrink-icon {
+    /* bottom: -635px;
+    right: 30px; */
+
+    bottom: 25px;
+    right: 15px;
+    position: absolute;
+    color: #fff;
+    background: rgba(0,0,0,0.6);
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 18px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: display 0.3s;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.inner-article p {
+    display: flex;
+    flex-direction: column;
+    margin: 0px !important;
+}

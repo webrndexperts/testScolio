@@ -203,7 +203,7 @@ const Result = () => {
         <div className='main-article'>
           <div className="row">
             {XrayData &&
-              <div className='filterby-age'>
+              <div className='filterby-age dddd'>
 
                 <select className='select-age' onChange={(e) => { setAgeValue(e.target.value) }} placeholder='filter by age'>
                   <option value=''>filter by age</option>
@@ -246,7 +246,7 @@ const Result = () => {
             </div>
 
             {(XrayData && XrayData.length) ? (
-              <Pagination XrayData={XrayData} popup={true} />
+              <Pagination XrayData={XrayData} popup={true} slidable={true} showImage={true} />
             ) : (
               <div className="no-results">
                 <p>{t("results.empty")}</p>

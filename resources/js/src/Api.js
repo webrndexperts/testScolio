@@ -184,3 +184,12 @@ export const getCurrentCountry = async () => {
         toast.error(error?.response?.data.message)
     }
 }
+export const getIpCountry = async () => {
+    try {
+        const countryData = await axios.get(`https://api.ipapi.is/`);
+        return countryData.data?.location
+    } catch (error) {
+        toast.error(error?.response?.data.message)
+    }
+}
+

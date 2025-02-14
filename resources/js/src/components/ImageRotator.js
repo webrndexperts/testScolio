@@ -28,22 +28,22 @@ const ImageRotator = (props) => {
 	const getImageForLanguage = () => {
 		let ImgVal;
 
-		if (currentLanguage === 'id_ID') {
-		  if (image === 'Img2') { ImgVal = IdImg2; }
-		  else if (image === 'Img3') { ImgVal = IdImg3; }
-		  else if (image === 'Img4') { ImgVal = IdImg4; }
-		  else { ImgVal = IdImg1; } // Default to IdImg1
-		} else if (currentLanguage === 'en_MY') {
-			if (image === 'Img2') { ImgVal = MyImg2; }
-			else if (image === 'Img3') { ImgVal = MyImg3; }
-			else if (image === 'Img4') { ImgVal = MyImg4; }
-			else { ImgVal = MyImg1; }
-		} else {
+		// if (currentLanguage === 'id_ID') {
+		//   if (image === 'Img2') { ImgVal = IdImg2; }
+		//   else if (image === 'Img3') { ImgVal = IdImg3; }
+		//   else if (image === 'Img4') { ImgVal = IdImg4; }
+		//   else { ImgVal = IdImg1; } // Default to IdImg1
+		// } else if (currentLanguage === 'en_MY') {
+		// 	if (image === 'Img2') { ImgVal = MyImg2; }
+		// 	else if (image === 'Img3') { ImgVal = MyImg3; }
+		// 	else if (image === 'Img4') { ImgVal = MyImg4; }
+		// 	else { ImgVal = MyImg1; }
+		// } else {
 		  if (image === 'Img2') { ImgVal = Img2; }
 		  else if (image === 'Img3') { ImgVal = Img3; }
 		  else if (image === 'Img4') { ImgVal = Img4; }
 		  else { ImgVal = Img1; } // Default to Img1
-		}
+		// }
 
 		return ImgVal;
 	}
