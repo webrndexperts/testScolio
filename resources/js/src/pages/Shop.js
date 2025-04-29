@@ -12,6 +12,7 @@ import MetaCreator from "../components/MetaCreator";
 import { addToDirectCart } from "../reducers/cartSlice";
 import { scrollToTop } from "../components/Helper";
 import WishlistIcon from '../components/WishlistIcon';
+import PriceView from "../components/PriceView";
 
 const API = process.env.REACT_APP_API_URL;
 const Shop = () => {
@@ -23,6 +24,7 @@ const Shop = () => {
 	const [shopData, setShopData] = useState();
 	const [metaProps, setMetaProps] = useState(null);
 	const { authData } = useSelector((state) => state.auth);
+    const currency = JSON.parse(localStorage.getItem('currency')) 
 
 	const sortByCategories = (event) => {
 		const sortedData = [...shopData];
@@ -79,7 +81,8 @@ const Shop = () => {
 			id: prod?.id,
 			image: prod?.photo,
 			title: prod?.title,
-			price: (prod && prod.price) ? parseFloat(prod.price).toFixed(2) : 0,
+			price: (prod && currentLanguage == 'en_MY' && prod.malaysian_price) ? parseFloat(prod.malaysian_price).toFixed(2) : prod?.price,
+			// price: (prod && prod.price) ? parseFloat(prod.price).toFixed(2) : 0,
 			slug: prod?.slug,
 			quantity: 1,
 			dimension_height: prod?.dimension_height,
@@ -162,7 +165,12 @@ const Shop = () => {
 						)}
 
 						{shopData &&
-						shopData?.map((userData) => (
+						shopData?.map((userData) => {
+                            let price = parseFloat(userData.price).toFixed(2);
+                            if (currentLanguage == 'en_MY') {
+                                price = userData.malaysian_price ? parseFloat(userData.malaysian_price) : userData.price
+                            } 
+                            return (
 							<div key={userData.id} className="col-sm-4">
 								<div className="shop-treatments">
 									<WishlistIcon product={userData} {...wishProps} />
@@ -174,7 +182,9 @@ const Shop = () => {
 										{(userData.price || userData.price > 0) && (
 											<Fragment>
 												<div className="price-shop">
-													<p className="price">${parseFloat(userData.price).toFixed(2)} SGD</p>
+													<p className="price"><PriceView price={price} /></p>
+													{/* <p className="price">{currency.symbol} {parseFloat(price).toFixed(2)} {currency.currency}</p> */}
+													{/* <p className="price">${parseFloat(userData.price).toFixed(2)} SGD</p> */}
 													<p className="star">
 														<Rating stars={4.5} />
 													</p>
@@ -229,7 +239,7 @@ const Shop = () => {
 									</div>
 								</div>
 							</div>
-						))}
+						)})}
 					</div>
 				</div>
 			</div>

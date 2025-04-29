@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\EasyParcelService;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
@@ -28,7 +29,14 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
-{
+{	
+
+	protected $easyParcel;
+
+    public function __construct(EasyParcelService $easyParcel)
+    {
+        $this->easyParcel = $easyParcel;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -130,7 +138,7 @@ class OrderController extends Controller
             $data[$key]['order_number'] = $row->order_number ?? '';
             $data[$key]['name'] = $row->user->name ?? ''; 
             $data[$key]['email'] =$row->user->email ?? '';
-            $data[$key]['sub_total'] = '$ ' .number_format($row->sub_total,2) . ' SGD';
+            $data[$key]['sub_total'] = ($row->currency_symbol ?? '$') . ' ' . number_format($row->sub_total,2) . ' ' . ($row->currency ?? 'SGD'); ;
             $data[$key]['payment_method'] =$row->payment_method;
             $data[$key]['created_at'] = $row->created_at->format(' d M, Y');
             $data[$key]['payment_status'] =$_status;
@@ -163,6 +171,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+		// dd($request->all());
 
 		$order_data = $request->all();
 		// $shipment_shipping_id =  !empty($order_data['shipping_id']) ? $order_data['shipping_id'] : '';
@@ -187,7 +196,7 @@ class OrderController extends Controller
 			'discount_couponcode' => !empty($order_data['discount_couponcode']) ? $order_data['discount_couponcode'] : '',
 			'shipping_method_name' => !empty($order_data['shipping_method_name']) ? $order_data['shipping_method_name'] : '',
 			'shipping_id' => !empty($order_data['shipping_id']) ? $order_data['shipping_id'] : '',
-			'shipping_price' => $order_data['shippig_charges'],
+			'shipping_price' => $order_data['shipping_charges'],
 			'quantity' => !empty($order_data['quantity']) ? $order_data['quantity'] : '',
 			'gst_tax' => !empty($order_data['gst_tax']) ? $order_data['gst_tax'] : 0.00,
 			'stripe_total_price' => !empty($order_data['stripe_total_price']) ? $order_data['stripe_total_price'] : 0.00,
@@ -197,7 +206,11 @@ class OrderController extends Controller
 			'grouped_product_attributes' => isset($updated_grouped_product_attributes) ? $updated_grouped_product_attributes : '',
 			//'scoliosis_exercises_file' => !empty($grouped_product_attributes['CustomizedImgage']) ? $grouped_product_attributes['CustomizedImgage'] : '',
 			'lang' => !empty($order_data['language']) ? $order_data['language'] : '',
-			'sku' => !empty($order_data['sku']) ? $order_data['sku'] : ''
+			'sku' => !empty($order_data['sku']) ? $order_data['sku'] : '',
+			'currency' => !empty($order_data['currency']) ? $order_data['currency'] : '',
+			'currency_symbol' => !empty($order_data['currency_symbol']) ? $order_data['currency_symbol'] : '',
+			'same_address' => !empty($order_data['same_address']) ? $order_data['same_address'] : '',
+
 		];
 	
 		// Check if all necessary fields are present before creating the order
@@ -234,16 +247,39 @@ class OrderController extends Controller
 		$billing_address_1 = !empty($order_data['street']) ? $order_data['street'] : '';
 		$billing_address_2 = !empty($order_data['apartment']) ? $order_data['apartment'] : '';
 		$billing_phone = !empty($order_data['phone']) ? $order_data['phone'] : '';
-		$shipping_first_name = !empty($order_data['shippingFirstName']) ? $order_data['shippingFirstName'] : '';
-		$shipping_last_name = !empty($order_data['shippingLastName']) ? $order_data['shippingLastName'] : '';
-		$shipping_country = !empty($order_data['shippingCountry']) ? $order_data['shippingCountry'] : '';
-		$shipping_address_1 = !empty($order_data['shippingStreet']) ? $order_data['shippingStreet'] : '';
-		$shipping_address_2 = !empty($order_data['shippingApartment']) ? $order_data['shippingApartment'] : '';
-		$shipping_city = !empty($order_data['shippingTown']) ? $order_data['shippingTown'] : '';
-		$shipping_state = !empty($order_data['shipping_state']) ? $order_data['shipping_state'] : '';
-		$shipping_postcode = !empty($order_data['shippingPostcode']) ? $order_data['shippingPostcode'] : '';
-		$shipping_phone = !empty($order_data['shippingPhone']) ? $order_data['shippingPhone'] : '';
-		$propductType = !empty($order_data['propductType']) ? $order_data['propductType'] : '';
+		
+		// $shipping_first_name = !empty($order_data['shippingFirstName']) ? $order_data['shippingFirstName'] : '';
+		// $shipping_last_name = !empty($order_data['shippingLastName']) ? $order_data['shippingLastName'] : '';
+		// $shipping_country = !empty($order_data['shippingCountry']) ? $order_data['shippingCountry'] : '';
+		// $shipping_address_1 = !empty($order_data['shippingStreet']) ? $order_data['shippingStreet'] : '';
+		// $shipping_address_2 = !empty($order_data['shippingApartment']) ? $order_data['shippingApartment'] : '';
+		// $shipping_city = !empty($order_data['shippingTown']) ? $order_data['shippingTown'] : '';
+		// $shipping_state = !empty($order_data['shipping_state']) ? $order_data['shipping_state'] : '';
+		// $shipping_postcode = !empty($order_data['shippingPostcode']) ? $order_data['shippingPostcode'] : '';
+		// $shipping_phone = !empty($order_data['shippingPhone']) ? $order_data['shippingPhone'] : '';
+
+		if ($order_data['same_address'] == true) {
+			$shipping_first_name = !empty($order_data['firstName']) ? $order_data['firstName'] : '';
+			$shipping_last_name = !empty($order_data['lastName']) ? $order_data['lastName'] : '';
+			$shipping_country = !empty($order_data['country']) ? $order_data['country'] : '';
+			$shipping_address_1 = !empty($order_data['street']) ? $order_data['street'] : '';
+			$shipping_address_2 = !empty($order_data['apartment']) ? $order_data['apartment'] : '';
+			$shipping_city = !empty($order_data['town']) ? $order_data['town'] : '';
+			$shipping_state = !empty($order_data['state']) ? $order_data['state'] : '';
+			$shipping_postcode = !empty($order_data['postcode']) ? $order_data['postcode'] : '';
+			$shipping_phone = !empty($order_data['phone']) ? $order_data['phone'] : '';
+		} else {
+			$shipping_first_name = !empty($order_data['shippingFirstName']) ? $order_data['shippingFirstName'] : '';
+			$shipping_last_name = !empty($order_data['shippingLastName']) ? $order_data['shippingLastName'] : '';
+			$shipping_country = !empty($order_data['shippingCountry']) ? $order_data['shippingCountry'] : '';
+			$shipping_address_1 = !empty($order_data['shippingStreet']) ? $order_data['shippingStreet'] : '';
+			$shipping_address_2 = !empty($order_data['shippingApartment']) ? $order_data['shippingApartment'] : '';
+			$shipping_city = !empty($order_data['shippingTown']) ? $order_data['shippingTown'] : '';
+			$shipping_state = !empty($order_data['shipping_state']) ? $order_data['shipping_state'] : '';
+			$shipping_postcode = !empty($order_data['shippingPostcode']) ? $order_data['shippingPostcode'] : '';
+			$shipping_phone = !empty($order_data['shippingPhone']) ? $order_data['shippingPhone'] : '';
+		}
+		$propductType = !empty($order_data['productType']) ? $order_data['productType'] : '';
 
 		$get_user_order_info = [
 			'billing_first_name' => $billing_first_name,
@@ -367,7 +403,10 @@ class OrderController extends Controller
 		// dd($product);
         // $product_name = !empty($product->name) ? $product->name : '';
         // $product_sku = !empty($product->product_sku) ? $product->product_sku : '';
-		if($propductType == 'normal'){
+		if($propductType == 'normal') {
+
+		
+		if($order_data['shipping_type'] == 'easy_ship'){
 			
 
 		if(!empty($product_actual_weight) || !empty($dimension_height) || !empty($dimension_length) || !empty($dimension_weight)  ){
@@ -466,32 +505,7 @@ class OrderController extends Controller
 			"order_data" => [
                 "buyer_selected_courier_name" => $shipment_method_name,
 			],
-			"parcels" => $parcels
-			// [
-			// 	[
-			// 		"box" => [
-			// 			"slug" => "testing",
-			// 			"length" => $dimension_length,
-			// 			"width" => $dimension_weight,
-			// 			"height" => $dimension_height
-			// 		],
-			// 		"items" => [
-			// 			[
-			// 				"description" => 'testing',
-			// 				"category" => "Health & Beauty",
-			// 				"sku" => 'bk5th-us',
-			// 				"quantity" => $quantity,
-			// 				"declared_customs_value" => 22,
-			// 				"declared_currency" => "SGD",
-			// 				"actual_weight" => $product_actual_weight ,
-			// 				// "actual_weight" => $product_actual_weight / 100,
-			// 				"origin_country_alpha2" => $order_data['country']
-			// 			]
-			// 		],
-			// 		"total_actual_weight" => $product_actual_weight 
-			// 		// "total_actual_weight" => $product_actual_weight / 100
-			// 	]
-			// ]
+			"parcels" => $parcels 
             ]),
             'headers' => [
      	    	'accept' => 'application/json',
@@ -511,7 +525,71 @@ class OrderController extends Controller
 		
 		// dd($jsonData);
 		}
+	 } else {
+		// try {
+        //     $orders = $request->input('orders');
+
+        //     if (!is_array($orders) || empty($orders)) {
+        //         return response()->json(['error' => 'Invalid order data'], 400);
+        //     }
+
+        //     $response = $this->easyParcel->createOrder($orders);
+        //     \Log::info('createOrder response', ['response' => $response]);
+        //     return response()->json($response);
+            
+        // } catch (\Exception $e) {
+        //     \Log::error('Error creating order', [
+        //         'error' => $e->getMessage(),
+        //         'trace' => $e->getTraceAsString()
+        //     ]);
+        //     return response()->json(['error' => 'Failed to create order'], 500);
+        // }
+
+
+		try {
+			// Get the request data
+			// $order = $request->all();
+		
+			// Validate if required fields exist
+			if (empty($order_data) || !isset($order_data['product_items']) || !is_array($order_data['product_items'])) {
+				return response()->json(['error' => 'Invalid order data'], 400);
+			}
+		
+			// Format order data for EasyParcel
+			$formattedOrders = $this->formatEasyParcelOrder($order_data);
+		
+			\Log::info('Formatted Order Data', ['order' => $formattedOrders]);
+			if ($order_data['shipping_id'] !== 'JTnv9o0zKC-STORE-PICKUP-MY') {
+				
+			// Send order to EasyParcel API
+			$response = $this->easyParcel->createOrder($formattedOrders); // Send as an array
+			
+			\Log::info('createOrder response', ['response' => $response]);
+
+			// Extract order number safely
+			$orderNumber = $response['result'][0]['order_number'] ?? null;
+
+			if (!$orderNumber) {
+				\Log::error('Order number not found in response', ['response' => $response]);
+				return response()->json(['error' => 'Failed to retrieve order number'], 500);
+			}
+
+			// Pay for the order
+			$paymentResponse = $this->easyParcel->payOrder([$orderNumber]); // Wrap in an array
+
+			\Log::info('Payment response', ['response' => $paymentResponse]);
+			// return response()->json($response);
+			}
+		} catch (\Exception $e) {
+			\Log::error('Error creating order', [
+				'error' => $e->getMessage(),
+				'trace' => $e->getTraceAsString()
+			]);
+			return response()->json(['error' => 'Failed to create order'], 500);
+		}
+		
 	 }
+	}
 		//if($order_id->id){
 		// Delete abandon carts where user_id exists in orders
 		// $delete_user_abandon_cart = AbandonCart::whereIn('user_id', function ($query) {
@@ -575,7 +653,55 @@ class OrderController extends Controller
     }
 	
 	
-
+	public function formatEasyParcelOrder($order)
+	{
+		$formattedOrders = [];
+	
+		foreach ($order['product_items'] as $product) {
+			$formattedOrders[] = [
+				'weight' => isset($order['product_actual_weight']) ? max($order['product_actual_weight'] / 1000, 1) : 1,
+				'width'         => $product['dimension_width'] ?? '1',
+				'length'        => $product['dimension_length'] ?? '1',
+				'height'        => $product['dimension_height'] ?? '1',
+				'content'       => $product['title'],
+				'value'         => $product['price'],
+				'service_id'    => $order['shipping_id'],
+				'pick_name'     => $order['firstName'] . ' ' . $order['lastName'],
+				'pick_company'  => $order['company'] ?? '',
+				'pick_contact'  => $order['phone'],
+				'pick_mobile'   => $order['phone'],
+				'pick_addr1'    => $order['street'],
+				'pick_addr2'    => $order['apartment'] ?? '',
+				'pick_city'     => $order['town'],
+				'pick_state'    => $order['state'],
+				'pick_code'     => $order['postcode'],
+				'pick_country'  => $order['country'],
+	
+				'send_name'     => $order['shippingFirstName'] . ' ' . $order['shippingLastName'],
+				'send_company'  => $order['shippingCompany'] ?? '',
+				'send_contact'  => $order['shippingPhone'],
+				'send_mobile'   => $order['shippingPhone'],
+				'send_addr1'    => $order['shippingStreet'],
+				'send_addr2'    => $order['shippingApartment'] ?? '',
+				'send_city'     => $order['shippingTown'],
+				'send_state'    => $order['shippingState'],
+				'send_code'     => $order['shippingPostcode'],
+				'send_country'  => $order['shippingCountry'],
+	
+				'collect_date'  => now()->format('Y-m-d'),
+				'send_email'    => $order['shippingEmail'],
+				'hs_code'       => 'yshs_code',
+				'REQ_ID'        => 'shipping # ' . $order['order_number'],
+				'reference'     => 'order' . $order['order_number'],
+				'cod_enabled'   => false, // Set to true if Cash on Delivery is required
+				'cod_amount'    => '0.00',
+			];
+		}
+	
+		return $formattedOrders;
+	}
+	
+	
     /**
      * Display the specified resource.
      *

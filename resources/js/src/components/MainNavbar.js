@@ -277,7 +277,7 @@ const MainNavbar = () => {
                             </Link>
                           </li>
                           <li>
-                            <Link to="/wishlists">
+                            <Link to={`${urlLanguage}/wishlists`}>
                               {t("product_dropdown.wishlist.title")}
                             </Link>
                           </li>

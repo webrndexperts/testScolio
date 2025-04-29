@@ -55,9 +55,9 @@
   transition: max-height .3s ease-in-out;
 }
 
-.accordion-single-content p {
+/* .accordion-single-content p {
   padding: 20px;
-}
+} */
 
 .accordion-single-item.is-open .accordion-single-content  {
   max-height: fit-content;

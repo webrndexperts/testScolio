@@ -62,7 +62,8 @@ class AdminController extends Controller
 			'photo' => !empty($imageName) ? asset('custom_images/users/' . $imageName) : ''
         ];
 		if($request->password){
-			$data_password = hash('md5', $request->password);
+			$data_password = Hash::make($request->password);
+			// $data_password = hash('md5', $request->password);
 			$data['password'] = $data_password;
 		}
 

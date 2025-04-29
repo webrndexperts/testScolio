@@ -114,7 +114,7 @@ class PostTestController extends Controller
     public function store(Request $request)
     {   
         
-        // dd($request->all(),$enLanguages);    
+        // dd($request->all());    
         $this->validate($request,[
             'post_slug'=>'required',
         ], [ 'post_slug.required' => 'Parent slug is required !' ]);      

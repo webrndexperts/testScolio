@@ -10341,3 +10341,17 @@ h5.Shipping-infos {
     flex-direction: column;
     margin: 0px !important;
 }
+
+.ship-refresh-btn:hover{
+    background: #1E2642;
+}
+
+.ship-refresh-btn {
+    background: #F59A31;
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 12px;
+    margin-left: 20px;
+    padding: 11px 15px;
+}

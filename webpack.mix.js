@@ -32,6 +32,8 @@ mix.js('resources/js/app.js', 'public/js')
                     'REACT_APP_STRIPE_LIVE': JSON.stringify(process.env.REACT_APP_STRIPE_LIVE),
                     'REACT_APP_CAPTCHA_SITE_KEY': JSON.stringify(process.env.REACT_APP_CAPTCHA_SITE_KEY),
                     'REACT_APP_PAYMENT_MODE': JSON.stringify(process.env.REACT_APP_PAYMENT_MODE),
+                    'REACT_APP_PAYPAL_DEV': JSON.stringify(process.env.REACT_APP_PAYPAL_DEV),
+                    'REACT_APP_PAYPAL_SECRET': JSON.stringify(process.env.REACT_APP_PAYPAL_SECRET),
                 }
 
             })

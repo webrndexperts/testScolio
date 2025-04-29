@@ -7,8 +7,8 @@ import { loadStripe } from '@stripe/stripe-js';
 // const stripePromise = loadStripe(stripeLive);
 
 
-// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_DEV)
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_LIVE)
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_DEV)
+// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_LIVE)
 
 const StripeProvider = ({ children }) => {
   return <Elements stripe={stripePromise}>{children}</Elements>;

@@ -23,7 +23,8 @@ const ProductCategory = () => {
     const [categoryTitle, setCategoryTitle] = useState('');
     const [metaProps, setMetaProps] = useState(null);
     const { authData, authLogin } = useSelector((state) => state.auth);
- 
+    const currency = JSON.parse(localStorage.getItem('currency')) 
+
     const navigate = useNavigate()
     const { t } = useTranslation();
 
@@ -111,7 +112,12 @@ const ProductCategory = () => {
 
                 <div className='shop-section'>
                     <div className="row">
-                        {categoryProducts && categoryProducts.products && categoryProducts.products.map(userData =>  (
+                        {categoryProducts && categoryProducts.products && categoryProducts.products.map(userData => { 
+                                 let price = parseFloat(userData.price).toFixed(2);
+                                 if (currentLanguage == 'en_MY') {
+                                     price = userData.malaysian_price ? parseFloat(userData.malaysian_price) : userData.price
+                                 } 
+                            return (
                             <div key={userData.id} className="col-sm-4">
                                 <div className="shop-treatments">
                                     <WishlistIcon product={userData} {...wishProps} />
@@ -120,7 +126,8 @@ const ProductCategory = () => {
                                         <img src={userData.photo} alt={userData.photo} />
                                         <h3>{userData.title}</h3>
                                         <div className='price-shop'>
-                                            <p className='price'>${parseFloat(userData.price).toFixed(2)} SGD</p>
+                                            <p className="price">{currency.symbol} {parseFloat(price).toFixed(2)} {currency.currency}</p>
+                                            {/* <p className='price'>${parseFloat(userData.price).toFixed(2)} SGD</p> */}
                                             <p className='star'><Rating stars={4.5}/></p>
                                         </div>
                                         
@@ -157,7 +164,7 @@ const ProductCategory = () => {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        )})}
                     </div>
                 </div>
             </div>

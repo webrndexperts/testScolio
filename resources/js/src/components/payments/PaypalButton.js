@@ -6,21 +6,22 @@ import { toast } from 'react-toastify';
 const PaypalButton = (props) => {
 	const { paypalRef, paypalPaymentApprove, totalPrice, t, currency = 'SGD', paypalPaymentFailed ,authData} = props;
 	const isLoggedIn = () => authData && authData.id;
-
+	const paypalKey = process.env.REACT_APP_PAYPAL_DEV
+	const paypalSecret = process.env.REACT_APP_PAYPAL_SECRET
 	const [isButtonDisabled, setIsButtonDisabled] = useState(!isLoggedIn());
 	const [error, setError] = useState(false);
 
-		
 	useEffect(() => {
 		setIsButtonDisabled(!isLoggedIn());
 	}, [authData,authData?.id]);
 
-	const apiUrl = paypalApiUrl;
-	// const apiUrl = paypalSandboxUrl;
+	// const apiUrl = paypalApiUrl;
+	const apiUrl = paypalSandboxUrl;
 	
 	const initialOptions = {
-    	clientId: paypalLive,
+    	// clientId: paypalLive,
     	// clientId: paypalSandbox,
+    	clientId: paypalKey,
     	currency,
     	intent: "capture",
 	}
@@ -32,8 +33,9 @@ const PaypalButton = (props) => {
 		let response =  await fetch(`${apiUrl}/v1/oauth2/token`, {
 			method: 'POST',
 			headers: {
-			  	'Authorization': 'Basic ' + btoa(`${paypalLive}:${paypalLiveSecret}`)
+			  	// 'Authorization': 'Basic ' + btoa(`${paypalLive}:${paypalLiveSecret}`)
 			  	// 'Authorization': 'Basic ' + btoa(`${paypalSandbox}:${paypalSandboxSecret}`)
+			  	'Authorization': 'Basic ' + btoa(`${paypalKey}:${paypalSecret}`)
 			},
 			body: new URLSearchParams({
 			  	'grant_type': 'client_credentials'

@@ -72,34 +72,60 @@ class LoginController extends Controller
     }
 	public function customLogin(Request $request)
 	{
-		$user = User::where(function($query) use($request) {
-                $query->where('email', $request->email)
-                      ->orWhere('user_login', $request->email);
-				})
-				->where('password', hash('md5', $request->password))
-				->where('role', 'admin')
-				->first();
 		
-		if($user && $user->id) {
-			
-			Auth::login($user);
-			  
-		  // Log successful login with IP address
-		    $ipAddress = $request->ip(); // Retrieve IP address
-			Log::info('Admin login dashboard in successfully.', ['email_or_login' => $request->email, 'user_id' => $user->id, 'ip_address' => $ipAddress]);
-			
-		 return redirect('/admin')->with('success','You are login successfully.');
-		}
-		else{
-			
-			// Log failed login attempt with IP address
-			$ipAddress = $request->ip();
-			Log::warning('Failed login attempt for Admin.', [
-				'email_or_login' => $request->email,
-				'ip_address' => $ipAddress
-			]);
-         return redirect()->back()->with('error', 'Login user details is not found.');
+        $type = filter_var($request->email , FILTER_VALIDATE_EMAIL) ? 'email' : 'user_login';
+        $credentials = [
+            $type => $request->email,
+            'password' => $request->password,
+            'role' => 'admin',
+            'status' => 'active'
+        ];
+
+
+
+        if(Auth::attempt($credentials)) {
+            $ipAddress = $request->ip(); // Retrieve IP address
+            Log::info('Admin login dashboard in successfully.', ['email_or_login' => $request->email, 'user_id' => Auth::user()->id, 'ip_address' => $ipAddress]);
+            
+            return redirect('/admin')->with('success','You are login successfully.');
+        } else {
+            $ipAddress = $request->ip();
+            Log::warning('Failed login attempt for Admin.', [
+                'email_or_login' => $request->email,
+                'ip_address' => $ipAddress
+            ]);
+            return redirect()->back()->with('error', 'Login user details is not found.');
         }
+        
+        
+        // $user = User::where(function($query) use($request) {
+        //         $query->where('email', $request->email)
+        //               ->orWhere('user_login', $request->email);
+		// 		})
+		// 		->where('password', hash('md5', $request->password))
+		// 		->where('role', 'admin')
+		// 		->first();
+		
+		// if($user && $user->id) {
+			
+		// 	Auth::login($user);
+			  
+		//   // Log successful login with IP address
+		//     $ipAddress = $request->ip(); // Retrieve IP address
+		// 	Log::info('Admin login dashboard in successfully.', ['email_or_login' => $request->email, 'user_id' => $user->id, 'ip_address' => $ipAddress]);
+			
+		//  return redirect('/admin')->with('success','You are login successfully.');
+		// }
+		// else{
+			
+		// 	// Log failed login attempt with IP address
+		// 	$ipAddress = $request->ip();
+		// 	Log::warning('Failed login attempt for Admin.', [
+		// 		'email_or_login' => $request->email,
+		// 		'ip_address' => $ipAddress
+		// 	]);
+        //  return redirect()->back()->with('error', 'Login user details is not found.');
+        // }
  
 
 

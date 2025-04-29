@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 
 import TopBanner from '../components/TopBanner';
 import ApiHook from "../components/CustomHooks/ApiHook";
@@ -12,6 +12,7 @@ import { scrollToTop } from "../components/Helper";
 import Rating from "../components/Rating";
 
 const WishlistView = () => {
+    const { slug, lang } = useParams();
 	const [wishlistData, setWishlistData] = useState([]);
 	const [metaProps, setMetaProps] = useState(null);
 	const { authData, authLogin } = useSelector((state) => state.auth);
@@ -21,6 +22,7 @@ const WishlistView = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+    const currency = JSON.parse(localStorage.getItem('currency')) 
 
 	/**
 	 * Function to generate date in a formatted way.
@@ -46,7 +48,8 @@ const WishlistView = () => {
 			id: prod?.id,
 			image: prod?.photo,
 			title: prod?.title,
-			price: (prod && prod.price) ? parseFloat(prod.price).toFixed(2) : 0,
+			price: (prod && currentLanguage == 'en_MY' && prod.malaysian_price) ? parseFloat(prod.malaysian_price).toFixed(2) : prod?.price,
+			// price: (prod && prod.price) ? parseFloat(prod.price).toFixed(2) : 0,
 			slug: prod?.slug,
 			quantity: 1,
 			dimension_height: prod?.dimension_height,
@@ -181,6 +184,12 @@ const WishlistView = () => {
 		}
 	}, [authLogin])
 
+    useEffect(() => {
+        if(currentLanguage != lang) {
+            navigate(`${urlLanguage}/wishlists`);
+        }
+    }, [urlLanguage, currentLanguage, lang])
+
 	return (
 		<Fragment>
 			<TopBanner title={t('product_dropdown.wishlist.title')} />
@@ -201,6 +210,10 @@ const WishlistView = () => {
 
 							{(wishlistData.length) ? (
 								wishlistData.map((item, k) => {
+                                    let price = parseFloat(item.product.price).toFixed(2);
+                                    if (currentLanguage == 'en_MY') {
+                                        price = item.product.malaysian_price ? parseFloat(item.product.malaysian_price) : item.product.price
+                                    } 
 									return (
 										<tr>
 											<td>
@@ -217,7 +230,8 @@ const WishlistView = () => {
 												</Link>
 											</td>
 
-											<td>${parseFloat(item.product?.price).toFixed(2)}</td>
+											<td><p className="price">{currency.symbol} {parseFloat(price).toFixed(2)} {currency.currency}</p></td>
+											{/* <td>${parseFloat(item.product?.price).toFixed(2)}</td> */}
 
 											<td>
 												<span className="star">

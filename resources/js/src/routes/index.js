@@ -26,6 +26,7 @@ import OrdersComponent from '../Pagess/Orderss';
 import ConsultationForm from '../Pagess/BookConsulation';
 import Index from '../pages/Index';
 import ThanksOrderView from '../pages/ThanksOrderView';
+import WishlistView from '../pages/WishlistView';
 
 const languageRoutes = [
 	{
@@ -131,6 +132,10 @@ const languageRoutes = [
 	{
 		path: "/:lang/ConsultationForm",
 		element: <ConsultationForm />
+	},
+	{
+		path: "/:lang/wishlists",
+		element: <WishlistView />
 	},
 ]
 
@@ -239,6 +244,10 @@ const withoutLanguageRoutes = [
 	{
 		path: "/ConsultationForm",
 		element: <ConsultationForm />
+	},
+	{
+		path: "/wishlists",
+		element: <WishlistView />
 	},
 ]
 

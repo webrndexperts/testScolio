@@ -71,6 +71,7 @@ class XRayResultController extends Controller
         //     'page_slug'=>'required',
         //     'status'=>'required|in:active,inactive'
         // ]);
+        // dd($request->all());
         $this->validate($request, [
             'case_number' => 'required',
             'status' => 'required|in:active,inactive'
@@ -86,26 +87,53 @@ class XRayResultController extends Controller
         if (!$hasFilledPost) {
             return back()->withErrors(['post' => 'At least fill all fields of one language.'])->withInput();
         }
+
+        $filteredPosts = collect($data['post'])->filter(function ($post) {
+            return !empty($post['title']); // Keep only those that have a title
+        })->toArray();
+
+
+        $data['post'] = $filteredPosts;
+        
         // dd($request->all());
-        foreach ($data['post'] as $post) {
-            $slug_title = $post['title'];
+        // foreach ($data['post'] as $post) {
+        //     $slug_title = $post['title'];
 
 
-            if (isset($slug_title)) {
-                $slug_data = Str::slug($slug_title);
-                $data_by_slug[] = ['slug' => $slug_data];
-            }
+        //     if (isset($slug_title)) {
+        //         $slug_data = Str::slug($slug_title);
+        //         $data_by_slug[] = ['slug' => $slug_data];
+        //     }
+        // }
+
+            // Generate a single slug for the parent
+    $firstSlug = null;
+    foreach ($data['post'] as $post) {
+        if (!empty($post['title'])) {
+            $firstSlug = Str::slug($post['title']);
+            break; // Exit loop after finding the first non-empty title
         }
+    }
 
-        $saved_slug = [];
-        foreach ($data_by_slug as $title_by_slug) {
-            $saved_slug[] = ['slug' => $title_by_slug['slug']];
-            $dataPostParents = [
-                'slug' => $title_by_slug['slug'],
-                'case_number' => !empty($data['case_number']) ? $data['case_number'] : ''
-            ];
-            $page = XrayResultsParents::create($dataPostParents);
-        }
+     // If no valid slug is found, return with an error
+     if (!$firstSlug) {
+        return back()->withErrors(['post' => 'A title is required to generate a slug.'])->withInput();
+     }
+
+         // Create only **one** parent
+    $page = XrayResultsParents::create([
+        'slug' => $firstSlug,
+        'case_number' => $data['case_number'] ?? ''
+    ]);
+        // $saved_slug = [];
+        // foreach ($data_by_slug as $title_by_slug) {
+        //     $saved_slug[] = ['slug' => $title_by_slug['slug']];
+        //     $dataPostParents = [
+        //         'slug' => $title_by_slug['slug'],
+        //         'case_number' => !empty($data['case_number']) ? $data['case_number'] : ''
+        //     ];
+        //     $page = XrayResultsParents::create($dataPostParents);
+        // }
         $status_data = !empty($data['status']) ? $data['status'] : 'active';
 
         $case_number = $data['case_number'];
@@ -138,7 +166,7 @@ class XRayResultController extends Controller
                             'age' => !empty($age) ? $age : '',
                             'curve_degree' => !empty($curve_degree) ? $curve_degree : null,
                             'title' => !empty($value['title']) ? $value['title'] : '',
-                            'xray_cat_id' => !empty($value['post_cat_id']) ? $value['post_cat_id'] : '',
+                            'xray_cat_id' => !empty($value['post_cat_id']) ? $value['post_cat_id'] : null,
                             'description' => !empty($value['description']) ? $value['description'] : '',
                             'seo_meta_title' => !empty($value['seo_meta_title']) ? $value['seo_meta_title'] : '',
                             'seo_meta_description' => !empty($value['seo_meta_description']) ? $value['seo_meta_description'] : '',
@@ -157,7 +185,7 @@ class XRayResultController extends Controller
                         'age' => !empty($age) ? $age : '',
                         'curve_degree' => !empty($curve_degree) ? $curve_degree : null,
                         'title' => !empty($value['title']) ? $value['title'] : '',
-                        'xray_cat_id' => !empty($value['post_cat_id']) ? $value['post_cat_id'] : '',
+                        'xray_cat_id' => !empty($value['post_cat_id']) ? $value['post_cat_id'] : null,
                         'description' => !empty($value['description']) ? $value['description'] : '',
                         'seo_meta_title' => !empty($value['seo_meta_title']) ? $value['seo_meta_title'] : '',
                         'seo_meta_description' => !empty($value['seo_meta_description']) ? $value['seo_meta_description'] : '',
@@ -167,81 +195,42 @@ class XRayResultController extends Controller
                         'status' => $status_data,
                     ];
                 }
-                // if (isset($value['title'])) {
-                //     $dataDes[] = [
-                //         'xray_parent_id' => $page->id,
-                //         'lang'  => $code,
-                //         'case_number'  => !empty($case_number) ? $case_number : '',
-                //         'age'  => !empty($age) ? $age : '',
-                //         'curve_degree'  => !empty($curve_degree) ? $curve_degree : null,
-                //         'title' => !empty($value['title']) ? $value['title'] : '',
-                //         'xray_cat_id' => !empty($value['post_cat_id']) ? $value['post_cat_id'] : '',
-                //         'description' => !empty($value['description']) ? $value['description'] : '',
-                // 		'seo_meta_title' => !empty($value['seo_meta_title']) ? $value['seo_meta_title'] : '',
-                //         'seo_meta_description' => !empty($value['seo_meta_description']) ? $value['seo_meta_description'] : '',
-                //         'seo_meta_tag' => !empty($value['seo_meta_tag']) ? $value['seo_meta_tag'] : '',
-                //         'video_url' => !empty($value['video_url']) ? $value['video_url'] : '',
-                // 		'photo' => !empty($imageName) ? asset('custom_images/xray-results/' . $imageName) : '',
-                // 		'status'  => $status_data,
-                //     ];
-                // } else {
-                //     echo 'not insert';
-                // }
+                
             }
         }
-
-
-
 
         // $dataDesWithSlugs = [];
 
         // foreach ($dataDes as $index => $postData) {
-        // 	if (isset($saved_slug[$index])) {
-        // 		$slug = $saved_slug[$index]['slug'];
-        // 	   // dd($slug);
-        // 		// Check if a record with the same slug already exists
-        // 		$count = XrayResults::where('slug', $slug)->count();
+        //     $slug = $saved_slug[$index]['slug'] ?? Str::slug($postData['title']);
+        //     $count = XrayResults::where('slug', $slug)->count();
 
-        // 		if ($count > 0) {
-        // 			// If a record with the same slug exists, append a suffix or take another action
-        // 			$slug .= '-' . Str::random(6); // Appending a random string to make it unique
-        // 		}
+        //     if ($count > 0) {
+        //         $slug .= '-' . Str::random(6);
+        //     }
 
-        // 		// Add the slug to the data
-        // 		$postData['slug'] = $slug;
-
-        // 		// Add the data to the array
-        // 		$dataDesWithSlugs[] = $postData;
-        // 	}
+        //     $postData['slug'] = $slug;
+        //     $dataDesWithSlugs[] = $postData;
         // }
 
-        // // Create the Banner records
+        // // Insert all entries
         // foreach ($dataDesWithSlugs as $postData) {
-        // 	$status = XrayResults::create($postData);
+        //     $status = XrayResults::create($postData);
         // }
 
-        $dataDesWithSlugs = [];
 
-        foreach ($dataDes as $index => $postData) {
-            $slug = $saved_slug[$index]['slug'] ?? Str::slug($postData['title']);
-            $count = XrayResults::where('slug', $slug)->count();
+            // Insert all translations into XrayResults
+    foreach ($dataDes as $postData) {
+        $slug = Str::slug($postData['title']);
+        $count = XrayResults::where('slug', $slug)->count();
 
-            if ($count > 0) {
-                $slug .= '-' . Str::random(6);
-            }
-
-            $postData['slug'] = $slug;
-            $dataDesWithSlugs[] = $postData;
+        if ($count > 0) {
+            $slug .= '-' . Str::random(6);
         }
 
-        // Insert all entries
-        foreach ($dataDesWithSlugs as $postData) {
-            $status = XrayResults::create($postData);
-        }
-
-
-
-
+        $postData['slug'] = $slug;
+        $status = XrayResults::create($postData);
+    }
 
         // Move the create method outside the loop
         // foreach ($dataDes as $postData) {

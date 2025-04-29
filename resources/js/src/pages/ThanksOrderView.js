@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation , Trans  } from 'react-i18next';
 import useDynamicTitle from '../hooks/useDynamicTitle';
 import TopBanner from '../components/TopBanner';
+import PriceView from "../components/PriceView";
+
 const ThanksOrderView = () => {
     const API = process.env.REACT_APP_API_URL;
     const { orderId, lang } = useParams();
@@ -53,7 +55,7 @@ const ThanksOrderView = () => {
     }, [i18n.language, currentLanguage, dispatch, navigate, lang]);
 
 	useDynamicTitle('Order');
-    console.log(orderDetail?.shipping_price)
+    console.log(orderDetail)
     return (
         <div className='thankyou-section'>
             <div className='container'>
@@ -181,19 +183,20 @@ const ThanksOrderView = () => {
                                     </div>
                                     </div>
                                     <div class="product-price-nam">
-                                        <p><span>$</span>{parseFloat(orderDetail?.total_amount).toFixed(2)} SGD</p>
+                                        <p> <PriceView currency={orderDetail?.currency} symbol={orderDetail?.currency_symbol} price={orderDetail?.total_amount} /> </p>
+                                        {/* <p><span>$</span>{parseFloat(orderDetail?.total_amount).toFixed(2)} SGD</p> */}
                                     </div>
                                 </div>
                                 )            
                                                 
                             })}     
                             <div className='subtotal-thankyous'>
-                            <div class="subtotal-thankyou"><p> {t("order_Information.Subtotal")}:</p><h5><span>$</span>{parseFloat(orderDetail?.total_amount).toFixed(2)} SGD</h5></div>
+                            <div class="subtotal-thankyou"><p> {t("order_Information.Subtotal")}:</p><h5> <PriceView currency={orderDetail?.currency} symbol={orderDetail?.currency_symbol} price={orderDetail?.total_amount} /> </h5></div>
                             {(orderDetail?.orderUserInfo && orderDetail?.shipping_method_name)  ? ( <div class="subtotal-thankyou"><p> {t('CART12.Shipping')}:</p><h5 className='Shipping-infos'>	{orderDetail?.shipping_method_name} ({orderDetail?.orderUserInfo.shipping_address_1} {orderDetail?.orderUserInfo.shipping_address_2}, {orderDetail?.orderUserInfo.shipping_city} {orderDetail?.orderUserInfo.shipping_postcode})</h5></div> 	) : null}
-                            {(orderDetail?.orderUserInfo && orderDetail?.shipping_method_name)  ? ( <div class="subtotal-thankyou"><p> {t('CART12.Shipping')} {t('product_dropdown.wishlist.price')}:</p><h5><span>$</span>{parseFloat(orderDetail?.shipping_price).toFixed(2)} SGD </h5></div> ) : null}
-                            <div class="subtotal-thankyou"><p>{t("order_Information.Tax")}:</p><h5><span>$</span>{orderDetail?.gst_tax} SGD</h5></div>
+                            {(orderDetail?.orderUserInfo && orderDetail?.shipping_method_name)  ? ( <div class="subtotal-thankyou"><p> {t('CART12.Shipping')} {t('product_dropdown.wishlist.price')}:</p><h5> <PriceView currency={orderDetail?.currency} symbol={orderDetail?.currency_symbol} price={orderDetail?.shipping_price} />  </h5></div> ) : null}
+                            <div class="subtotal-thankyou"><p>{t("order_Information.Tax")}:</p><h5> <PriceView currency={orderDetail?.currency} symbol={orderDetail?.currency_symbol} price={orderDetail?.gst_tax} /> </h5></div>
                             </div>
-                            <div class="total-thankyou"><p>{t('CART12.Total')}:</p><h5><span>$</span>{parseFloat(orderDetail?.sub_total).toFixed(2)} SGD</h5></div>
+                            <div class="total-thankyou"><p>{t('CART12.Total')}:</p><h5>  <PriceView currency={orderDetail?.currency} symbol={orderDetail?.currency_symbol} price={orderDetail?.sub_total} /> </h5></div>
                         </div>
                     </div>
 

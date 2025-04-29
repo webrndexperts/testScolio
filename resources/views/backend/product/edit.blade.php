@@ -66,6 +66,8 @@
               <option value="">--Select any type--</option>
                   <option value="simple-product" {{(($product->product_type=='simple-product')? 'selected' : '')}}>Simple Product</option>
                   <option value="variable-product" {{(($product->product_type=='variable-product')? 'selected' : '')}}>Variable Product</option>
+                  <option value="digital" {{(($product->product_type=='digital')? 'selected' : '')}}>Digital Product</option>
+                  <option value="aws3-bucket-product" {{(($product->product_type=='aws3-bucket-product')? 'selected' : '')}}>S3 Product</option>
 
           </select>
         </div>

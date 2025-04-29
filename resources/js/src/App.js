@@ -117,6 +117,17 @@ const App = () => {
         }
 
     }, [i18n, currentLanguage]);
+
+    useEffect(() => {
+
+        if (currentLanguage == 'en_MY') {
+            localStorage.setItem('currency', JSON.stringify({currency:'MYR',symbol:'RM'}))
+        } else {
+            localStorage.setItem('currency', JSON.stringify({currency:'SGD',symbol:'$'}))
+        }
+
+    }, [currentLanguage]);
+
     useEffect(() => {
         // AOS.init();
         AOS.init({
@@ -198,7 +209,7 @@ const App = () => {
                             path="/online-booking"
                             element={<OnlineBooking />}
                         />
-                        <Route path="/wishlists" element={<WishlistView />} />
+                        {/* <Route path="/wishlists" element={<WishlistView />} /> */}
 
                         <Route
                             path="/en_US/*"

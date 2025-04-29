@@ -153,7 +153,13 @@
     $('#excerpt').summernote({
       placeholder: "Write short description.....",
         tabsize: 2,
-        height: 150
+        height: 150,
+        callbacks: {
+    onEnter: function(e) {
+      e.preventDefault();
+      document.execCommand('insertHTML', false, '<p><br></p>');
+    }
+  }
     });
     });
 
@@ -173,6 +179,30 @@
                     { title: 'Block Quote', tag: 'blockquote', className: 'blockquote', value: 'blockquote' },
                     { title: 'Code Block', tag: 'pre', className: 'code-block', value: 'pre' }
                     ],
+                    callbacks: {
+                      onEnter: function(e) {
+      // Prevent default Enter behavior (which inserts <br>)
+      e.preventDefault();
+      debugger
+      document.execCommand('insertHTML', false, '<p>&nbsp;</p>');
+      // Insert a <p> tag without <br> inside
+        
+        // Move the cursor inside the new paragraph
+        let p = $('p').last();  // Get the last <p> tag inserted
+          let range = document.createRange();
+          let selection = window.getSelection();
+          debugger
+          
+          // Set the range to the end of the new <p> tag
+            range.setStart(p[0], 0);
+            range.setEnd(p[0], 0);
+            
+            // Clear current selection and set the new range
+            selection.removeAllRanges();
+            selection.addRange(range);
+            debugger
+    }
+  }
       });
     });
 </script>

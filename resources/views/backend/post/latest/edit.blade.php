@@ -42,7 +42,7 @@ $postCount = $posts->where('lang', $language->code)->count();
      
           <h5 class="card-header">Edit Post</h5>
           <div class="card-body">
-            <form method="post" action="{{route('latestpost.update',$post->id)}}" enctype="multipart/form-data">
+            <form id="post-edit-{{ $post->id }}" method="post" action="{{route('latestpost.update',$post->id)}}" enctype="multipart/form-data">
               @csrf 
               @method('PATCH')
       
@@ -70,8 +70,12 @@ $postCount = $posts->where('lang', $language->code)->count();
               </div>
               <div class="form-group">
                 <label for="description" class="col-form-label">Description</label>
-                <textarea class="form-control" id="description" name="description">{{$post->description}}</textarea>
-                <div id="example"></div>
+             
+              {{-- <div id="desc-editor">{!! $post->description !!}</div> --}}
+              {{-- <div id="desc-editor-{{$post->id}}" class="desc-editor">{!! $post->description !!}</div>
+              <textarea class="form-control description-textarea" id="description-{{$post->id}}" name="description" hidden>{{$post->description}}</textarea> --}}
+
+                <textarea class="form-control" id="description" name="description" hidden>{{$post->description}}</textarea>
                 @error('description')
                 <span class="text-danger">{{$message}}</span>
                 @enderror
@@ -183,7 +187,7 @@ $postCount = $posts->where('lang', $language->code)->count();
 <link rel="stylesheet" href="{{asset('backend/summernote/summernote.min.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 <style>
-  .orange-h1 {
+  h1, h1 * {
       color: #E97132 !important;
       font-size: 22px !important;
   }
@@ -207,205 +211,321 @@ $postCount = $posts->where('lang', $language->code)->count();
       color: #E97132 !important;
       font-size: 12px !important;
   } 
+
+  .orange-heading {
+    color: #E97132 !important;
+  }
+
+  .ck-dropdown__panel .ck-list {
+    max-height: 200px !important; /* Adjust height as needed */
+    overflow-y: auto !important; /* Enables vertical scrolling */
+  }
+
+  .ql-toolbar .ql-customElement {
+    min-width: 120px; /* Adjust width */
+    border: 1px solid #ccc;
+    color: black;
+}
+
+/* Apply font sizes to the Quill dropdown */
+.ql-picker.ql-size .ql-picker-item[data-value="10px"] {
+    content: "10px";
+    font-size: 10px;
+}
+.ql-picker.ql-size .ql-picker-item[data-value="12px"] {
+    content: "12px";
+    font-size: 12px;
+}
+.ql-picker.ql-size .ql-picker-item[data-value="14px"] {
+    content: "14px";
+    font-size: 14px;
+}
+.ql-picker.ql-size .ql-picker-item[data-value="16px"] {
+    content: "16px";
+    font-size: 16px;
+}
+.ql-picker.ql-size .ql-picker-item[data-value="18px"] {
+    content: "18px";
+    font-size: 18px;
+}
+.ql-picker.ql-size .ql-picker-item[data-value="20px"] {
+    content: "20px";
+    font-size: 20px;
+}
+.ql-picker.ql-size .ql-picker-item[data-value="24px"] {
+    content: "24px";
+    font-size: 24px;
+}
+.ql-picker.ql-size .ql-picker-item[data-value="32px"] {
+    content: "32px";
+    font-size: 32px;
+}
+.ql-picker.ql-size .ql-picker-item[data-value="40px"] {
+    content: "40px";
+    font-size: 40px;
+}
+
+.ql-snow {
+  .ql-picker {
+    &.ql-size {
+      .ql-picker-label,
+      .ql-picker-item {
+        font-size: inherit !important; /* Ensures correct text rendering */
+
+        &::before {
+          content: attr(data-value) !important;
+          font-size: inherit; /* Ensures it reflects the actual font size */
+        }
+      }
+    }
+  }
+}
+
 </style>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.15/css/froala_editor.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/plugins/colors.min.css">
-<link rel="stylesheet" href="{{ asset('editor/css/code_view.min.css') }}">
+{{-- Quill Style --}}
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
 
 @endpush
 @push('scripts')
 <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
 <script src="{{asset('backend/summernote/summernote.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-<!-- Place the first <script> tag in your HTML's <head> -->
-  {{-- <script src="https://cdn.tiny.cloud/1/sz7uct0l3k449es9dqu5kn1e8bm563h0u8mj8og80wf94an5/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-  <script>
-  tinymce.init({
-    selector: 'textarea#description',
-    plugins: [
-        'code', 'image', 'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 
-        'searchreplace', 'table', 'visualblocks', 'wordcount'
-    ],
-    toolbar: 'undo redo | code | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | checklist numlist bullist indent outdent | removeformat',
+
+
+{{-- CK Editor --}}
+<script type="importmap">
+
+  {
+
+      "imports": {
+
+          "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+
+          "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
+
+      }
+
+  }
+
+  </script>
+
+
+{{-- Quill JS --}}
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill-better-table@1.2.9/dist/quill-better-table.min.js"></script>
+
+{{-- <script>
+  let fontSizes = [];
+
+  // Add sizes from 10px to 20px
+  for (let i = 10; i <= 20; i++) {
+      fontSizes.push(i + 'px');
+  }
+
+  // Add sizes from 22px to 40px, incrementing by 2px
+  for (let i = 22; i <= 40; i += 2) {
+      fontSizes.push(i + 'px');
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const containers = document.querySelectorAll(".desc-editor");
+        // Register custom font sizes (PX values)
+        Quill.register({
+  'modules/better-table': quillBetterTable
+}, true)
+    var Size = Quill.import("attributors/style/size");
+    Size.whitelist = fontSizes;
+    Quill.register(Size, true);
+    const toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'],        // Basic formatting
+  ['blockquote'],
+  ['link', 'image', 'video', 'formula'],            // Media options
+
+  [{ 'header': 1 }, { 'header': 2 }, { 'header': 3 }, { 'header': 4 }, { 'header': 5 }, { 'header': 6 }],               // Header levels
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],  
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // Subscript/Superscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // Indent/Outdent
+  [{ 'size': Size.whitelist }], // ✅ Now includes px values
+
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],        // Header dropdown
+
+  [{ 'color': [] }, { 'background': [] }],          // Text & Background color
+  [{ 'font': [] }],                                 // Font family
+  [{ 'align': [] }],                                // Alignment
+  [{ 'table': true }],
+  ['clean'],                                        // Remove formatting
+
+];
+    containers.forEach(function(editorDiv) {
+      
+      let editorId = editorDiv.id; 
+        let postId = editorDiv.id.split("-").pop(); // Extract post ID
+
+        let textareaId = editorId.replace("desc-editor-", "description-"); 
+        let textarea = document.getElementById(`description-${postId}`);
+        let form = document.getElementById(`post-edit-${postId}`);
+
+      let quill = new Quill(`#${editorId}`, {
+            modules: {
+              'better-table': {
+                    operationMenu: {
+                        items: {
+                            unmergeCells: {
+                                text: 'Unmerge Cells'
+                            }
+                        }
+                    }
+                },
+                table:true,
+                toolbar: toolbarOptions,   // `#toolbar-${postId}`
+            },  
+            placeholder: "Start typing...",
+            theme: "snow"
+        });
+        quill.keyboard.addBinding({
+  key: 13, // Enter key
+  handler: function(range) {
+    quill.insertText(range.index, "\n"); // Inserts newline instead of <p>
+    quill.setSelection(range.index + 1);
+  }
+});
+let toolbar = quill.getModule('toolbar');
+
+// Ensure toolbar exists before adding event listener
+if (toolbar) {
+    let tableButton = toolbar.container.querySelector('.ql-table');
     
-    // ✅ Force Font Size to Use Pixels
-    // font_size_formats: "10px 12px 14px 16px 18px 20px 22px 24px 26px 28px 30px 32px 36px 40px 48px 60px 72px",
-    font_size_formats: "9px 10px 11px 12px 14px 16px 18px 20px 22px 24px 32px 36px",
-    font_size_input_default_unit: 'px', // Forces font size input to use px
-  
-    // ✅ Ensure headings also use pixels (px)
-    formats: {
-        h1: { block: 'h1', styles: { 'font-size': '22px' }, classes: 'orange-h1' },
-        h2: { block: 'h2', styles: { 'font-size': '20px' }, classes: 'orange-h2' },
-        h3: { block: 'h3', styles: { 'font-size': '18px' }, classes: 'orange-h3' },
-        h4: { block: 'h4', styles: { 'font-size': '16px' }, classes: 'orange-h4' },
-        h5: { block: 'h5', styles: { 'font-size': '14px' }, classes: 'orange-h5' },
-        h6: { block: 'h6', styles: { 'font-size': '12px' }, classes: 'orange-h6' }
-    },
-
-    // ✅ Optional: Define heading styles
-    style_formats: [
-        {
-            title: 'Headings',
-            items: [
-                { title: 'H1', block: 'h1', styles: { 'font-size': '22px' }, classes: 'orange-h1' },
-                { title: 'H2', block: 'h2', styles: { 'font-size': '20px' }, classes: 'orange-h2' },
-                { title: 'H3', block: 'h3', styles: { 'font-size': '18px' }, classes: 'orange-h3' },
-                { title: 'H4', block: 'h4', styles: { 'font-size': '16px' }, classes: 'orange-h4' },
-                { title: 'H5', block: 'h5', styles: { 'font-size': '14px' }, classes: 'orange-h5' },
-                { title: 'H6', block: 'h6', styles: { 'font-size': '12px' }, classes: 'orange-h6' }
-            ]
-        }
-    ],
-
-    // ✅ Apply consistent styles in editor
-    content_style: `
-        .orange-h1 { color: #E97132; font-size: 22px; } 
-        .orange-h2 { color: #E97132; font-size: 20px; } 
-        .orange-h3 { color: #E97132; font-size: 18px; } 
-        .orange-h4 { color: #E97132; font-size: 16px; } 
-        .orange-h5 { color: #E97132; font-size: 14px; } 
-        .orange-h6 { color: #E97132; font-size: 12px; }
-    `,
-    images_upload_url: `{{  route('upload.image') }}`, // Laravel route for image upload
-    automatic_uploads: true,
-
-    images_upload_handler: (blobInfo, progress) => {
-        return new Promise((resolve, reject) => {
-            let formData = new FormData();
-            formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-            fetch(`{{  route('upload.image') }}`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('HTTP Error: ' + response.status);
-                }
-                return response.json();
-            })
-            .then(json => {
-                if (!json || typeof json.location !== 'string') {
-                    throw new Error('Invalid JSON: ' + JSON.stringify(json));
-                }
-                resolve(json.location); // Return the uploaded image URL
-            })
-            .catch(error => {
-                reject(error.message || 'Image upload failed');
-            });
+    if (tableButton) {
+        tableButton.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default behavior
+            quill.getModule('better-table').insertTable(3, 3);
         });
     }
+}
 
+        // ✅ Image Upload to Server
+        quill.getModule("toolbar").addHandler("image", () => {
+            let input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("accept", "image/*");
+            input.click();
+
+            input.onchange = async () => {
+                let file = input.files[0];
+                let formData = new FormData();
+                formData.append("file", file);
+
+                try {
+                  let response = await fetch("{{ route('editor.upload') }}", {
+                method: "POST",  // ✅ Set the correct HTTP method
+                body: formData,
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                },
+            });
+
+            let result = await response.json(); // ✅ Parse response as JSON
+            let imageUrl = result.link; // ✅ Make sure your backend returns { link: "uploaded_image_url" }
+
+                    let range = quill.getSelection();
+                    quill.insertEmbed(range.index, "image", imageUrl);
+                } catch (error) {
+                    console.error("Upload failed:", error);
+                }
+            };
+        });
+
+        // ✅ Video Embed
+        quill.getModule("toolbar").addHandler("video", () => {
+            let url = prompt("Enter video URL:");
+            if (url) {
+                let range = quill.getSelection();
+                quill.insertEmbed(range.index, "video", url);
+            }
+        });
+
+        quill.getModule("toolbar").addHandler("customElement", function(value) {
+    if (value) {
+        const selection = quill.getSelection();
+        if (selection) {
+            quill.format("customElement", value);
+        }
+    }
 });
+
+        // Set initial Quill content from the textarea
+        quill.root.innerHTML = textarea.value;
+
+        // Update textarea before form submission
+        form.addEventListener("submit", function() {
+            textarea.value = quill.root.innerHTML;
+        });
+
+// quill.on('text-change', function() {
+//     setTimeout(() => {
+//         let selection = quill.getSelection();
+//         if (selection) {
+//             let [block] = quill.getLine(selection.index); // Get the selected block
+
+//             if (block && block.domNode.tagName.match(/^H[1-6]$/)) {
+//                 let headerTag = block.domNode.tagName.toLowerCase();
+
+//                 // Remove previous classes from all headings
+//                 quill.root.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach(heading => {
+//                     heading.classList.remove(
+//                         "orange-h1", "orange-h2", "orange-h3",
+//                         "orange-h4", "orange-h5", "orange-h6"
+//                     );
+//                 });
+
+//                 // ✅ Add orange class to the currently selected heading
+//                 block.domNode.classList.add(`orange-${headerTag}`);
+//             }
+//         }
+//     }, 0); // ✅ Ensures execution happens instantly
+// });
+
+let previousHeader = null; // Store the last edited heading
+
+quill.on("text-change", function () {
+    setTimeout(() => {
+        let selection = quill.getSelection();
+        if (selection) {
+            let [block] = quill.getLine(selection.index); // Get the selected block
+
+            if (block && block.domNode.tagName.match(/^H[1-6]$/)) {
+                let headerTag = block.domNode.tagName.toLowerCase();
+
+                // ✅ If the new heading is different from the last one, remove class from the old one
+                if (previousHeader && previousHeader !== block.domNode) {
+                    previousHeader.classList.remove(
+                        "orange-h1", "orange-h2", "orange-h3",
+                        "orange-h4", "orange-h5", "orange-h6"
+                    );
+                }
+
+                // ✅ Add orange class to the newly selected heading
+                block.domNode.classList.add(`orange-${headerTag}`);
+
+                // ✅ Update previousHeader to track the last edited heading
+                previousHeader = block.domNode;
+            }
+        }
+    }, 0);
+});
+
+
+
+    })
+      });
+
+
 
 </script> --}}
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.15/js/froala_editor.pkgd.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/colors.min.js"></script>
-<script type="text/javascript" src="{{ asset('editor/js/code_view.min.js') }}"></script>
-<script>
-         document.addEventListener("DOMContentLoaded", function () {
-const editor = new FroalaEditor("#description", { documentReady: true,
-  // pluginsEnabled: ['codeView'],
-  toolbarButtons: [
-        'undo', 'redo', '|', 
-        'bold', 'italic', 'underline', 'strikeThrough', '|',
-        'subscript', 'superscript', '|',
-        'fontFamily', 'fontSize', 'textColor', 'backgroundColor', '|',
-        'paragraphFormat', 'align', 'outdent', 'indent', 'lineHeight', '|',
-        'formatOL', 'formatUL', 'quote', '|',
-        'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|',
-        'specialCharacters', 'embedly', 'emoticons', '|',
-        'html', 'codeView',
-        'fullscreen', 'print', 'help', '|',
-        'clearFormatting','|','Elements'
-    ],
-    codeMirror: true ,
-    enter: FroalaEditor.ENTER_DIV,  
-    paragraphDefaultSelection: 'div', 
-    imageUpload: true, 
-    imageUploadURL: `{{  route('editor.upload') }}`, 
-    requestHeaders: {
-        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
-    },
-  styleTags: {
-        'h1': 'H1',
-        'h2': 'H2',
-        'h3': 'H3',
-        'h4': 'H4',
-        'h5': 'H5',
-        'h6': 'H6',
-        'p': 'Paragraph'
-    },
-    heightMin: 300,
-    heightMax: 150,
-    colorsStep: 10, 
-    htmlAllowedAttrs: ['class','style'],
-    events: {
-        'initialized': function () {
-            let editor = this;
-
-            editor.$el.on('mouseup keyup', function () {
-                let selectedElement = editor.selection.element();
-                
-                if (selectedElement.tagName === 'H1') {
-                    selectedElement.classList.add('orange-h1'); 
-                } 
-                else if (selectedElement.tagName === 'H2') {
-                    selectedElement.classList.add('orange-h2'); 
-                }
-                else if (selectedElement.tagName === 'H3') {
-                    selectedElement.classList.add('orange-h3'); 
-                }
-                else if (selectedElement.tagName === 'H4') {
-                    selectedElement.classList.add('orange-h4'); 
-                }
-                else if (selectedElement.tagName === 'H5') {
-                    selectedElement.classList.add('orange-h5'); 
-                }
-                else if (selectedElement.tagName === 'H6') {
-                    selectedElement.classList.add('orange-h6'); 
-                }
-            });
-        },
-    }
-
-
-    
-  });
-  // ✅ **Add Custom Dropdown**
-  FroalaEditor.RegisterCommand('Elements', {
-      title: 'Insert Element',
-      type: 'dropdown',
-      icon: '<i class="fa fa-code"></i>', 
-      options: {
-          'p': 'Paragraph',
-          'h1': 'H1',
-          'h2': 'H2',
-          'h3': 'H3',
-          'h4': 'H4',
-          'h5': 'H5',
-          'h6': 'H6',
-          'blockquote': 'Blockquote',
-          'article': 'Article',
-      },
-      callback: function (cmd, val) {
-          this.html.insert(`<${val} class="custom-element">${val} Content</${val}><br>`);
-      },
-      refreshAfterCallback: true
- });
-});
-</script>
 
 <script>
 
@@ -732,5 +852,304 @@ const editor = new FroalaEditor("#description", { documentReady: true,
 
 
       
+</script>
+
+
+
+
+<script type="module">
+
+  import {
+      ClassicEditor,
+      AccessibilityHelp,
+      Alignment,
+      Autoformat,
+      AutoLink,
+      Autosave,
+      BalloonToolbar,
+      BlockQuote,
+      Bold,
+      Code,
+      Essentials,
+      FindAndReplace,
+      FontBackgroundColor,
+      FontColor,
+      FontFamily,
+      FontSize,
+      GeneralHtmlSupport,
+      Heading,
+      Highlight,
+      HorizontalLine,
+      Indent,
+      IndentBlock,
+      Italic,
+      Link,
+      Paragraph,
+      RemoveFormat,
+      SelectAll,
+      SpecialCharacters,
+      SpecialCharactersArrows,
+      SpecialCharactersCurrency,
+      SpecialCharactersEssentials,
+      SpecialCharactersLatin,
+      SpecialCharactersMathematical,
+      SpecialCharactersText,
+      Strikethrough,
+      Style,
+      Subscript,
+      Superscript,
+      Table,
+      TableCaption,
+      TableCellProperties,
+      TableColumnResize,
+      TableProperties,
+      TableToolbar,
+      TextTransformation,
+      Underline,
+      Undo,
+      Image,
+      ImageInsert,
+      List,
+      ImageStyle,
+      ImageToolbar,
+      ImageCaption,
+      ImageResize,
+      LinkImage,
+      
+  } from 'ckeditor5';
+  class MyUploadAdapter {
+      constructor(loader) {
+          this.loader = loader;
+      }
+
+      upload() {
+          return this.loader.file
+              .then(file => new Promise((resolve, reject) => {
+                  const data = new FormData();
+                  data.append('upload', file);
+
+                  fetch("{{ route('editor.upload') }}", {
+                          method: 'POST',
+                          headers: {
+                              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                          },
+                          body: data
+                      })
+                      .then(response => response.json())
+                      .then(result => {
+                          if (result.error) {
+                              return reject(result.error.message);
+                          }
+                          resolve({
+                              default: result.url
+                          });
+                      })
+                      .catch(error => {
+                          reject(error);
+                      });
+              }));
+      }
+
+      abort() {}
+  }
+
+  function MyUploadAdapterPlugin(editor) {
+      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+          return new MyUploadAdapter(loader);
+      };
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+      let editorConfig = {
+
+          toolbar: {
+              items: ['undo', 'redo', '|', 'heading', 'style', '|', 'fontSize', 'fontFamily', 'fontColor',
+                  'fontBackgroundColor', '|', 'bold', 'italic', 'underline', '|', 'link',
+                  'insertTable', 'highlight', 'blockQuote', '|', 'alignment', '|', 'outdent',
+                  'indent', 'insertImage', 'bulletedList', 'numberedList',
+              ],
+              shouldNotGroupWhenFull: false
+          },
+          image: {
+              toolbar: [
+                  'imageStyle:alignLeft',
+                  'imageStyle:alignCenter',
+                  'imageStyle:alignRight',
+                  '|',
+                  'toggleImageCaption',
+                  'imageTextAlternative',
+                  '|',
+                  'linkImage',
+              ],
+
+              insert: {
+                  // If this setting is omitted, the editor defaults to 'block'.
+                  // See explanation below.
+                  type: 'auto'
+              }
+          },
+
+          extraPlugins: [MyUploadAdapterPlugin],
+          plugins: [AccessibilityHelp, Alignment, Autoformat, AutoLink, Autosave, BalloonToolbar,
+              BlockQuote, Bold, Code, Essentials, FindAndReplace, FontBackgroundColor, FontColor,
+              FontFamily, FontSize, GeneralHtmlSupport, Heading, Highlight, HorizontalLine, Indent,
+              IndentBlock, Italic, Link, Paragraph, RemoveFormat, SelectAll, SpecialCharacters,
+              SpecialCharactersArrows, SpecialCharactersCurrency, SpecialCharactersEssentials,
+              SpecialCharactersLatin, SpecialCharactersMathematical, SpecialCharactersText,
+              Strikethrough, Style, Subscript, Superscript, Table, TableCaption, TableCellProperties,
+              TableColumnResize, TableProperties, TableToolbar, TextTransformation, Underline, Undo,
+              Image, ImageInsert, List, ImageStyle, ImageToolbar, ImageCaption, ImageResize, LinkImage
+          ],
+
+          balloonToolbar: ['bold', 'italic', '|', 'link'],
+          fontFamily: {
+              supportAllValues: true
+          },
+          fontSize: {
+              // options: [10, 12, 14, 'default', 18, 20, 22],
+              options: [
+                ...Array.from({ length: 11 }, (_, i) => (10 + i) + 'px'),  // 10px to 20px
+                ...Array.from({ length: 10 }, (_, i) => (22 + i * 2) + 'px') // 22px to 40px (increment by 2)
+            ],
+              supportAllValues: true
+          },
+          heading: {
+              options: [{
+                      model: 'paragraph',
+                      title: 'Paragraph',
+                      class: 'ck-heading_paragraph'
+                  },
+                  {
+                      model: 'heading1',
+                      view: 'h1',
+                      title: 'Heading 1',
+                      class: 'ck-heading_heading1 orange-heading'
+                      
+                  },
+                  {
+                      model: 'heading2',
+                      view: 'h2',
+                      title: 'Heading 2',
+                      class: 'ck-heading_heading2 orange-heading'
+                  },
+                  {
+                      model: 'heading3',
+                      view: 'h3',
+                      title: 'Heading 3',
+                      class: 'ck-heading_heading3 orange-heading'
+                  },
+                  {
+                      model: 'heading4',
+                      view: 'h4',
+                      title: 'Heading 4',
+                      class: 'ck-heading_heading4 orange-heading'
+                  }
+              ]
+          },
+          htmlSupport: {
+              allow: [{
+                  name: /^.*$/,
+                  styles: true,
+                  attributes: true,
+                  classes: true
+              }]
+          },
+          // initialData: `{!! $data !!}`,
+          link: {
+              addTargetToExternalLinks: true,
+              defaultProtocol: 'https://',
+              decorators: {
+                  toggleDownloadable: {
+                      mode: 'manual',
+                      label: 'Downloadable',
+                      attributes: {
+                          download: 'file'
+                      }
+                  }
+              }
+          },
+          menuBar: {
+              isVisible: true
+          },
+          placeholder: 'Type or paste your content here!',
+          style: {
+              definitions: [{
+                      name: 'Article category',
+                      element: 'h3',
+                      classes: ['category']
+                  },
+                  {
+                      name: 'Title',
+                      element: 'h2',
+                      classes: ['document-title']
+                  },
+                  {
+                      name: 'Subtitle',
+                      element: 'h3',
+                      classes: ['document-subtitle']
+                  },
+                  {
+                      name: 'Info box',
+                      element: 'p',
+                      classes: ['info-box']
+                  },
+                  {
+                      name: 'Side quote',
+                      element: 'blockquote',
+                      classes: ['side-quote']
+                  },
+                  {
+                      name: 'Marker',
+                      element: 'span',
+                      classes: ['marker']
+                  },
+                  {
+                      name: 'Spoiler',
+                      element: 'span',
+                      classes: ['spoiler']
+                  },
+                  {
+                      name: 'Code (dark)',
+                      element: 'pre',
+                      classes: ['fancy-code', 'fancy-code-dark']
+                  },
+                  {
+                      name: 'Code (bright)',
+                      element: 'pre',
+                      classes: ['fancy-code', 'fancy-code-bright']
+                  }
+              ]
+          },
+          table: {
+              contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties',
+                  'tableCellProperties'
+              ]
+          }
+      };
+      // let editor;
+      // editor = ClassicEditor.create(document.querySelector('#description'), editorConfig)
+      // window.editor = editor;
+
+
+
+     
+        document.querySelectorAll('textarea[name="description"]').forEach(textarea => {
+          // debugger
+         editorConfig.initialData = textarea.value
+            ClassicEditor
+                .create(textarea,editorConfig)
+                .then(editor => {
+                    // Update textarea value on form submit
+                    textarea.closest("form").addEventListener("submit", function () {
+                        textarea.value = editor.getData();
+                    });
+                })
+                .catch(error => {
+                    console.error("CKEditor Error:", error);
+                });
+        });
+ 
+  });
 </script>
 @endpush

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\NumberController;
+use App\Http\Controllers\ShipController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PostController;
@@ -257,7 +258,11 @@ Route::get('googlereviews/filter/{language}', [GoogleReviewsController::class, '
 */
 
      Route::post('shipping-rates', [ShippingController::class, 'getShippingRates']);	 
-     Route::get('shipping-list', [ShippingController::class, 'getShippingList']);	 
+     Route::get('shipping-list', [ShippingController::class, 'getShippingList']);
+     
+     Route::post('/get-rate',[ShipController::class , 'getCourierRates'])->name('ship.rate');
+     Route::post('/create-shipping',[ShipController::class , 'createOrder'])->name('ship.crate');
+     Route::post('/shipping-payment',[ShipController::class , 'payOrder'])->name('ship.crate');
      Route::post('stripe-payment', [ShippingController::class, 'processPayment']);	 
 
      Route::post('payment-intent', [ShippingController::class, 'processAllPay']);

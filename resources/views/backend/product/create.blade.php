@@ -182,6 +182,7 @@ table th, table td
                   <option value="simple-product">Simple Product</option>
                   <option value="variable-product">Variable Product</option>
 				  <option value="aws3-bucket-product">Aws3 Bucket Product</option>
+				  <option value="digital">Digital Product</option>
 
           </select>
         </div>

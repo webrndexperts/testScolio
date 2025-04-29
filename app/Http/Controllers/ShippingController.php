@@ -32,7 +32,6 @@ class ShippingController extends Controller
         try {
 
             $get_all_meta = $request->all();
-            // dd($get_all_meta);
             $country_alpha2 = !empty($get_all_meta['country_alpha2']) ? $get_all_meta['country_alpha2'] : '';
             $line_1 = !empty($get_all_meta['line_1']) ? $get_all_meta['line_1'] : '';
             $state = !empty($get_all_meta['state']) ? $get_all_meta['state'] : '';
@@ -433,7 +432,8 @@ class ShippingController extends Controller
         $stripe = new Stripe('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'); // Live secret key for scoliolife
 
         if (array_key_exists('mode', $request->all())) {
-            $stripe = new Stripe('sk_test_r210BvUvkJxZC4eCmnC08YCa00a2oze7Ke');
+            $stripe = new Stripe(env('STRIPE_SECERT_KEY'));
+            // $stripe = new Stripe('sk_test_r210BvUvkJxZC4eCmnC08YCa00a2oze7Ke');
         }
 
         return $stripe;
@@ -461,6 +461,7 @@ class ShippingController extends Controller
         $charge = [];
         $token = !empty($request->token) ? $request->token : '';
         $amount = !empty($request->amount) ? $request->amount : 0.00;
+        $currency = !empty($request->currency) ? $request->currency :'SGD';
         $customerEmail = !empty($request->customer_email) ? $request->customer_email : '';
         $orderNumber = !empty($request->order_number) ? $request->order_number : '';
         $customerName = !empty($request->customer_name) ? $request->customer_name : '';
@@ -469,11 +470,11 @@ class ShippingController extends Controller
             return response()->json(['success' => false, 'message' => "Can't procced with this amount."]);
         }
        
-        $captcha_token = $request->captcha_token;
-        $captcha_response = $this->recaptchaService->verify($captcha_token);
-        if (!$captcha_response['success']) {
-            return response()->json(['success' => false, 'message' => 'Captcha validation failed.']);
-        }
+        // $captcha_token = $request->captcha_token;
+        // $captcha_response = $this->recaptchaService->verify($captcha_token);
+        // if (!$captcha_response['success']) {
+        //     return response()->json(['success' => false, 'message' => 'Captcha validation failed.']);
+        // }
 
         // Log the initial request data
         Log::info('Payment request received:', [
@@ -502,7 +503,7 @@ class ShippingController extends Controller
 
                 $charge = $stripe->charges()->create([
                     'amount' => $amount,
-                    'currency' => 'SGD',
+                    'currency' => $currency,
                     'source' => $token,
                     'description' => 'Payment for order number ->' . $orderNumber,
                     //'customer' => $customer['id'],

@@ -48,9 +48,40 @@
 
 
 /* .orange { color:#E97132 !important; } */
-.orange-h1 { color: #E97132; font-size: 22px; }
-.orange-h2 { color: #E97132; font-size: 20px; } 
-.orange-h3 { color: #E97132; font-size: 18px; } 
-.orange-h4 { color: #E97132; font-size: 16px; } 
-.orange-h5 { color: #E97132; font-size: 14px; } 
-.orange-h6 { color: #E97132; font-size: 12px; } 
+.inner-article .orange-h1,.inner-article  h1 , .inner-article h1 * { color: #E97132 !important; font-size: 22px !important; }
+.inner-article .orange-h2,.inner-article  h2 , .inner-article h2 * { color: #E97132 !important; font-size: 20px !important; } 
+.inner-article .orange-h3,.inner-article  h3 , .inner-article h3 * { color: #E97132 !important; font-size: 18px !important; } 
+.inner-article .orange-h4,.inner-article  h4 , .inner-article h4 * { color: #E97132 !important; font-size: 16px !important; } 
+.inner-article .orange-h5,.inner-article  h5 , .inner-article h5 * { color: #E97132 !important; font-size: 14px !important; } 
+.inner-article .orange-h6,.inner-article  h6 , .inner-article h6 * { color: #E97132 !important; font-size: 12px !important; } 
+
+
+h1:not(.orange-h1) strong,
+h2:not(.orange-h2) strong,
+h3:not(.orange-h3) strong,
+h4:not(.orange-h4) strong,
+h5:not(.orange-h5) strong,
+h6:not(.orange-h6) strong,
+.inner-article p strong,
+.inner-article li strong {
+    color: inherit;
+    font-size: initial !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.inner-article ol li {
+    list-style: decimal;
+}
+
+.inner-article li[data-list="bullet"],
+.inner-article ul li {
+    list-style: disc;
+}
+
+.inner-article strong {
+    padding: 0 !important;
+}
+.inner-article p {
+    margin-bottom: 0;
+}

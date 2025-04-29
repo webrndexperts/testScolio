@@ -193,3 +193,38 @@ export const getIpCountry = async () => {
     }
 }
 
+export const easyParcelRate = async (shipParam) => {
+    try {
+        const requestData = [
+            {
+                "pick_code": "81200",
+                "pick_state": "jhr",
+                "pick_country": "MY",
+                "send_code": "400013",
+                "send_state": "bom",
+                "send_country": "IN",
+                "weight": "5",
+                "date_coll": "2025-02-20"
+            }
+        ];
+        
+        const response = await axios.post(
+            `${API}get-rate`, 
+            shipParam, // Pass the data directly, not wrapped in 'body'
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                timeout: 180000    // 2-minute timeout
+            }
+        );
+        
+        return response.data; // Return the response data
+
+    } catch (error) {
+        // Enhanced error handling
+        const errorMessage = error?.response?.data?.message || error?.message || 'An error occurred';
+        toast.error(errorMessage); // Show error message in a toast
+    }
+}
