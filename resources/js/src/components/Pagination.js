@@ -1,13 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ReactPlayer from 'react-player';
-import ReactPaginate from 'react-paginate';
-import ReadLessMore from './ReadLessMore';
-import ReadMorePopup from './ReadMorePopup';
-import SlidablePopup from './SlidablePopup';
-import ImagePopup from './extras/ImagePopup';
+import React, { useEffect, useRef, useState } from "react";
+import ReactPlayer from "react-player";
+import ReactPaginate from "react-paginate";
+import ReadLessMore from "./ReadLessMore";
+import ReadMorePopup from "./ReadMorePopup";
+import SlidablePopup from "./SlidablePopup";
+import ImagePopup from "./extras/ImagePopup";
 
-
-const Pagination = ({ XrayData, popup = false, slidable = false, showImage = false }) => {
+const Pagination = ({
+    XrayData,
+    popup = false,
+    slidable = false,
+    showImage = false,
+}) => {
     const [currentPage, setCurrentPage] = useState(0);
     const [popupData, setPopupData] = useState(null);
     const [slideIndex, setSlideIndex] = useState(0);
@@ -16,7 +20,8 @@ const Pagination = ({ XrayData, popup = false, slidable = false, showImage = fal
     const slidePopupRef = useRef(null);
     const [showImagePopup, setShowImagePopup] = useState(false);
     const [imageData, setImageData] = useState(null);
-
+    const [zoomed, setZoomed] = useState(false); // Track if zoomed
+    
     const handlePageChange = ({ selected }) => {
         setCurrentPage(selected);
         // Perform any actions you need when the page changes
@@ -25,13 +30,14 @@ const Pagination = ({ XrayData, popup = false, slidable = false, showImage = fal
     const toogleImageModel = (val = null) => {
         setImageData(val);
         setShowImagePopup(!showImagePopup);
-    }
+    };
 
     const toogleSliderModel = (val = null, ind = 0) => {
         setPopupData(val);
         setSlideIndex(ind);
         setShowSlidePopup(!showSlidePopup);
-    }
+        setZoomed(false)
+    };
 
     const getSliderDataTrigger = (kVal) => {
         let item = XrayData[kVal];
@@ -39,11 +45,9 @@ const Pagination = ({ XrayData, popup = false, slidable = false, showImage = fal
         setSlideIndex(kVal);
 
         if (slidePopupRef && slidePopupRef?.current) {
-            slidePopupRef.current.scrollTop = 0;  // Scroll the modal body to the top
+            slidePopupRef.current.scrollTop = 0; // Scroll the modal body to the top
         }
-
-        console.log('slidePopupRef', slidePopupRef);
-    }
+    };
 
     // const data = Array.from({ length: 50 }, (_, index) => index + 1);
     const itemsPerPage = 12;
@@ -55,71 +59,103 @@ const Pagination = ({ XrayData, popup = false, slidable = false, showImage = fal
 
     const findItemIndex = (id) => {
         return XrayData?.findIndex((item) => item.id === id);
-    }
+    };
 
-    const currentData = XrayData?.slice(startIndex, endIndex).map((item, index) => ({
-        ...item,
-        originalKey: findItemIndex(item.id), // or whatever key you use to identify each item
-    }));
-
+    const currentData = XrayData?.slice(startIndex, endIndex).map(
+        (item, index) => ({
+            ...item,
+            originalKey: findItemIndex(item.id), // or whatever key you use to identify each item
+        })
+    );
 
     useEffect(() => {
         if (!showSlidePopup) {
             setDataCount(XrayData.length);
         }
-    }, [XrayData])
+    }, [XrayData]);
 
     // Properties for the slider popup.
     let sliderPopupProps = {
-        popupData, slideIndex, toogleSliderModel, showSlidePopup, getSliderDataTrigger, dataCount, slidePopupRef
-    }
+        popupData,
+        slideIndex,
+        toogleSliderModel,
+        showSlidePopup,
+        getSliderDataTrigger,
+        dataCount,
+        slidePopupRef,
+        zoomed, 
+        setZoomed
+    };
 
     // Properties for image popup.
     let imagePopup = {
-        toogleImageModel, showImagePopup, item: imageData
-    }
+        toogleImageModel,
+        showImagePopup,
+        item: imageData,
+    };
 
     // Normal popup props.
     let popupProps = {
-        words: 300, slidable, toogleSliderModel, showImage, toogleImageModel
-    }
+        words: 300,
+        slidable,
+        toogleSliderModel,
+        showImage,
+        toogleImageModel,
+    };
 
     return (
         <>
             <div className="row">
                 {currentData?.map((item, key) => (
-                    <div className='col-md-4' key={item.id}>
-                        <div className='results-sections' data-key={item.originalKey} key={item.id}>
+                    <div className="col-md-4" key={item.id}>
+                        <div
+                            className="results-sections"
+                            data-key={item.originalKey}
+                            key={item.id}
+                        >
                             <h2> {item.title} </h2>
-                            {(popup) ? (
-                                <ReadMorePopup item={item} {...popupProps} caseIndex={item.originalKey} />
+                            {popup ? (
+                                <ReadMorePopup
+                                    item={item}
+                                    {...popupProps}
+                                    caseIndex={item.originalKey}
+                                />
                             ) : (
-                                <ReadLessMore html={item.description} words={300} />
+                                <ReadLessMore
+                                    html={item.description}
+                                    words={300}
+                                />
                             )}
                         </div>
                     </div>
                 ))}
             </div>
-            {XrayData &&
+            {XrayData && (
+                // <ReactPaginate
+                //     pageCount={pageCount}
+                //     onPageChange={handlePageChange}
+                //     containerClassName="pagination"
+                //     activeClassName="active"
+                //     previousLabel={currentPage === 0 ? null : "previous"}
+                //     nextLabel={currentPage === pageCount - 1 ? null : "next"}
+                // />
                 <ReactPaginate
                     pageCount={pageCount}
                     onPageChange={handlePageChange}
                     containerClassName="pagination"
                     activeClassName="active"
-                    previousLabel={currentPage === 0 ? null : 'previous'}
-                    nextLabel={currentPage === pageCount - 1 ? null : 'next'}
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    disabledClassName="disabled" // Hides prev/next when disabled
+                    forcePage={currentPage} // Ensure the current page is highlighted
                 />
-            }
+            )}
 
-            {(popup && slidable) ? (
-                <SlidablePopup {...sliderPopupProps} />
-            ) : null}
+            {popup && slidable ? <SlidablePopup {...sliderPopupProps} /> : null}
 
-            {(showImage) ? (
-                <ImagePopup {...imagePopup} />
-            ) : null}
+            {showImage ? <ImagePopup {...imagePopup} /> : null}
         </>
-    )
-}
+    );
+};
 
-export default Pagination
+export default Pagination;

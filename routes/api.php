@@ -336,7 +336,8 @@ Route::get('googlereviews/filter/{language}', [GoogleReviewsController::class, '
     Route::get('xrays/filter/{language}', [XRayController::class, 'filterByLanguage']);
 	Route::get('xrays-dropdown-filter-age/{language}/{slug}', [XRayController::class, 'DropdownFilterByAge']);
 	//Route::get('xrays-dropdown-filter-curve-degree/{curve_degree}', [XRayController::class, 'DropdownFilterByCurveDegree']);
-	
+	Route::post('xray-upload', [XrayController::class, 'uploadXray']);
+
 	
 	/*
 |--------------------------------------------------------------------------

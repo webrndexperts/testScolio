@@ -1,1 +1,167 @@
-var __defProp=Object.defineProperty,__getOwnPropSymbols=Object.getOwnPropertySymbols,__hasOwnProp=Object.prototype.hasOwnProperty,__propIsEnum=Object.prototype.propertyIsEnumerable,__defNormalProp=(e,t,r)=>t in e?__defProp(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r,__spreadValues=(e,t)=>{for(var r in t||(t={}))__hasOwnProp.call(t,r)&&__defNormalProp(e,r,t[r]);if(__getOwnPropSymbols)for(var r of __getOwnPropSymbols(t))__propIsEnum.call(t,r)&&__defNormalProp(e,r,t[r]);return e};(self.webpackChunk=self.webpackChunk||[]).push([[216],{9482:(e,t,r)=>{var a,s=Object.create,l=Object.defineProperty,o=Object.getOwnPropertyDescriptor,n=Object.getOwnPropertyNames,p=Object.getPrototypeOf,i=Object.prototype.hasOwnProperty,h=(e,t,r,a)=>{if(t&&"object"==typeof t||"function"==typeof t)for(let s of n(t))i.call(e,s)||s===r||l(e,s,{get:()=>t[s],enumerable:!(a=o(t,s))||a.enumerable});return e},y=(e,t,r)=>(((e,t,r)=>{t in e?l(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r})(e,"symbol"!=typeof t?t+"":t,r),r),d={};((e,t)=>{for(var r in t)l(e,r,{get:t[r],enumerable:!0})})(d,{default:()=>P}),e.exports=(a=d,h(l({},"__esModule",{value:!0}),a));var u=((e,t,r)=>(r=null!=e?s(p(e)):{},h(!t&&e&&e.__esModule?r:l(r,"default",{value:e,enumerable:!0}),e)))(r(7294)),c=r(8045),_=r(1776);class P extends u.Component{constructor(){super(...arguments),y(this,"callPlayer",c.callPlayer),y(this,"playerID",this.props.config.playerId||`twitch-player-${(0,c.randomString)()}`),y(this,"mute",(()=>{this.callPlayer("setMuted",!0)})),y(this,"unmute",(()=>{this.callPlayer("setMuted",!1)}))}componentDidMount(){this.props.onMount&&this.props.onMount(this)}load(e,t){const{playsinline:r,onError:a,config:s,controls:l}=this.props,o=_.MATCH_URL_TWITCH_CHANNEL.test(e),n=o?e.match(_.MATCH_URL_TWITCH_CHANNEL)[1]:e.match(_.MATCH_URL_TWITCH_VIDEO)[1];t?o?this.player.setChannel(n):this.player.setVideo("v"+n):(0,c.getSDK)("https://player.twitch.tv/js/embed/v1.js","Twitch").then((t=>{this.player=new t.Player(this.playerID,__spreadValues({video:o?"":n,channel:o?n:"",height:"100%",width:"100%",playsinline:r,autoplay:this.props.playing,muted:this.props.muted,controls:!!o||l,time:(0,c.parseStartTime)(e)},s.options));const{READY:a,PLAYING:p,PAUSE:i,ENDED:h,ONLINE:y,OFFLINE:d,SEEK:u}=t.Player;this.player.addEventListener(a,this.props.onReady),this.player.addEventListener(p,this.props.onPlay),this.player.addEventListener(i,this.props.onPause),this.player.addEventListener(h,this.props.onEnded),this.player.addEventListener(u,this.props.onSeek),this.player.addEventListener(y,this.props.onLoaded),this.player.addEventListener(d,this.props.onLoaded)}),a)}play(){this.callPlayer("play")}pause(){this.callPlayer("pause")}stop(){this.callPlayer("pause")}seekTo(e,t=!0){this.callPlayer("seek",e),t||this.pause()}setVolume(e){this.callPlayer("setVolume",e)}getDuration(){return this.callPlayer("getDuration")}getCurrentTime(){return this.callPlayer("getCurrentTime")}getSecondsLoaded(){return null}render(){return u.default.createElement("div",{style:{width:"100%",height:"100%"},id:this.playerID})}}y(P,"displayName","Twitch"),y(P,"canPlay",_.canPlay.twitch),y(P,"loopOnEnded",!0)}}]);
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["reactPlayerTwitch"], {
+  /***/
+  "./node_modules/react-player/lib/players/Twitch.js": (
+    /*!*********************************************************!*\
+      !*** ./node_modules/react-player/lib/players/Twitch.js ***!
+      \*********************************************************/
+    /***/
+    (module, __unused_webpack_exports, __webpack_require__) => {
+      var __create = Object.create;
+      var __defProp2 = Object.defineProperty;
+      var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+      var __getOwnPropNames = Object.getOwnPropertyNames;
+      var __getProtoOf = Object.getPrototypeOf;
+      var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+      var __defNormalProp2 = (obj, key, value) => key in obj ? __defProp2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+      var __export = (target, all) => {
+        for (var name in all)
+          __defProp2(target, name, { get: all[name], enumerable: true });
+      };
+      var __copyProps = (to, from, except, desc) => {
+        if (from && typeof from === "object" || typeof from === "function") {
+          for (let key of __getOwnPropNames(from))
+            if (!__hasOwnProp2.call(to, key) && key !== except)
+              __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        }
+        return to;
+      };
+      var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+        // If the importer is in node compatibility mode or this is not an ESM
+        // file that has been converted to a CommonJS file using a Babel-
+        // compatible transform (i.e. "__esModule" has not been set), then set
+        // "default" to the CommonJS "module.exports" for node compatibility.
+        isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
+        mod
+      ));
+      var __toCommonJS = (mod) => __copyProps(__defProp2({}, "__esModule", { value: true }), mod);
+      var __publicField = (obj, key, value) => {
+        __defNormalProp2(obj, typeof key !== "symbol" ? key + "" : key, value);
+        return value;
+      };
+      var Twitch_exports = {};
+      __export(Twitch_exports, {
+        default: () => Twitch
+      });
+      module.exports = __toCommonJS(Twitch_exports);
+      var import_react = __toESM(__webpack_require__(
+        /*! react */
+        "./node_modules/react/index.js"
+      ));
+      var import_utils = __webpack_require__(
+        /*! ../utils */
+        "./node_modules/react-player/lib/utils.js"
+      );
+      var import_patterns = __webpack_require__(
+        /*! ../patterns */
+        "./node_modules/react-player/lib/patterns.js"
+      );
+      const SDK_URL = "https://player.twitch.tv/js/embed/v1.js";
+      const SDK_GLOBAL = "Twitch";
+      const PLAYER_ID_PREFIX = "twitch-player-";
+      class Twitch extends import_react.Component {
+        constructor() {
+          super(...arguments);
+          __publicField(this, "callPlayer", import_utils.callPlayer);
+          __publicField(this, "playerID", this.props.config.playerId || `${PLAYER_ID_PREFIX}${(0, import_utils.randomString)()}`);
+          __publicField(this, "mute", () => {
+            this.callPlayer("setMuted", true);
+          });
+          __publicField(this, "unmute", () => {
+            this.callPlayer("setMuted", false);
+          });
+        }
+        componentDidMount() {
+          this.props.onMount && this.props.onMount(this);
+        }
+        load(url, isReady) {
+          const { playsinline, onError, config, controls } = this.props;
+          const isChannel = import_patterns.MATCH_URL_TWITCH_CHANNEL.test(url);
+          const id = isChannel ? url.match(import_patterns.MATCH_URL_TWITCH_CHANNEL)[1] : url.match(import_patterns.MATCH_URL_TWITCH_VIDEO)[1];
+          if (isReady) {
+            if (isChannel) {
+              this.player.setChannel(id);
+            } else {
+              this.player.setVideo("v" + id);
+            }
+            return;
+          }
+          (0, import_utils.getSDK)(SDK_URL, SDK_GLOBAL).then((Twitch2) => {
+            this.player = new Twitch2.Player(this.playerID, __spreadValues({
+              video: isChannel ? "" : id,
+              channel: isChannel ? id : "",
+              height: "100%",
+              width: "100%",
+              playsinline,
+              autoplay: this.props.playing,
+              muted: this.props.muted,
+              // https://github.com/CookPete/react-player/issues/733#issuecomment-549085859
+              controls: isChannel ? true : controls,
+              time: (0, import_utils.parseStartTime)(url)
+            }, config.options));
+            const { READY, PLAYING, PAUSE, ENDED, ONLINE, OFFLINE, SEEK } = Twitch2.Player;
+            this.player.addEventListener(READY, this.props.onReady);
+            this.player.addEventListener(PLAYING, this.props.onPlay);
+            this.player.addEventListener(PAUSE, this.props.onPause);
+            this.player.addEventListener(ENDED, this.props.onEnded);
+            this.player.addEventListener(SEEK, this.props.onSeek);
+            this.player.addEventListener(ONLINE, this.props.onLoaded);
+            this.player.addEventListener(OFFLINE, this.props.onLoaded);
+          }, onError);
+        }
+        play() {
+          this.callPlayer("play");
+        }
+        pause() {
+          this.callPlayer("pause");
+        }
+        stop() {
+          this.callPlayer("pause");
+        }
+        seekTo(seconds, keepPlaying = true) {
+          this.callPlayer("seek", seconds);
+          if (!keepPlaying) {
+            this.pause();
+          }
+        }
+        setVolume(fraction) {
+          this.callPlayer("setVolume", fraction);
+        }
+        getDuration() {
+          return this.callPlayer("getDuration");
+        }
+        getCurrentTime() {
+          return this.callPlayer("getCurrentTime");
+        }
+        getSecondsLoaded() {
+          return null;
+        }
+        render() {
+          const style = {
+            width: "100%",
+            height: "100%"
+          };
+          return /* @__PURE__ */ import_react.default.createElement("div", { style, id: this.playerID });
+        }
+      }
+      __publicField(Twitch, "displayName", "Twitch");
+      __publicField(Twitch, "canPlay", import_patterns.canPlay.twitch);
+      __publicField(Twitch, "loopOnEnded", true);
+    }
+  )
+}]);

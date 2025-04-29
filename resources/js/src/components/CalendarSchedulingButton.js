@@ -19,8 +19,10 @@ const CalendarSchedulingButton = () => {
     };
 
     const loadCalendarButton = () => {
+      const url = currentLanguage === 'en_MY' ? 'https://calendar.google.com/calendar/u/0/appointments/AcZssZ2TqAIY5UIPxzP-EDaEkKISdkTf2qniUQmsIQw=' : 'https://calendar.google.com/calendar/appointments/AcZssZ2ZSvJEdJjQgBwtDftJ1R_ne-M7HEtSlAg7fUk=?gv=true';
       window.calendar?.schedulingButton?.load({
-        url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1P3DYfyXG30a5Pm1AREixcY1SY7abFRpi4XUl4k6J_4YfgJJLPi3EtTL6eO-oWm0rv67sLgnmp?gv=true',
+        url: url,
+        // url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1P3DYfyXG30a5Pm1AREixcY1SY7abFRpi4XUl4k6J_4YfgJJLPi3EtTL6eO-oWm0rv67sLgnmp?gv=true',
         color: '#EF6C00',
         label: t("form.book_an_appointment"),
         target: script,

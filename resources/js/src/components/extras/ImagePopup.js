@@ -8,7 +8,6 @@ const ImagePopup = (props) => {
 
     useEffect(() => {
         if(item) {
-            console.log('item', item)
             setTitle(item.title);
             setPhoto(item.photo);
         }
@@ -27,7 +26,7 @@ const ImagePopup = (props) => {
 
             <ModalBody>
                 {(photo) ? (
-                    <img src={photo} alt={title} />
+                    <img src={photo} className='w-100' alt={title} />
                 ) : (
                     <span>Image not found.</span>
                 )}

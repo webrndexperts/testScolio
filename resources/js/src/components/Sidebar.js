@@ -155,7 +155,7 @@ const Sidebar = () => {
                             </ul>
                             {/* <h2 className="widget-title">Our promise</h2>
                             <div className="sidebar_promise_img">
-                                <img src="https://sladmin.scoliolife.com/uploads/2022/12/Our-Promise-EN.png" alt='Our-Promise-EN.png' />
+                                <img src="https://scoliolife.com/uploads/2022/12/Our-Promise-EN.png" alt='Our-Promise-EN.png' />
                             </div> */}
 
                             {data1?.map((item, index) => (

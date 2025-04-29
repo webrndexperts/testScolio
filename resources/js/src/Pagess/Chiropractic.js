@@ -28,56 +28,56 @@ function Chiro() {
         switch (language) {
             case 'en_SG':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/Chiropractic-FAQ-EN-1-1.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/Chiropractic-FAQ-EN-1-1.webp',
                     title: 'Chiropractic Faq',
                     maintitle: 'CHIROPRACTIC FAQ'
                 };
             case 'es_ES':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/Chiropractic-FAQ-ES.png',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/Chiropractic-FAQ-ES.png',
                     title: 'Chiropractic Faq',
                     maintitle: 'PREGUNTAS FRECUENTES SOBRE QUIROPRÁCTICA'
 
                 };
             case 'fr_FR':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/Chiropractic-FAQ-FR.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/Chiropractic-FAQ-FR.webp',
                     title: 'FAQ Sur La Chiropraxie',
                     maintitle: 'FAQ SUR LA CHIROPRAXIE'
                 };
             case 'id_ID':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/Chiropractic-FAQ-ID.png',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/Chiropractic-FAQ-ID.png',
                     title: 'Faq Kiropraktik',
                     maintitle: 'FAQ KIROPRAKTIK'
                 };
                 case 'de_DE':
                     return {
-                        imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/Chiropractic-FAQ-DE.webp',
+                        imageUrl: 'https://scoliolife.com/uploads/2023/01/Chiropractic-FAQ-DE.webp',
                         title: 'Häufig gestellte Fragen zur Chiropraktik',
                         maintitle: 'CHIROPRACTIC FAQ'
                     };
             case ' it_IT':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/Chiropractic-FAQ-IT.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/Chiropractic-FAQ-IT.webp',
                     title: 'DOMANDE FREQUENTI SULLA CHIROPRATICA',
                     maintitle: 'DOMANDE FREQUENTI SULLA CHIROPRATICA'
                 };
             case 'es_MX':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/Chiropractic-FAQ-ES.png',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/Chiropractic-FAQ-ES.png',
                     title: 'Chiropractic Faq',
                     maintitle: 'PREGUNTAS FRECUENTES SOBRE QUIROPRÁCTICA'
                 };
             case 'zh_CN':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/Chiropractic-FAQ-CS.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/Chiropractic-FAQ-CS.webp',
                     title: '整脊治疗 常见问题',
                     maintitle: '整脊治疗 常见问题'
                 };
             case 'zh_HK':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/Chiropractic-FAQ-CT.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/Chiropractic-FAQ-CT.webp',
                     title: '整脊治療 常見問題',
                     maintitle: '整脊治療 常見問題'
                 };
@@ -89,7 +89,7 @@ function Chiro() {
                 };
             default:
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/Chiropractic-FAQ-EN-1-1.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/Chiropractic-FAQ-EN-1-1.webp',
                     title: 'Chiropractic Faq',
                     maintitle: 'CHIROPRACTIC FAQ'
                 };
@@ -160,7 +160,7 @@ function Chiro() {
                     <div className='about'>
                         <div>
                             <div className="elementor-widget-container">
-                                <img loading="lazy" decoding="async" width="660" height="390" src={imageUrl} alt='IMG' />
+                                <img loading="lazy" decoding="async" src={imageUrl} alt='IMG' />
                             </div>
                         </div>
                         <div className="faq-sections">

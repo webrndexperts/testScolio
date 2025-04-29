@@ -29,67 +29,67 @@ function Track() {
         switch (language) {
             case 'en_SG':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20EN.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20EN.webp',
                     title: 'Scoliotrack™ Frequently Asked Questions',
                     maintitle: 'SCOLIOTRACK FAQ'
                 };
             case 'es_ES':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20ES.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20ES.webp',
                     maintitle: 'SCOLIOTRACK FAQ'
 
                 };
             case 'fr_FR':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20FR.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20FR.webp',
                     title: 'Scoliotrack™ Foire Aux Questions',
                     maintitle: 'SCOLIOTRACK FAQ'
                 };
             case 'de_DE':
                     return {
-                        imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20DE.webp',
+                        imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20DE.webp',
                         title: 'Scoliotrack™ Häufig Gestellte Fragen',
                         maintitle: 'Häufig gestellte Fragen zu SCOLIOTRACK'
                };
             case 'id_ID':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20ID.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20ID.webp',
                     title: 'Scoliotrack™pertanyaan Yang Sering Diajukan',
                     maintitle: 'SCOLIOTRACK FAQ'
                 };
             case ' it_IT':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20IT.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20IT.webp',
                     title: 'Scoliotrack™domande Frequenti',
                     maintitle: 'SCOLIOTRACK FAQ'
                 };
             case 'es_MX':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/Chiropractic-FAQ-EN-1-2.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/Chiropractic-FAQ-EN-1-2.webp',
                     title: 'Scoliotrack™preguntas Más Frecuentes',
                     maintitle: 'SCOLIOTRACK FAQ'
                 };
             case 'zh_CN':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20CS.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20CS.webp',
                     title: 'Scoliotrack™pertanyaan Yang Sering Diajukan',
                     maintitle: 'SCOLIOTRACK FAQ'
                 };
             case 'zh_HK':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20CT.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20CT.webp',
                     title: 'Scoliotrack™常問問題',
                     maintitle: 'SCOLIOTRACK FAQ'
                 };
             case 'ja_JP':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20JP.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20JP.webp',
                     title: 'Scoliotrack™よくある質問',
                     maintitle: 'SCOLIOTRACK FAQ'
                 };
             default:
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20EN.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioTrack%20FAQ%20EN.webp',
                     title: 'Scoliotrack™ Frequently Asked Questions',
                     maintitle: 'SCOLIOTRACK FAQ'
                 };

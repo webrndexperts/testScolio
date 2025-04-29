@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect, useRef, useState, forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const ReadMorePopup = (props) => {
     const {
-        item = "", words = 200, slidable = false, caseIndex, toogleSliderModel, showImage, toogleImageModel
+        item = "", words = 100, slidable = false, caseIndex, toogleSliderModel, showImage, toogleImageModel
     } = props;
     const [heading, setHeading] = useState("");
     const [text, setText] = useState("");
@@ -24,9 +24,7 @@ const ReadMorePopup = (props) => {
     };
 
     const handleImageClick = (e) => {
-        let { src } = e.target;
-        if(!item.photo) { item.photo = src; }
-        toogleImageModel(item);
+        toggleModal()
     }
 
     const manageCustomScript = () => {
@@ -39,18 +37,30 @@ const ReadMorePopup = (props) => {
     }
 
     const triggerCheck = () => {
-        var _txt =
-            item.description.length > words
-                ? item.description.slice(0, words) +
-                  '<span id="ellipsis">...</span>'
-                : item.description;
-
+        // Extract image tags
+        const imgTags = item.description.match(/<img[^>]*>/g) || [];
+    
+        // Remove all HTML tags except images
+        const textWithoutHtml = item.description
+            .replace(/<img[^>]*>/g, '')
+            .replace(/<[^>]*>/g, '')
+            .replace(/^(&nbsp;|\s)+|(&nbsp;|\s)+$/g, '')
+            .replace(/\s+/g, ' ');
+    
+        // Trim the text if it exceeds the character limit
+        let _txt = textWithoutHtml.length > words
+            ? textWithoutHtml.slice(0, words) + '<span id="ellipsis">...</span>'
+            : textWithoutHtml;
+    
+        // Reinsert image tags at the beginning
+        _txt = imgTags.join(' ') + ' ' + _txt;
+    
         setHeading(item.title);
         setDescription(item.description);
         setText(_txt);
-        setShow(item.description.length > words ? true : false);
+        setShow(textWithoutHtml.length > words);
     };
-
+    
     useEffect(() => {
         if (item) {
             triggerCheck();
@@ -67,14 +77,14 @@ const ReadMorePopup = (props) => {
         <Fragment>
             <MainContainer ref={imageRef}>
                 {text.includes("<img ") ? (
-                    <div
-                        className="trigger-image"
+                    <p
+                        className="trigger-image custom-single-img"
                         dangerouslySetInnerHTML={{
-                            __html: text,
+                            __html: text?.replaceAll('<br>',  ''),
                         }}
                     />
                 ) : (
-                    <div className="trigger-image">
+                    <div className="trigger-image custom-single-img">
                         {item?.photo && (
                             <p>
                                 <img
@@ -84,9 +94,9 @@ const ReadMorePopup = (props) => {
                                 />
                             </p>
                         )}
-                        <div
+                        <p
                             dangerouslySetInnerHTML={{
-                                __html: text,
+                                __html: text?.replaceAll('<br>',  ''),
                             }}
                         />
                     </div>
@@ -113,7 +123,7 @@ const ReadMorePopup = (props) => {
                             {description.includes("<img ") ? (
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: description,
+                                        __html: description?.replaceAll('<br>',  ''),
                                     }}
                                 />
                             ) : (
@@ -129,12 +139,13 @@ const ReadMorePopup = (props) => {
                                     )}
                                     <div
                                         dangerouslySetInnerHTML={{
-                                            __html: description,
+                                            __html: description?.replaceAll('<br>',  ''),
                                         }}
                                     />
                                 </div>
                             )}
                         </ModalBody>
+                        <ModalFooter></ModalFooter>
                     </Modal>
                 </Fragment>
             ) : (

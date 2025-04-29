@@ -102,7 +102,7 @@ const NewCheckout = (props) => {
             <div className='all-data'>
         <div class="blA7b">
             <div className='total-method'>
-                <img src="https://sladmin.scoliolife.com/uploads/2019/05/ScolioPosture-01-1.png"/>
+                <img src="https://scoliolife.com/uploads/2019/05/ScolioPosture-01-1.png"/>
             </div>
             <div className='total-num'>
                 <p>2</p>

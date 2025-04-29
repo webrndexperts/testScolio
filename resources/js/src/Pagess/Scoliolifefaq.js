@@ -30,68 +30,68 @@ function Slife() {
         switch (language) {
             case 'en_SG':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/03/ScolioLife-FAQ-EN.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/03/ScolioLife-FAQ-EN.webp',
                     title: 'Scoliolife™ Frequently Asked Questions',
                     maintitle: 'SCOLIOLIFE FAQ'
                 };
             case 'es_ES':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/ScolioLife-FAQ-ES.png',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/ScolioLife-FAQ-ES.png',
                     title: 'Preguntas Frecuentes Sobre Scoliolife™',
                     maintitle: 'PREGUNTAS FRECUENTES SOBRE SCOLIOLIFE™'
 
                 };
             case 'fr_FR':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/ScolioLife-FAQ-FR.png',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/ScolioLife-FAQ-FR.png',
                     title: 'Foire Aux Questions Sur Scoliolife™',
                     maintitle: 'FOIRE AUX QUESTIONS SUR SCOLIOLIFE™'
                 };
             case 'id_ID':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/ScolioLife-FAQ-ID.png',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/ScolioLife-FAQ-ID.png',
                     title: 'Scoliolife™ Pertanyaan Yang Sering Diajukan',
                     maintitle: 'SCOLIOLIFE ™ PERTANYAAN YANG SERING DIAJUKAN'
                 };
             case ' it_IT':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/ScolioLife-FAQ-IT.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/ScolioLife-FAQ-IT.webp',
                     title: 'Domande Frequenti Su Scoliolife™',
                     maintitle: 'DOMANDE FREQUENTI SU SCOLIOLIFE™'
                 };
             case 'es_MX':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioLife-FAQ-ES.png',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioLife-FAQ-ES.png',
                     title: 'Preguntas Frecuentes Sobre Scoliolife™',
                     maintitle: 'PREGUNTAS FRECUENTES SOBRE SCOLIOLIFE™'
                 };
                 case 'de_DE':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/03/ScolioLife-FAQ-DE.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/03/ScolioLife-FAQ-DE.webp',
                     title: 'Häufig gestellte Fragen',
                     maintitle: 'PREGUNTAS FRECUENTES SOBRE SCOLIOLIFE™'
                 };
             case 'zh_CN':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/04/ScolioLife-FAQ-CS.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/04/ScolioLife-FAQ-CS.webp',
                     title: 'Scoliolife™常见问题',
                     maintitle: 'SCOLIOLIFE™ 常见问题'
                 };
             case 'zh_HK':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/ScolioLife-FAQ-CT.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/ScolioLife-FAQ-CT.webp',
                     title: 'SCOLIOLIFE™常見問題',
                     maintitle: 'SCOLIOLIFE™ 常見問題'
                 };
             case 'ja_JP':
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/01/ScolioLife-FAQ-JP.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/01/ScolioLife-FAQ-JP.webp',
                     title: 'スコリオライフ™に関するよくある質問',
                     maintitle: 'スコリオライフ™に関するよくある質問'
                 };
             default:
                 return {
-                    imageUrl: 'https://sladmin.scoliolife.com/uploads/2023/03/ScolioLife-FAQ-EN.webp',
+                    imageUrl: 'https://scoliolife.com/uploads/2023/03/ScolioLife-FAQ-EN.webp',
                     title: 'Scoliolife™ Frequently Asked Questions',
                     maintitle: 'SCOLIOLIFE FAQ'
                 };
@@ -166,7 +166,7 @@ function Slife() {
                     <div className='about'>
                     <div>
                         <div className="elementor-widget-container">
-                            <img loading="lazy" decoding="async" width="660" height="390" src={imageUrl} alt="" />
+                            <img loading="lazy" decoding="async" src={imageUrl} alt={maintitle} />
                         </div>
                     </div>
                     <div>

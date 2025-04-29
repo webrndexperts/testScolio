@@ -861,7 +861,7 @@ const ProductDetailPage = () => {
                             <div className="pr_cont">
                               <div className="svd">
                                 <img
-                                  src="https://sladmin.scoliolife.com/uploads/2022/10/thumb_Streaming.png"
+                                  src="https://scoliolife.com/uploads/2022/10/thumb_Streaming.png"
                                   alt=""
                                 />
                               </div>

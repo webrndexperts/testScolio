@@ -429,11 +429,13 @@ class ShippingController extends Controller
     }
 
     protected function getStripeKeys($request)
-    {
+    {   
+        // $key = env('STRIPE_RK');
         $stripe = new Stripe('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'); // Live secret key for scoliolife
 
         if (array_key_exists('mode', $request->all())) {
             $stripe = new Stripe('sk_test_r210BvUvkJxZC4eCmnC08YCa00a2oze7Ke');
+            // $stripe = new Stripe($key);
         }
 
         return $stripe;
@@ -469,11 +471,11 @@ class ShippingController extends Controller
             return response()->json(['success' => false, 'message' => "Can't procced with this amount."]);
         }
        
-        $captcha_token = $request->captcha_token;
-        $captcha_response = $this->recaptchaService->verify($captcha_token);
-        if (!$captcha_response['success']) {
-            return response()->json(['success' => false, 'message' => 'Captcha validation failed.']);
-        }
+        // $captcha_token = $request->captcha_token;
+        // $captcha_response = $this->recaptchaService->verify($captcha_token);
+        // if (!$captcha_response['success']) {
+        //     return response()->json(['success' => false, 'message' => 'Captcha validation failed.']);
+        // }
 
         // Log the initial request data
         Log::info('Payment request received:', [

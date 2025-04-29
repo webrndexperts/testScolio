@@ -40,7 +40,7 @@
                     </tr>
                     <tr>
                         <td style="color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 40px 60px;">
-                            <img src="https://sladmin.scoliolife.com/uploads/2021/02/Book1-5th-EN.png" alt="Scoliolife" style="height: 200px; width: 200px; object-fit: cover; border: 3px solid #fff; border-radius: 50%; margin-right: 50px;">
+                            <img src="https://scoliolife.com/uploads/2021/02/Book1-5th-EN.png" alt="Scoliolife" style="height: 200px; width: 200px; object-fit: cover; border: 3px solid #fff; border-radius: 50%; margin-right: 50px;">
                             <div>
                                 <a href="#" style="color: #fff; font-size: 35px; text-decoration: none;">Capri Cuban Diamond Necklace in 18k White Gold Vermeil</a>
                                 <p style="font-size: 16px;">Price: $189.00</p>
@@ -67,17 +67,17 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
                                     <td align="center" style="width: 33.33%; padding: 10px;">
-                                        <img src="https://sladmin.scoliolife.com/uploads/2021/02/Book1-5th-EN.png" alt="Scoliolife" style="height: 200px; width: 200px; object-fit: cover; border: 1px solid #fff;">
+                                        <img src="https://scoliolife.com/uploads/2021/02/Book1-5th-EN.png" alt="Scoliolife" style="height: 200px; width: 200px; object-fit: cover; border: 1px solid #fff;">
                                         <a href="#" style="color: #fff; font-size: 18px; margin:15px 0; display: block; text-decoration: none;">Capri Cuban Diamond Necklace in 18k White Gold Vermeil</a>
                                         <a href="#" style="color: #fff; background: #f29f05; font-size: 18px; padding: 15px; display: inline-block; text-align: center; text-decoration: none; margin-top: 10px; border-radius: 2px;">Shop Now</a>
                                     </td>
                                     <td align="center" style="width: 33.33%; padding: 10px;">
-                                        <img src="https://sladmin.scoliolife.com/uploads/2021/02/Book1-5th-EN.png" alt="Scoliolife" style="height: 200px; width: 200px; object-fit: cover; border: 1px solid #fff;">
+                                        <img src="https://scoliolife.com/uploads/2021/02/Book1-5th-EN.png" alt="Scoliolife" style="height: 200px; width: 200px; object-fit: cover; border: 1px solid #fff;">
                                         <a href="#" style="color: #fff; font-size: 18px;margin:15px 0;  display: block; text-decoration: none;">Capri Cuban Diamond Necklace in 18k White Gold Vermeil</a>
                                         <a href="#" style="color: #fff; background: #f29f05; font-size: 18px; padding: 15px; display: inline-block; text-align: center; text-decoration: none; margin-top: 10px; border-radius: 2px;">Shop Now</a>
                                     </td>
                                     <td align="center" style="width: 33.33%; padding: 10px;">
-                                        <img src="https://sladmin.scoliolife.com/uploads/2021/02/Book1-5th-EN.png" alt="Scoliolife" style="height: 200px; width: 200px; object-fit: cover; border: 1px solid #fff;">
+                                        <img src="https://scoliolife.com/uploads/2021/02/Book1-5th-EN.png" alt="Scoliolife" style="height: 200px; width: 200px; object-fit: cover; border: 1px solid #fff;">
                                         <a href="#" style="color: #fff; font-size: 18px; margin:15px 0;  display: block; text-decoration: none;">Capri Cuban Diamond Necklace in 18k White Gold Vermeil</a>
                                         <a href="#" style="color: #fff; background: #f29f05; font-size: 18px; padding: 15px; display: inline-block; text-align: center; text-decoration: none; margin-top: 10px; border-radius: 2px;">Shop Now</a>
                                     </td>

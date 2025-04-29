@@ -5,7 +5,7 @@
             <tbody><tr>
                 <td align="center" valign="top">
                     <div id="">
-                        <p style="margin-top:0"><img src="https://sladmin.scoliolife.com/uploads/2022/06/ScolioLife-Email-Header-Jun-2022.png" alt="ScolioLife™">
+                        <p style="margin-top:0"><img src="https://scoliolife.com/uploads/2022/06/ScolioLife-Email-Header-Jun-2022.png" alt="ScolioLife™">
                            </p>						</div>
                     <table border="0" cellpadding="0" cellspacing="0" width="600" id="container" style="background-color:#fff;border:1px solid #e0e0e0;border-radius:3px">
                         <tbody><tr>

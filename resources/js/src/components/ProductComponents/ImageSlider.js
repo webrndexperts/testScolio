@@ -1,26 +1,11 @@
 import React, { useMemo, useState } from 'react';
-// import Youtube from '../HomeComponents/Youtube';
-// import Mediacrop from '../../images/mediacrop.webp';
-// import Apple from '../../images/apple ios.webp';
-// import Amazon from '../../images/amazon.webp';
-// import GogglePlay from '../../images/google play.webp';
-// import Mediacrop1 from '../../images/mediacrop.webp';
-// import Apple1 from '../../images/apple ios.webp';
-// import Mediacrop2 from '../../images/mediacrop.webp';
-// import GogglePlay1 from '../../images/google play.webp';
-// import Mediacro3 from '../../images/mediacrop.webp';
 import { Modal, ModalBody, Carousel, CarouselItem, CarouselControl,ModalHeader } from 'reactstrap';
 import ReactPlayer from 'react-player';
 const ImageSlider = ({ productDetail }) => {
-//   console.log("productDetail------------",productDetail);
-    // const imagePath = [Mediacrop, Apple, Amazon, GogglePlay, Mediacrop1, Apple1, Mediacrop2, GogglePlay1, Mediacro3]
-    //  imageUrlArray.push()
-    
-    // console.log("imageUrlArray----", imageUrlArray);
+
     const productDetails = useMemo(() => productDetail, [productDetail])
-    const imageUrlArray = productDetails?productDetails?.product_gallery?.split(','):[''];
-    imageUrlArray?.splice(0, 0,productDetail?.photo);
-    // console.log("productDetail", productDetails);
+    const galleryImages = productDetails?.product_gallery ? productDetails.product_gallery.split(',').filter(img => img.trim() !== '') : [];
+    const imageUrlArray = [productDetail?.photo, ...galleryImages];
     const [modal, setModal] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -34,7 +19,6 @@ const ImageSlider = ({ productDetail }) => {
             setActiveIndex(activeIndex + 1);
         } else {
             setActiveIndex(0);
-            // setModal(false)
         }
     };
     const previous = () => {
@@ -55,21 +39,22 @@ const ImageSlider = ({ productDetail }) => {
                    url={productDetails?.featured_video_url}
                     controls
                 />
-                // <iframe width="980" height="450" src="https://www.youtube.com/embed/r32oLAKDPkk" frameborder="0" allowfullscreen=""></iframe>
                 :
                 <img src={productDetails?.photo} alt={productDetails?.photo}></img>
             }
             </div>
             </div>
+            {(galleryImages.length > 0 || productDetail?.photo) && (
             <div className="col-md-2">
                 <div className='product-img'>
                     {imageUrlArray?.slice(0, 4).map((item, index) => (
                         <div key={index} onClick={() => handleImageClick(index)}>
-                            <img src={item} alt={item} ></img>
+                            <img src={item} alt={item} />
                         </div>
                     ))}
                 </div>
                 </div>
+                )}
         {/* </div> */}
 
 

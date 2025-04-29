@@ -184,3 +184,26 @@ export const getCurrentCountry = async () => {
         toast.error(error?.response?.data.message)
     }
 }
+export const getIpCountry = async () => {
+    try {
+        const countryData = await axios.get(`https://api.ipapi.is/`);
+        return countryData.data?.location
+    } catch (error) {
+        toast.error(error?.response?.data.message)
+    }
+}
+
+export const getOpeningHours = async (lang) => {
+
+    try {
+        const openingHours = await axios.get(`${API}openinghourswidget/filter/${lang}`);
+        if (openingHours.status !== 200) {
+            toast.error(openingHours.data.message)
+        }
+
+        return openingHours.data
+    } catch (error) {
+        toast.error(error?.response?.data.message)
+    }
+    
+}

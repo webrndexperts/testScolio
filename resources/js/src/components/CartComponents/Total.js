@@ -431,20 +431,40 @@ const Total = (props) => {
 		// getCountryData();
   	}, []);
 	
-	useEffect(() => {
-		if(cart && cart.length === 1 && cart[0].productType ==	"aws3-bucket-product"){
-			localStorage.removeItem('shippingData')
-			localStorage.removeItem('shippingCartAddress')
-			localStorage.removeItem('checkAddressSelect')
-			setShippingDetail(null)
-			setShippigCharges(0)
-			setDigital(true)
-		}else{
-			getShippingDetails();
+	// useEffect(() => {
+	// 	if(cart && cart.length === 1 && (cart[0].productType ==	"aws3-bucket-product" || cart[0].productType ==	"digital")){
+	// 		localStorage.removeItem('shippingData')
+	// 		localStorage.removeItem('shippingCartAddress')
+	// 		localStorage.removeItem('checkAddressSelect')
+	// 		setShippingDetail(null)
+	// 		setShippigCharges(0)
+	// 		setDigital(true)
+	// 	}else{
+	// 		getShippingDetails();
 			
+	// 	}
+	// 	getCountryData();
+	// }, [cart])
+
+	useEffect(() => {
+		const hasDigitalProduct = cart?.some(item => item.productType === "digital");
+		const hasAwsProduct = cart?.some(item => item.productType === "aws3-bucket-product");
+		const hasPhysicalProduct = cart?.some(item => item.productType !== "digital" && item.productType !== "aws3-bucket-product");
+
+		if ((hasDigitalProduct || hasAwsProduct) && !hasPhysicalProduct) {
+			localStorage.removeItem('shippingData');
+			localStorage.removeItem('shippingCartAddress');
+			localStorage.removeItem('checkAddressSelect');
+			setShippingDetail(null);
+			setShippigCharges(0);
+			setDigital(true);
+		} else {
+			getShippingDetails();
 		}
+		
 		getCountryData();
-	}, [cart])
+	}, [cart]);
+	
 
 	let formProps = {
 	    handleValuesChange, handleFormSubmit, form, onCountryChangeChange, onStateChangeChange, setShippingPin,

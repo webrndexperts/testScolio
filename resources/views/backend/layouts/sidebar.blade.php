@@ -49,7 +49,7 @@
         <!-- Abandon Cart -->
    <li class="nav-item">
       <a class="nav-link" href="{{route('media.index')}}">
-      <img src="https://sladmin.scoliolife.com/images/dashicons-admin-media.svg">
+      <img src="https://scoliolife.com/images/dashicons-admin-media.svg">
       <span> Media</span></a>
    </li>
    

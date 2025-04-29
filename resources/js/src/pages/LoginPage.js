@@ -90,7 +90,7 @@ const LoginPage = (props) => {
         <div className="row">
           <div className="col-sm-6">
             <div className="login-img">
-              <img src="https://sladmin.scoliolife.com/uploads/2023/05/login-bg-600x587-1.webp" alt='https://sladmin.scoliolife.com/uploads/2023/05/login-bg-600x587-1.webp' />
+              <img src="https://scoliolife.com/uploads/2023/05/login-bg-600x587-1.webp" alt='https://scoliolife.com/uploads/2023/05/login-bg-600x587-1.webp' />
               <div className="side-btn">
                 <Link to="/login" className={isLogin ? "login" : "register"}>{t("loginReg.Log In")}</Link>
                 <Link to="/register" className={isLogin ? "register" : "login"}>{t("loginReg.Register")}</Link>

@@ -25,58 +25,58 @@ const Youtube = () => {
                 return {
                     videoUrl: 'https://youtu.be/Gmclw_6zTEg',
 
-                    imageUrl: "	https://sladmin.scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-300-x-200-px.png"
+                    imageUrl: "	https://scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-300-x-200-px.png"
                 };
             case 'es_ES':
                 return {
                     videoUrl: 'https://youtu.be/HG_RW8GuOdE',
-                    imageUrl: "https://sladmin.scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-ES.png"
+                    imageUrl: "https://scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-ES.png"
                 };
             case 'fr_FR':
                 return {
                     videoUrl: 'https://youtu.be/a5fi98ELvls',
-                    imageUrl: "	https://sladmin.scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-FR.png"
+                    imageUrl: "	https://scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-FR.png"
                 };
             case 'id_ID':
                 return {
                     videoUrl: 'https://youtu.be/RKRuP-cRGx8',
-                    imageUrl: "https://sladmin.scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-ID.png"
+                    imageUrl: "https://scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-ID.png"
                 };
             case ' it_IT':
                 return {
                     videoUrl: 'https://youtu.be/CYtcH6wRMeg',
-                    imageUrl: "https://sladmin.scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-IT.png"
+                    imageUrl: "https://scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-IT.png"
                 };
             case 'es_MX':
                 return {
                     videoUrl: 'https://youtu.be/HG_RW8GuOdE',
-                    imageUrl: "	https://sladmin.scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-ES.png"
+                    imageUrl: "	https://scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-ES.png"
                 };
             case 'zh_CN':
                 return {
                     videoUrl: 'https://youtu.be/HEZqTIWOi10',
-                    imageUrl: "https://sladmin.scoliolife.com/uploads/2023/09/Take-a-look-inside-our-clinic-CS.png"
+                    imageUrl: "https://scoliolife.com/uploads/2023/09/Take-a-look-inside-our-clinic-CS.png"
                 };
             case 'zh_HK':
                 return {
                     videoUrl: 'https://youtu.be/Gk3-6-1XCt0',
-                    imageUrl: "https://sladmin.scoliolife.com/uploads/2023/09/Take-a-look-inside-our-clinic-CT.png"
+                    imageUrl: "https://scoliolife.com/uploads/2023/09/Take-a-look-inside-our-clinic-CT.png"
                 };
             case 'ja_JP':
                 return {
                     videoUrl: 'https://youtu.be/mAqoeh4JDGU',
-                    imageUrl: "https://sladmin.scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-JP.png"
+                    imageUrl: "https://scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-JP.png"
                 };
                 case 'de_DE':
                     return {
                         videoUrl: 'https://youtu.be/Xh5_YGWZBrg',
-                        imageUrl: "https://sladmin.scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-DE.png"
+                        imageUrl: "https://scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-DE.png"
                     };
             default:
                 return {
                     videoUrl: 'https://youtu.be/Gmclw_6zTEg',
 
-                    imageUrl: "	https://sladmin.scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-300-x-200-px.png"
+                    imageUrl: "	https://scoliolife.com/uploads/2023/08/Take-a-look-inside-our-clinic-300-x-200-px.png"
                 };
         }
     };

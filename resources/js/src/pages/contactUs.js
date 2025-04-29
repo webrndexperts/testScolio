@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./ContactUs.css";
-// import { useSelector } from 'react-redux';
-// import { selectLanguage } from '../reducers/languageSlice';
 import CalendarSchedulingButton from "../components/CalendarSchedulingButton";
 import ApiHook from "../components/CustomHooks/ApiHook";
 import ContactComponent from "../components/ContactComponent";
@@ -9,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useDynamicTitle from "../hooks/useDynamicTitle";
 import TopBanner from "../components/TopBanner";
-// import ReactWhatsapp from 'react-whatsapp';
 import { jsonData } from "../hooks/social-icons";
 import { useSelector } from "react-redux";
+import { getOpeningHours } from "../Api";
 
 const ContactUs = () => {
   const [currentLanguage, urlLanguage] = ApiHook();
@@ -21,6 +19,7 @@ const ContactUs = () => {
   const [icons, setIcons] = useState([]);
   const { contactData } = useSelector((state) => state.cart);
   const [scolioContact, setscolioContact] = useState(null);
+  const [openingHour, setOpeningHour] = useState(null);
   useEffect(() => {
     if (contactData && contactData.id) {
       setscolioContact(contactData);
@@ -52,7 +51,14 @@ const ContactUs = () => {
       };
     }
   }, [isScriptLoaded]);
+useEffect(() => {
+  getOpeningHours(currentLanguage).then((data) => { 
+    if (data && data.length > 0) {
+      setOpeningHour(data);
+    }
+  });
 
+}, [currentLanguage])
   switch (currentLanguage) {
     case "en_SG":
       languageCode = "EN";
@@ -88,7 +94,7 @@ const ContactUs = () => {
       languageCode = "EN";
     // Default code for unknown language
   }
-  const facebookPageURL = `https://sladmin.scoliolife.com/uploads/2022/07/Contact-us-${languageCode}.png`;
+  const facebookPageURL = `https://scoliolife.com/uploads/2022/07/Contact-us-${languageCode}.png`;
 
   useDynamicTitle(t("contactUs.CONTACT US"));
 
@@ -123,6 +129,7 @@ const ContactUs = () => {
                     {" "}
                     <i className="fa fa-map-o" aria-hidden="true"></i>
                   </span>
+                  <p></p>
                   <div className="text">
                     <h3>
                       <span title="Main Office">
@@ -134,6 +141,7 @@ const ContactUs = () => {
                         __html: scolioContact?.address,
                       }}
                     />
+                    <p></p>
                   </div>
                 </li>
               </ul>
@@ -165,7 +173,6 @@ const ContactUs = () => {
                       <a
                       className='call-btn-sec'
                       href={`https://api.whatsapp.com/send/?phone=${formatWhatsAppNumber(scolioContact?.whatsapp_number)}&text=Hello%21%0A%0A%2AFOR+NEW+PATIENT%2A%0AName%3A%0ARelation+%28if+inquirer+is+not+patient%29%3A%0A%0A%2AENQUIRY%3A%2A%0A&type=phone_number&app_absent=0`}
-                      // href={`https://api.whatsapp.com/send?phone=${formatWhatsAppNumber(scolioContact?.whatsapp_number)}`}
                       >
                         <span> {scolioContact?.whatsapp_number} </span>
 
@@ -192,10 +199,11 @@ const ContactUs = () => {
                         {t("contactUs.Business Hours")}
                       </span>
                     </h3>
-                    <p>
-                      Monday – Friday: 08.00AM – 18.00PM Saturday: 09.00AM –
-                      1.00AM Sunday: Closed{" "}
-                    </p>
+                    {openingHour?.map((item) => {
+                      return (
+                        <div key={item?.id} dangerouslySetInnerHTML={{ __html: item.description }} />
+                      );
+                    })}
                     <p></p>
                   </div>
                 </li>
@@ -235,7 +243,6 @@ const ContactUs = () => {
 
             <div className="address">
               {isScriptLoaded && <CalendarSchedulingButton />}
-              {/* <button className="qxCTlb" style={{ color: "rgb(255, 255, 255)", backgroundColor: "rgb(239, 108, 0)" }}>Book an Appointment</button> */}
 
               <p></p>
               <ul className="contact-data">
@@ -272,7 +279,6 @@ const ContactUs = () => {
                     <br />
                     <a
                       href={`https://api.whatsapp.com/send/?phone=${formatWhatsAppNumber(scolioContact?.whatsapp_number)}&text=Hello%21%0A%0A%2AFOR+NEW+PATIENT%2A%0AName%3A%0ARelation+%28if+inquirer+is+not+patient%29%3A%0A%0A%2AENQUIRY%3A%2A%0A&type=phone_number&app_absent=0`}
-                      // href={`https://api.whatsapp.com/send?phone=${formatWhatsAppNumber(scolioContact?.whatsapp_number)}`}
                     >
                       {scolioContact?.whatsapp_number}
                     </a>{" "}
@@ -309,34 +315,6 @@ const ContactUs = () => {
                     </li>
                   );
                 })}
-                {/* <li className="clearfix social-facebook info-map">
-                  <i className="fa fa-facebook" aria-hidden="true"></i>
-                  <div className="value">
-                    Facebook:
-                    <a
-                      href="https://www.facebook.com/ScolioLife"
-                      target="blank"
-                      rel="noopener"
-                    >
-                      {" "}
-                      facebook.com/ScolioLife
-                    </a>
-                  </div>
-                </li> */}
-                {/* <li className="clearfix social-twitter info-map">
-                  <i className="fa fa-twitter" aria-hidden="true"></i>
-                  <div className="value">
-                    Twitter:
-                    <a
-                      href="https://twitter.com/scolioLife"
-                      target="blank"
-                      rel="noopener"
-                    >
-                      {" "}
-                      twitter.com/scolioLife
-                    </a>
-                  </div>
-                </li> */}
               </ul>
             </div>
             <div className="contact_quote">

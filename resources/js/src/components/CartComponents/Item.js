@@ -40,6 +40,10 @@ const Item = (props) => {
             ) {
                 _url = 'https://calendar.app.google/zMXutDLCVH4Yb1Tp8';
             }
+            if (currentLanguage === 'en_MY') {
+                _url = 'https://calendar.google.com/calendar/u/0/appointments/AcZssZ2TqAIY5UIPxzP-EDaEkKISdkTf2qniUQmsIQw='
+                setButtonUrl(_url)
+            }
             setButtonUrl(_url);
         }
     }, [consultationSize])

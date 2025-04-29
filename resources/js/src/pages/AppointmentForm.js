@@ -51,7 +51,7 @@ export default function AppoitmentForm() {
         <div className="col-sm-6">
           <img
             decoding="async"
-            src="https://sladmin.scoliolife.com/uploads/2023/03/Backgrond-2.png"
+            src="https://scoliolife.com/uploads/2023/03/Backgrond-2.png"
           />
         </div>
         <div className="col-sm-6">

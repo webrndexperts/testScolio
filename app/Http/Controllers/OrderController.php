@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\XrayImg;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
@@ -212,7 +213,20 @@ class OrderController extends Controller
 		) {
 			$order_id = Order::create($order_meta);
 			Log::info('Order created with ID:', [$order_id]);
-
+			foreach($order_data['product_items'] as $item) {
+			
+				if (isset($item['xray_upload_id'])) {
+					$order_product_meta['xray_upload_id'] = $item['xray_upload_id'];
+					
+					// Update X-ray upload status to 'paid' and link to order
+					XrayImg::where('id', $item['xray_upload_id'])
+						->update([
+							'order_id' => $order_id->id,
+							'status' => 'completed'
+						]); 
+					// Trigger analysis process (you can queue this)
+				}
+			}
 			// Proceed with further processing if needed
 		} else {
 			// Handle case where required fields are missing
@@ -467,31 +481,6 @@ class OrderController extends Controller
                 "buyer_selected_courier_name" => $shipment_method_name,
 			],
 			"parcels" => $parcels
-			// [
-			// 	[
-			// 		"box" => [
-			// 			"slug" => "testing",
-			// 			"length" => $dimension_length,
-			// 			"width" => $dimension_weight,
-			// 			"height" => $dimension_height
-			// 		],
-			// 		"items" => [
-			// 			[
-			// 				"description" => 'testing',
-			// 				"category" => "Health & Beauty",
-			// 				"sku" => 'bk5th-us',
-			// 				"quantity" => $quantity,
-			// 				"declared_customs_value" => 22,
-			// 				"declared_currency" => "SGD",
-			// 				"actual_weight" => $product_actual_weight ,
-			// 				// "actual_weight" => $product_actual_weight / 100,
-			// 				"origin_country_alpha2" => $order_data['country']
-			// 			]
-			// 		],
-			// 		"total_actual_weight" => $product_actual_weight 
-			// 		// "total_actual_weight" => $product_actual_weight / 100
-			// 	]
-			// ]
             ]),
             'headers' => [
      	    	'accept' => 'application/json',

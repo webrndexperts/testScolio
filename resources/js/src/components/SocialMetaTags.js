@@ -17,7 +17,7 @@ const SocialMetaTags = (props) => {
 			{ 'property': "og:site_name", 'content': "ScolioLife™" },
 			{ 'property': "article:publisher", 'content': "https://www.facebook.com/ScolioLife" },
 			{ 'property': "article:modified_time", 'content': "2024-02-29T08:43:58+00:00" },
-			{ 'property': "og:image", 'content': "https://sladmin.scoliolife.com/uploads/2023/07/Award-1-EN.webp" },
+			{ 'property': "og:image", 'content': "https://scoliolife.com/uploads/2023/07/Award-1-EN.webp" },
 			{ 'name': "twitter:card", 'content': "summary_large_image" },
 			{ 'name': "twitter:site", 'content': "@scoliolife" }
 		];

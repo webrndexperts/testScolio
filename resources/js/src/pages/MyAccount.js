@@ -45,7 +45,7 @@ useDynamicTitle(t('main-nav.MY ACCOUNT'))
                                 <ul>
                                     
                                     <li className="navigation-link--dashboard is-active"><i className="fa fa-angle-right" aria-hidden="true"></i>
-                                        <Link to="/">{t('order_Information.Dashboard')}</Link>
+                                        <Link to={`${urlLanguage}/my-account`}>{t('order_Information.Dashboard')}</Link>
                                     </li>
                                     <li className="navigation-link--orders_info"><i className="fa fa-angle-right" aria-hidden="true"></i>
                                     <Link to={`${urlLanguage}/order`}>{t('order_Information.Orders')}</Link>

@@ -81,7 +81,7 @@ const RegistrationPage = () => {
         <div className="row">
           <div className="col-sm-6">
             <div className="login-img">
-              <img src="https://sladmin.scoliolife.com/uploads/2023/05/login-bg-600x587-1.webp" alt="" />
+              <img src="https://scoliolife.com/uploads/2023/05/login-bg-600x587-1.webp" alt="" />
               <div className="side-btn">
                 <Link to="/login" className={isLogin ? "register" : "login"}>
                   {t("loginReg.Log In")}

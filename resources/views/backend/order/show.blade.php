@@ -185,6 +185,28 @@
                         <td>Payment Status</td>
                         <td> : Completed</td>
                     </tr>
+
+                    @if($order->xray_img && $order->xray_img->count())
+                    @foreach($order->xray_img as $xray)
+                        @if($xray->image_path)
+                            <tr>
+                                <td>X-Ray Image:</td>
+                                <td>
+                                    <img src="{{ asset('custom_images/'.$xray->image_path) }}" alt="X-Ray Image" style="height:100px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>X-Ray Email:</td>
+                                <td>
+                                
+                                   <a href="mailto: {{$xray->email ?? ''}}"> {{$xray->email ?? ''}}</a>
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                @endif
+                
+
               </table>
             </div>
           </div>

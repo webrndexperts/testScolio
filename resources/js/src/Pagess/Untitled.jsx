@@ -52,18 +52,18 @@ const MediaA = () => {
       id: 1,
       title: "PRINT-APPEARANCES",
       photo: [
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg1.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg2.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg3.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg4.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg5.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg6.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg7.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg8.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg9.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg10.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg11.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/pmaimg12.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg1.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg2.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg3.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg4.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg5.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg6.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg7.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg8.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg9.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg10.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg11.jpg",
+        "https://scoliolife.com/uploads/2016/03/pmaimg12.jpg",
       ],
       // para: ["Complementary Therapy – Vol. 2, Issue 5 2009", "Ezyhealth & Beauty - Mars 2010", "Berita Harian Mars 2010", "Todays Parents Avril 2010", "Lianhe Zaobao Avril 2010", "Lifestyle NTUC Mai 2010", "Lifestyle NTUC Mai 2010", "Lianhe Zaobao Août 2010", "DC Product Review Septembre 2010", "Shape Novembre 2010", "The American Chiropractor March 2012 ", "The American Chiropractor March 2012"]
     },
@@ -71,36 +71,36 @@ const MediaA = () => {
       id: 2,
       title: "MEDIA-PERONALITIES",
       photo: [
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg1.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg2.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg3.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg4.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg5.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg6.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg7.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg8.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg9.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg10.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg11.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg12.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg13.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg14.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg15.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg16.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg17.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg18.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg19.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg20.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg21.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg22.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg23.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg24.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg25.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg26.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg27.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg28.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg29.jpg",
-        "https://sladmin.scoliolife.com/uploads/2016/03/mpimg30.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg1.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg2.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg3.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg4.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg5.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg6.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg7.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg8.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg9.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg10.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg11.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg12.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg13.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg14.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg15.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg16.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg17.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg18.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg19.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg20.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg21.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg22.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg23.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg24.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg25.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg26.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg27.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg28.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg29.jpg",
+        "https://scoliolife.com/uploads/2016/03/mpimg30.jpg",
       ],
       // para: ["Bebe Battsetseg Miss Mongolia 2009", "Stanley Leong And Pamela Ho 983Live", "Steven Chia And Yvonne Yong Primetime Morning", "Bernard Tay President Automobile Association Of Singapore", "Laura Jane  International Model", "Darren Stephen Lim Et Jason    Chee Personal Trainers   Cleo Most Eligible Bachelor 2009  Singapore Calendar Guys 2010 Winner", "Michelle Goh Actress", "Jakub Koniar  International Model", "Peter Tong Model And Actor", "Olya Dzuba International Model", "Richard Garcia Professional Footballer For  Premiere League For Hull City And Internationally For Australia ", "Paul Foster  Actor, Model And Host", "Antonino Russo International Model", "Jayce Izuma   International Model", "Julian Low Acteur, Mannequin, Hôte", "Patrick Holford Nutritionist And Author", "Yohan Passos International Model", "Melody Reilly International Model", "Jee Choi International Model", "Jason Chee International Model", "Monika Zimaniova International Model", "Hossan Leong Actor", "Ekaterina Ilyukhina International Model", "Natalia Gandina International Model", "Ekaterina Nushtaeva International Model", "Irina LysiukInternational Model", "Ekaterina Shaydurova International Model", "Marina Vorobeva International Model", "Michael TetsuoInternational Model", "Ambassador Seychelles"]
     },
@@ -112,57 +112,57 @@ const MediaA = () => {
       case "en_SG":
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-EN.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-EN.webp",
         };
       case "es_ES":
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-ES.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-ES.webp",
         };
       case "fr_FR":
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-FR.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-FR.webp",
         };
       case "id_ID":
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-ID.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-ID.webp",
         };
       case " it_IT":
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-IT.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-IT.webp",
         };
       case "es_MX":
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-ES.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-ES.webp",
         };
         case "de_DE":
           return {
             imageUrl:
-              "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-DE.webp",
+              "https://scoliolife.com/uploads/2023/01/Media-Appearance-DE.webp",
           };
       case "zh_CN":
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-CS.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-CS.webp",
         };
       case "zh_HK":
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-CT.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-CT.webp",
         };
       case "ja_JP":
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-JP.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-JP.webp",
         };
       default:
         return {
           imageUrl:
-            "https://sladmin.scoliolife.com/uploads/2023/01/Media-Appearance-EN.webp",
+            "https://scoliolife.com/uploads/2023/01/Media-Appearance-EN.webp",
         };
     }
   };
@@ -321,19 +321,19 @@ const MediaA = () => {
               <div className="maimages">
                 <a href="">
                   <img
-                    src="https://sladmin.scoliolife.com/uploads/2016/03/mav-img1.jpg"
+                    src="https://scoliolife.com/uploads/2016/03/mav-img1.jpg"
                     alt=""
                   />
                 </a>
                 <a href="">
                   <img
-                    src="https://sladmin.scoliolife.com/uploads/2016/03/mav-img2.jpg"
+                    src="https://scoliolife.com/uploads/2016/03/mav-img2.jpg"
                     alt=""
                   />
                 </a>
                 <a href="">
                   <img
-                    src="https://sladmin.scoliolife.com/uploads/2016/03/mav-img3.jpg"
+                    src="https://scoliolife.com/uploads/2016/03/mav-img3.jpg"
                     alt=""
                   />
                 </a>

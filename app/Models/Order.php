@@ -46,4 +46,8 @@ class Order extends Model
         return Order::with(['user'])->where('user_id',$id)->orderBy('id','DESC')->get();
     }
 
+    public function xray_img(){
+        return $this->hasMany('App\Models\XrayImg','order_id','id');
+    }
+
 }

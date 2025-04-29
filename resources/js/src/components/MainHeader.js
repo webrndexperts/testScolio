@@ -165,7 +165,7 @@ export default function MainHeader() {
             <div className="col-sm-6 right_data">
               <div className="right-btn-wrapper">
                 <div className="book_consultation">
-                  <Link rel="noopener noreferrer" to={"/online-booking"}>
+                  <Link rel="noopener noreferrer" to={`${currentUrlLanguage}/online-booking`}>
                     <span>
                       <img
                         src="/assets/images/consultation-icon.webp"

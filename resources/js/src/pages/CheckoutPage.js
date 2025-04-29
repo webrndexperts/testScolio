@@ -151,17 +151,43 @@ const CheckoutPage = (props) => {
         lastname: "",
     });
 
-    const newArray = cartValues.map((item) => ({
-        title: item.title,
-        slug: item.slug,
-        price: item.price,
-        dimension_height: item.dimension_height,
-        dimension_length: item.dimension_length,
-        dimension_width: item.dimension_weight,
-        product_id: item.id,
-        sku: item.sku,
-        quantity: item.quantity,
-    }));
+    // const newArray = cartValues.map((item) => ({
+    //     title: item.title,
+    //     slug: item.slug,
+    //     price: item.price,
+    //     dimension_height: item.dimension_height,
+    //     dimension_length: item.dimension_length,
+    //     dimension_width: item.dimension_weight,
+    //     product_id: item.id,
+    //     sku: item.sku,
+    //     quantity: item.quantity,
+    // }));
+
+    const newArray = cartValues.map((item) => {
+        const baseItem = {
+            title: item.title,
+            slug: item.slug,
+            price: item.price,
+            dimension_height: item.dimension_height,
+            dimension_length: item.dimension_length,
+            dimension_width: item.dimension_weight,
+            product_id: item.id,
+            sku: item.sku,
+            quantity: item.quantity
+        };
+    
+        // Only add xray_upload_id for X-ray products with an upload
+        if (item.productType === 'digital' && 
+            item.slug === 'x-ray-review-analysis-service' && 
+            item.xrayUploadId) {
+            return {
+                ...baseItem,
+                xray_upload_id: item.xrayUploadId
+            };
+        }
+        
+        return baseItem;
+    });
 
     const skuArr = cartValues.map((item) => ({
         sku: item.sku,
@@ -372,9 +398,12 @@ const CheckoutPage = (props) => {
                     JSON.stringify(shippingData?.data)
                 );
                 setShippingDetail(shippingData?.data);
-                // setSelectedOption(shippingData?.data?.data[0]);
-                // setShippigCharges(shippingData?.data?.data[0].total_charge);
-
+                setSelectedOption(shippingData?.data?.data[0]);
+                setShippigCharges(shippingData?.data?.data[0].total_charge);
+                localStorage.setItem(
+                    "checkAddressSelect",
+                    JSON.stringify(shippingData?.data?.data[0])
+                );
                 var focusDiv = document.getElementById("shipping-options");
                 // console.log(shippingData.data.decodedData)
 
@@ -390,6 +419,20 @@ const CheckoutPage = (props) => {
             }
         }
     };
+
+    // Refetch shipping details when shipping form data changes
+    useEffect(() => {
+        if (!shippingChecked) {
+            ChangeAddressSubmit("shipping");
+        }
+    }, [billingGetValues("shippingCountry")]);
+
+    // Refetch shipping details when billing form data changes
+    useEffect(() => {
+        if (shippingChecked) {
+            ChangeAddressSubmit("billing");
+        }
+    }, [billingGetValues("country")]);
 
     // const handleCardElementChange = (element) => (event) => {
     // 	if (event.complete) {
@@ -601,7 +644,7 @@ const CheckoutPage = (props) => {
         setSelectedState(null);
         handleCountryChange(selectedVal?.isoCode, setStates);
 
-        ChangeAddressSubmit("billing");
+        // ChangeAddressSubmit("billing");
     };
 
     /**
@@ -626,7 +669,7 @@ const CheckoutPage = (props) => {
         setSelectedShippingState(null);
         handleCountryChange(selectedVal?.isoCode, setShippingStates);
 
-        ChangeAddressSubmit();
+        // ChangeAddressSubmit();
     };
 
     const onShippingStateChange = (selected) => {
@@ -691,6 +734,14 @@ const CheckoutPage = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (shippingChecked) {
+            ChangeAddressSubmit("billing");
+        } else {
+            ChangeAddressSubmit("shipping");
+        }
+    }, [shippingChecked]);
+
     /**
      * Function to trigger the checkout api and save
      * values to the database so to keep a record on that.
@@ -710,6 +761,8 @@ const CheckoutPage = (props) => {
                 }
                 localStorage.removeItem("paypalPay");
                 sessionStorage.removeItem("discountCoupon");
+                localStorage.removeItem("shippingData");
+                localStorage.removeItem("checkAddressSelect");
                 setPayedByPaypal(false);
                 scrollToTop();
                 setStripeLoader(false);
@@ -798,7 +851,7 @@ const CheckoutPage = (props) => {
                                 : "",
                         captcha_token: captchaToken ? captchaToken : null,
                         user_id: authData && authData.id ? authData.id : "",
-                        // mode: "test",
+                        mode: process.env.REACT_APP_PAYMENT_MODE,
                     }),
                 })
                     .then((response) => response.json())
@@ -867,12 +920,27 @@ const CheckoutPage = (props) => {
         data["shipping_id"] = selectedOption?.courier_id;
         data["shipping_rates_list"] = JSON.stringify(shippingRatesList);
         data["shippig_charges"] = shippigCharges;
-        data["propductType"] =
-            cartValues &&
-            cartValues.length == 1 &&
-            cartValues[0].productType == "aws3-bucket-product"
-                ? "amazon"
-                : "normal";
+        // data["propductType"] =
+        //     cartValues &&
+        //     cartValues.length == 1 &&
+        //     cartValues[0].productType == "aws3-bucket-product"
+        //         ? "amazon"
+        //         : "normal";
+
+        if (cartValues) {
+            if (cartValues.some((item) => item.productType === "digital")) {
+                data["productType"] = "digital";
+            } else if (
+                cartValues.every(
+                    (item) => item.productType === "aws3-bucket-product"
+                )
+            ) {
+                data["productType"] = "amazon";
+            } else {
+                data["productType"] = "normal";
+            }
+        }
+        data['same_address'] = shippingChecked;
         data["sub_total"] = parseFloat(totalPrice).toFixed(2);
         data["quantity"] = totalQuantity;
         data["total_amount"] = subTotalPrice;
@@ -982,7 +1050,6 @@ const CheckoutPage = (props) => {
             setcheckCondition(true);
         }
     };
-
     /**
      * Function to navigate page to checkout page..
      *
@@ -1067,12 +1134,39 @@ const CheckoutPage = (props) => {
         checkForCoupon();
     }, []);
 
+    // useEffect(() => {
+    //     if (
+    //         cartValues &&
+    //         cartValues.length === 1 &&
+    //         cartValues[0].productType == "aws3-bucket-product"
+    //     ) {
+    //         localStorage.removeItem("shippingData");
+    //         localStorage.removeItem("shippingCartAddress");
+    //         localStorage.removeItem("checkAddressSelect");
+    //         setShippingDetail(null);
+    //         setShippigCharges(0);
+    //         setDigital(true);
+    //     } else {
+    //         getShippingDetails();
+    //     }
+
+    //     getCountryData();
+    // }, [cartValues]);
+
     useEffect(() => {
-        if (
-            cartValues &&
-            cartValues.length === 1 &&
-            cartValues[0].productType == "aws3-bucket-product"
-        ) {
+        const hasDigitalProduct = cartValues?.some(
+            (item) => item.productType === "digital"
+        );
+        const hasAwsProduct = cartValues?.some(
+            (item) => item.productType === "aws3-bucket-product"
+        );
+        const hasPhysicalProduct = cart?.some(
+            (item) =>
+                item.productType !== "digital" &&
+                item.productType !== "aws3-bucket-product"
+        );
+
+        if ((hasDigitalProduct || hasAwsProduct) && !hasPhysicalProduct) {
             localStorage.removeItem("shippingData");
             localStorage.removeItem("shippingCartAddress");
             localStorage.removeItem("checkAddressSelect");

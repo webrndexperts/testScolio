@@ -6,9 +6,14 @@ import { loadStripe } from '@stripe/stripe-js';
 // const stripePromise = loadStripe(stripeDev);
 // const stripePromise = loadStripe(stripeLive);
 
-
+const mode = process.env.REACT_APP_PAYMENT_MODE;
+let key = process.env.REACT_APP_STRIPE_LIVE;
+if (mode === 'test'){
+  key = process.env.REACT_APP_STRIPE_DEV
+}
 // const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_DEV)
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_LIVE)
+// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_LIVE)
+const stripePromise = loadStripe(key)
 
 const StripeProvider = ({ children }) => {
   return <Elements stripe={stripePromise}>{children}</Elements>;

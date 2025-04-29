@@ -63,6 +63,11 @@ const ProductDetailPage = () => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [index, setIndex] = useState(15);
   const [metaProps, setMetaProps] = useState(null);
+
+  const [showXrayUploadModal, setShowXrayUploadModal] = useState(false);
+  const [xrayImage, setXrayImage] = useState(null);
+  const [email, setEmail] = useState('');
+
   const initialPosts = productDetail?.aws3_bucket_product.slice(0, index);
   let CheckLogin = JSON.parse(localStorage.getItem("isLogin"));
 
@@ -312,6 +317,12 @@ const ProductDetailPage = () => {
    * @return
    */
   const onBuyNowClick = async () => {
+
+    if (productDetail?.product_type === "digital" && productDetail?.slug === "x-ray-review-analysis-service") {
+      setShowXrayUploadModal(true);
+      return;
+    }
+
     // Implement your add to cart logic here
     let itemDataWithLanguage;
     if (isVariable) {
@@ -331,6 +342,11 @@ const ProductDetailPage = () => {
    */
   const handleAddToCart = async () => {
     // Implement your add to cart logic here
+    if (productDetail?.product_type === "digital" && productDetail?.slug === "x-ray-review-analysis-service") {
+      setShowXrayUploadModal(true);
+      return;
+    }
+
     let itemDataWithLanguage;
     if (isVariable) {
       itemDataWithLanguage = await checkVariationsData();
@@ -435,6 +451,53 @@ const ProductDetailPage = () => {
 
     return _retImg;
   }
+
+
+  const handleXrayUploadSubmit = async () => {
+    if (!xrayImage || !email) {
+      alert('Please upload an image and provide your email');
+      return;
+    }
+  
+    try {
+      // Upload the image
+      const formData = new FormData();
+      formData.append('xray_image', xrayImage);
+      formData.append('email', email);
+      formData.append('product_id', productDetail.id);
+      
+      if (authData?.id) {
+        formData.append('user_id', authData.id);
+      }
+  
+      const response = await axios.post(`${API}xray-upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
+      // Add the upload reference to the cart item
+      const itemDataWithXray = {
+        ...itemData,
+        xrayUploadId: response.data.upload_id,
+        requiresXray: true
+      };
+  
+      // Dispatch to cart based on which action triggered this
+      if (isProductAddedDirectly) {
+        dispatch(addToDirectCart(itemDataWithXray));
+        navigate(`${urlLanguage}/checkout`);
+      } else {
+        dispatch(addToCart(itemDataWithXray));
+        navigate(`${urlLanguage}/cart`);
+      }
+  
+      setShowXrayUploadModal(false);
+    } catch (error) {
+      console.error('Error uploading X-ray:', error);
+      alert('Error uploading X-ray. Please try again.');
+    }
+  };
 
   const UploadAddToCart = async (event) => {
 
@@ -564,7 +627,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     try{
-      const response = axios.post('https://sladmin.scoliolife.com/api/v1/get-aws-bucket-order' , {
+      const response = axios.post('https://scoliolife.com/api/v1/get-aws-bucket-order' , {
         user_id : (authData && authData.id) ? authData.id : null
       })
       .then((response) => {
@@ -585,6 +648,71 @@ const ProductDetailPage = () => {
     <>
       <TopBanner title={(productDetail && productDetail.title) ? productDetail.title : slug} />
       <MetaCreator {...metaProps} />
+
+
+      {showXrayUploadModal && (
+  <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">
+    <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title">Upload X-ray Image</h5>
+          <button 
+            type="button" 
+            className="btn-close" 
+            onClick={() => setShowXrayUploadModal(false)}
+          ></button>
+        </div>
+        <div className="modal-body">
+          <p className="mb-4">Please upload your X-ray image for analysis</p>
+          
+          <div className="mb-3">
+            <label htmlFor="xrayUpload" className="form-label">X-ray Image</label>
+            <input 
+              className="form-control" 
+              type="file" 
+              id="xrayUpload"
+              accept="image/*"
+              onChange={(e) => setXrayImage(e.target.files[0])} 
+            />
+          </div>
+          
+          <div className="mb-3">
+            <label htmlFor="xrayEmail" className="form-label">Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              id="xrayEmail"
+              placeholder="your@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <div className="form-text">We'll send the analysis results to this email</div>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button 
+            type="button" 
+            className="btn btn-secondary" 
+            onClick={() => setShowXrayUploadModal(false)}
+          >
+            Cancel
+          </button>
+          <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={handleXrayUploadSubmit}
+          >
+            Upload & Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+
+
       {productDetail?.aws3_bucket_product?.length < 1 ? (
         <>
           <div className="product-section">
@@ -979,7 +1107,7 @@ const ProductDetailPage = () => {
                             <div className="pr_cont">
                               <div className="svd">
                                 <img
-                                  src="https://sladmin.scoliolife.com/uploads/2022/10/thumb_Streaming.png"
+                                  src="https://scoliolife.com/uploads/2022/10/thumb_Streaming.png"
                                   alt=""
                                 />
                               </div>

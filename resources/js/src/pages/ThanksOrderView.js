@@ -53,7 +53,6 @@ const ThanksOrderView = () => {
     }, [i18n.language, currentLanguage, dispatch, navigate, lang]);
 
 	useDynamicTitle('Order');
-    console.log(orderDetail?.shipping_price)
     return (
         <div className='thankyou-section'>
             <div className='container'>
@@ -181,7 +180,7 @@ const ThanksOrderView = () => {
                                     </div>
                                     </div>
                                     <div class="product-price-nam">
-                                        <p><span>$</span>{parseFloat(orderDetail?.total_amount).toFixed(2)} SGD</p>
+                                        <p><span>$</span>{parseFloat(item?.product?.price).toFixed(2)} SGD</p>
                                     </div>
                                 </div>
                                 )            
