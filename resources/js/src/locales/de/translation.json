@@ -377,7 +377,8 @@
             "invalid": "Dieses Passwort-Zurücksetzen-Token ist ungültig.",
             "expired": "Token ist abgelaufen.",
             "thanks_message": "Ihr Passwort wurde zurückgesetzt. Bitte melden Sie sich an, um Dinge zu überprüfen."
-        }
+        },
+        "back": "Zurück zum Login"
     },
     "payments": {
         "stripe": "Kreditkarte",

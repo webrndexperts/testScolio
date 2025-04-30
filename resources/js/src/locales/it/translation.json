@@ -373,7 +373,8 @@
             "invalid": "Questo token di ripristino password non è valido.",
             "expired": "Il token è scaduto.",
             "thanks_message": "La tua password è stata resettata. Per favore effettua il login per controllare le cose."
-        }
+        },
+        "back": "Torna al login"
     },
     "payments": {
         "stripe": "Carta di credito",

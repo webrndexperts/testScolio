@@ -43,7 +43,8 @@ class User extends Authenticatable
     }
 
     public function sendPasswordResetNotification($token) {
-        $url = config('app.frontend_url')."/password/reset/{$token}?email={$this->email}";
+        // $url = config('app.frontend_url')."/password/reset/{$token}?email={$this->email}";
+        $url = url("password/reset/{$token}?email={$this->email}");
 
         $this->notify(new CustomResetPasswordNotification($token, $url));
     }

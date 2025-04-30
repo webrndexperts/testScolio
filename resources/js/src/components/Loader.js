@@ -1,12 +1,17 @@
 import React from 'react';
-import './Loader.css'; // Import your stylesheet for Loader
 
 const Loader = () => {
-  return (
-    <div className="loader-container">
-      <div className="loader"></div>
-    </div>
-  );
+	return (
+		<div className="language_spinner">
+	        <div
+	            className="spinner-border text-warning language_spinner"
+	            role="status"
+	        >
+	            <span className="sr-only">Loading...</span>
+	        </div>
+	        <span className="empty_layer"></span>
+	    </div>
+	);
 };
 
 export default Loader;

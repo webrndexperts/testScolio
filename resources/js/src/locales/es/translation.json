@@ -375,7 +375,8 @@
             "invalid": "Esta ficha de reiniciación de la contraseña es inválida.",
             "expired": "Token ha caducado.",
             "thanks_message": "Su contraseña ha sido reiniciada. Por favor, ingrese para comprobar las cosas."
-        }
+        },
+        "back": "Volver al inicio de sesión"
     },
     "payments": {
         "stripe": "Tarjeta de crédito",

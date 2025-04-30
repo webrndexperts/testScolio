@@ -375,7 +375,8 @@
             "invalid": "Token reset kata sandi ini tidak valid.",
             "expired": "Token sudah kadaluarsa.",
             "thanks_message": "Passwordmu sudah diatur ulang. Silakan login untuk memeriksa hal-hal."
-        }
+        },
+        "back": "Kembali ke Login"
     },
     "payments": {
         "stripe": "Kartu Kredit",

@@ -44,7 +44,11 @@ const LoginPage = (props) => {
     login(trimData).then((data) => {
       if (data.success === true) {
         dispatch(userLogin(data))
-          navigate(`/`)
+        // Render to the old url. 
+        var lastPage = sessionStorage.getItem('lastUrl');
+        lastPage = (lastPage && typeof lastPage != 'undefined') ? lastPage : '/';
+
+        navigate(lastPage)
       }
       // console.log("data++++",data);
     });
@@ -69,7 +73,11 @@ const LoginPage = (props) => {
         dispatch(userLogin(res.data))
         localStorage.setItem('isLogin',true);setIsLogin(true)
         localStorage.setItem('userData', JSON.stringify(res.data));
-        navigate(`/`)
+
+        var lastPage = sessionStorage.getItem('lastUrl');
+        lastPage = (lastPage && typeof lastPage != 'undefined') ? lastPage : '/';
+
+        navigate(lastPage)
       }
       //  console.log("GoogleLogData=======",GoogleLogData);
     }).catch((error)=>{
@@ -106,7 +114,9 @@ const LoginPage = (props) => {
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">{t("loginReg.Username or Email")}</label>
                   <div className='gmail-login'>
-                    <input type="text" className='form-control' id="email" name="usernameOrEmail"
+                    <input type="text" className='form-control' 
+                      id="email" name="usernameOrEmail"
+                      placeholder={t("loginReg.Username or Email")}
                       {...register("email", { required: true })}
                     />
                     <CiMail />
@@ -117,7 +127,9 @@ const LoginPage = (props) => {
                 <div className="mb-3">
                   <label htmlFor="password" className="form-label">{t("loginReg.Password")}</label>
                   <div className='password-login'>
-                    <input type={showPassword ? "text" : "password"} className='form-control' id="password" name="password"
+                    <input type={showPassword ? "text" : "password"}
+                      placeholder={t("loginReg.Password")}
+                      className='form-control' id="password" name="password"
                       {...register("password", {
                         required: true,
                       })}

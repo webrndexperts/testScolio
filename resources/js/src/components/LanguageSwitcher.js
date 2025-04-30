@@ -9,6 +9,7 @@ import { mobileScreen } from "../providers/constants";
 import { matchUrlAndStoredLanguage } from "../hooks/customFunctions";
 import { getCurrentCountry, getNumberApi } from "../Api";
 import { addContactData } from "../reducers/cartSlice";
+import Loader from "./Loader";
 
 let checkLoader = false;
 
@@ -177,15 +178,7 @@ const LanguageSwitcher = () => {
     return (
         <React.Fragment>
             {checkLoader && (
-                <div className="language_spinner">
-                    <div
-                        className="spinner-border text-warning language_spinner"
-                        role="status"
-                    >
-                        <span className="sr-only">Loading...</span>
-                    </div>
-                    <span className="empty_layer"></span>
-                </div>
+                <Loader />
             )}
 
             <div

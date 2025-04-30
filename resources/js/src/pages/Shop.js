@@ -12,6 +12,7 @@ import MetaCreator from "../components/MetaCreator";
 import { addToDirectCart } from "../reducers/cartSlice";
 import { scrollToTop } from "../components/Helper";
 import WishlistIcon from "../components/WishlistIcon";
+import Loader from "../components/Loader";
 
 const API = process.env.REACT_APP_API_URL;
 const Shop = () => {
@@ -21,6 +22,7 @@ const Shop = () => {
     const [currentLanguage, urlLanguage] = ApiHook();
     const [shopData, setShopData] = useState();
     const [metaProps, setMetaProps] = useState(null);
+    const [loading, setLoading] = useState(false);
     const { authData } = useSelector((state) => state.auth);
 
     const sortByCategories = (event) => {
@@ -109,6 +111,7 @@ const Shop = () => {
     const getShopList = () => {
         var params = authData && authData.id ? `?user=${authData?.id}` : "";
 
+        setLoading(true)
         fetch(`${API}products/filter/${currentLanguage}${params}`)
             .then((response) => {
                 if (!response.ok) {
@@ -117,6 +120,7 @@ const Shop = () => {
                 return response.json();
             })
             .then((data) => {
+                setLoading(false)
                 setShopData(data);
                 let _metaProps = {
                     tags: data && data.seo_meta_tag ? data.seo_meta_tag : "",
@@ -131,6 +135,7 @@ const Shop = () => {
                 setMetaProps(_metaProps);
             })
             .catch((error) => {
+                setLoading(false)
                 console.log("Fetch error:", error);
             });
     };
@@ -157,6 +162,10 @@ const Shop = () => {
                 <Sidebar></Sidebar>
                 <div className="shop-section">
                     <div className="row">
+                        {loading && (
+                            <Loader />
+                        )}
+
                         {shopData && (
                             <div className="Sort-By-Categories">
                                 <select

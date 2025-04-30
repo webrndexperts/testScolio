@@ -422,7 +422,8 @@
             "invalid": "This password reset token is invalid.",
             "expired": "Token has been expired.",
             "thanks_message": "Your password has been reset. Please login to check things."
-        }
+        },
+        "back": "Back to Login"
     },
     "payments": {
         "stripe": "Credit Card",
