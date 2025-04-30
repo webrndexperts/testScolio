@@ -50,4 +50,8 @@ class Order extends Model
         return $this->hasMany('App\Models\XrayImg','order_id','id');
     }
 
+    public function order_address_info(){
+        return $this->hasOne('App\Models\OrderAddressInfo','order_id','id');
+    }
+
 }

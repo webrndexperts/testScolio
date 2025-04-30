@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderAddressInfo;
 use App\Models\XrayImg;
 use Illuminate\Http\Request;
 use App\Models\Cart;
@@ -171,7 +172,7 @@ class OrderController extends Controller
 		// return response()->json(['id' => $shipment_shipping_id , 'name' => $shipment_method_name ]);
 		// die('sdfsdfs');
 		\App::setLocale($request->lang);
-		// dd($order_data);
+		dd($order_data);
 
 			// Handle the case where 'Image' key doesn't exist or decoding failed
 		$updated_grouped_product_attributes = json_encode($order_data['grouped_product_attributes'], JSON_UNESCAPED_UNICODE);
@@ -198,7 +199,8 @@ class OrderController extends Controller
 			'grouped_product_attributes' => isset($updated_grouped_product_attributes) ? $updated_grouped_product_attributes : '',
 			//'scoliosis_exercises_file' => !empty($grouped_product_attributes['CustomizedImgage']) ? $grouped_product_attributes['CustomizedImgage'] : '',
 			'lang' => !empty($order_data['language']) ? $order_data['language'] : '',
-			'sku' => !empty($order_data['sku']) ? $order_data['sku'] : ''
+			'sku' => !empty($order_data['sku']) ? $order_data['sku'] : '',
+			'same_address' => !empty($order_data['same_address']) ? $order_data['same_address'] : '',
 		];
 	
 		// Check if all necessary fields are present before creating the order
@@ -248,18 +250,44 @@ class OrderController extends Controller
 		$billing_address_1 = !empty($order_data['street']) ? $order_data['street'] : '';
 		$billing_address_2 = !empty($order_data['apartment']) ? $order_data['apartment'] : '';
 		$billing_phone = !empty($order_data['phone']) ? $order_data['phone'] : '';
-		$shipping_first_name = !empty($order_data['shippingFirstName']) ? $order_data['shippingFirstName'] : '';
-		$shipping_last_name = !empty($order_data['shippingLastName']) ? $order_data['shippingLastName'] : '';
-		$shipping_country = !empty($order_data['shippingCountry']) ? $order_data['shippingCountry'] : '';
-		$shipping_address_1 = !empty($order_data['shippingStreet']) ? $order_data['shippingStreet'] : '';
-		$shipping_address_2 = !empty($order_data['shippingApartment']) ? $order_data['shippingApartment'] : '';
-		$shipping_city = !empty($order_data['shippingTown']) ? $order_data['shippingTown'] : '';
-		$shipping_state = !empty($order_data['shipping_state']) ? $order_data['shipping_state'] : '';
-		$shipping_postcode = !empty($order_data['shippingPostcode']) ? $order_data['shippingPostcode'] : '';
-		$shipping_phone = !empty($order_data['shippingPhone']) ? $order_data['shippingPhone'] : '';
+		
+		// $shipping_first_name = !empty($order_data['shippingFirstName']) ? $order_data['shippingFirstName'] : '';
+		// $shipping_last_name = !empty($order_data['shippingLastName']) ? $order_data['shippingLastName'] : '';
+		// $shipping_country = !empty($order_data['shippingCountry']) ? $order_data['shippingCountry'] : '';
+		// $shipping_address_1 = !empty($order_data['shippingStreet']) ? $order_data['shippingStreet'] : '';
+		// $shipping_address_2 = !empty($order_data['shippingApartment']) ? $order_data['shippingApartment'] : '';
+		// $shipping_city = !empty($order_data['shippingTown']) ? $order_data['shippingTown'] : '';
+		// $shipping_state = !empty($order_data['shipping_state']) ? $order_data['shipping_state'] : '';
+		// $shipping_postcode = !empty($order_data['shippingPostcode']) ? $order_data['shippingPostcode'] : '';
+		// $shipping_phone = !empty($order_data['shippingPhone']) ? $order_data['shippingPhone'] : '';
+
+
+		if ($order_data['same_address'] == true) {
+			$shipping_first_name = !empty($order_data['firstName']) ? $order_data['firstName'] : '';
+			$shipping_last_name = !empty($order_data['lastName']) ? $order_data['lastName'] : '';
+			$shipping_country = !empty($order_data['country']) ? $order_data['country'] : '';
+			$shipping_address_1 = !empty($order_data['street']) ? $order_data['street'] : '';
+			$shipping_address_2 = !empty($order_data['apartment']) ? $order_data['apartment'] : '';
+			$shipping_city = !empty($order_data['town']) ? $order_data['town'] : '';
+			$shipping_state = !empty($order_data['state']) ? $order_data['state'] : '';
+			$shipping_postcode = !empty($order_data['postcode']) ? $order_data['postcode'] : '';
+			$shipping_phone = !empty($order_data['phone']) ? $order_data['phone'] : '';
+		} else {
+			$shipping_first_name = !empty($order_data['shippingFirstName']) ? $order_data['shippingFirstName'] : '';
+			$shipping_last_name = !empty($order_data['shippingLastName']) ? $order_data['shippingLastName'] : '';
+			$shipping_country = !empty($order_data['shippingCountry']) ? $order_data['shippingCountry'] : '';
+			$shipping_address_1 = !empty($order_data['shippingStreet']) ? $order_data['shippingStreet'] : '';
+			$shipping_address_2 = !empty($order_data['shippingApartment']) ? $order_data['shippingApartment'] : '';
+			$shipping_city = !empty($order_data['shippingTown']) ? $order_data['shippingTown'] : '';
+			$shipping_state = !empty($order_data['shipping_state']) ? $order_data['shipping_state'] : '';
+			$shipping_postcode = !empty($order_data['shippingPostcode']) ? $order_data['shippingPostcode'] : '';
+			$shipping_phone = !empty($order_data['shippingPhone']) ? $order_data['shippingPhone'] : '';
+		}
+		
 		$propductType = !empty($order_data['propductType']) ? $order_data['propductType'] : '';
 
 		$get_user_order_info = [
+			'order_id' => $order_id->id,
 			'billing_first_name' => $billing_first_name,
 			'billing_last_name' => $billing_last_name,
 			'billing_email' => $billing_email,
@@ -282,10 +310,13 @@ class OrderController extends Controller
 			'shipping_phone' => $shipping_phone,
 		];
 		
-		if(!empty($order_data['userId'])){
-			
-		UserAddressInfo::updateOrCreate(['user_id' => $order_data['userId']], $get_user_order_info);
+		if($order_id->id) {
+			OrderAddressInfo::create($get_user_order_info);
 		}
+		// if(!empty($order_data['userId'])){
+			
+		// UserAddressInfo::updateOrCreate(['user_id' => $order_data['userId']], $get_user_order_info);
+		// }
 
 
 		
@@ -576,7 +607,12 @@ class OrderController extends Controller
         $order=Order::getsingleOrderAPI($id);
 		$order_number = !empty($order->order_number) ? $order->order_number : '';
 		$order_user_id =  !empty($order->user_id) ? $order->user_id : '';
-		$orderUserInfo = UserAddressInfo::where('user_id', $order_user_id)->first();
+		// $orderUserInfo = UserAddressInfo::where('user_id', $order_user_id)->first();
+		$orderUserInfo = $order->order_address_info;
+		if (empty($orderUserInfo)) {
+			$orderUserInfo = UserAddressInfo::where('user_id', $order_user_id)->first();
+		}
+		// dd($orderUserInfo);
 		//dd($orderUserInfo);
 		$orderProducts = OrderProductMeta::with('product')->where('order_id', $order_number)->get();
 
@@ -727,7 +763,15 @@ class OrderController extends Controller
         $order = Order::getsingleOrderAPI($request->id);
 		$order_number = $order->order_number;
 		$order_user_id = $order->user_id;
-		$order['orderUserInfo'] = UserAddressInfo::where('user_id', $order_user_id)->first();
+		// $order['orderUserInfo'] = $order->order_address_info;
+
+		$orderUserInfo = $order->order_address_info;
+		if (empty($orderUserInfo)) {
+			$orderUserInfo = UserAddressInfo::where('user_id', $order_user_id)->first();
+		}
+		
+		$order['orderUserInfo'] = $orderUserInfo;
+		// $order['orderUserInfo'] = UserAddressInfo::where('user_id', $order_user_id)->first();
 		$order['orderProducts'] = OrderProductMeta::with('product')->where('order_id', $order_number)->get();
 
 	//	dd(asset('storage/app/public/6617c53ea9ed8.png'));

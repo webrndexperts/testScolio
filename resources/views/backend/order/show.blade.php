@@ -231,16 +231,16 @@
                     </tr>
                     <tr>
                         <td>Phone No.</td>
-                        <td> : {{$orderUserInfo->shipping_phone ?? ''}}</td>
+                        <td> : {{$orderUserInfo->billing_phone ?? ''}}</td>
                     </tr>
                     <tr>
                         <td>Address</td>
-                        <td> : {{$orderUserInfo->shipping_address_1 ?? ''}}</td>
+                        <td> : {{$orderUserInfo->billing_address_1 ?? ''}}</td>
                     </tr>
 					
                     <tr>
                         <td>Country</td>
-                        <td> : {{$orderUserInfo->shipping_country ?? ''}}</td>
+                        <td> : {{$orderUserInfo->billing_country ?? ''}}</td>
                     </tr>
 					 <tr>
                         <td>State</td>
@@ -248,7 +248,7 @@
                     </tr>
                     <tr>
                         <td>Post Code</td>
-                        <td> : {{$orderUserInfo->shipping_postcode ?? ''}}</td>
+                        <td> : {{$orderUserInfo->billing_postcode ?? ''}}</td>
                     </tr>
               </table>
             </div>

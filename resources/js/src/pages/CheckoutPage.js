@@ -1011,14 +1011,14 @@ const CheckoutPage = (props) => {
                         // 	return;
                         // }
 
-                        if (!captchaToken) {
-                            setCaptchaErr(true);
-                            errorToast("Verify Captcha !", {
-                                className: "full-red-alert",
-                                autoClose: 5000,
-                            });
-                            return;
-                        }
+                        // if (!captchaToken) {
+                        //     setCaptchaErr(true);
+                        //     errorToast("Verify Captcha !", {
+                        //         className: "full-red-alert",
+                        //         autoClose: 5000,
+                        //     });
+                        //     return;
+                        // }
 
                         const cardElement =
                             elements.getElement(CardNumberElement);
