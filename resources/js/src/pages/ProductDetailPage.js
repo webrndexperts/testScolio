@@ -22,6 +22,7 @@ import Image from "../images/Streaming_EN.png";
 import ProductDropdown from "./ProductDropdown1";
 import TopBanner from '../components/TopBanner';
 import MetaCreator from "../components/MetaCreator";
+import Loader from "../components/Loader";
 import FranForm from "./FranForm";
 import WishlistIcon from '../components/WishlistIcon';
 import { scrollToTop } from "../components/Helper";
@@ -63,6 +64,7 @@ const ProductDetailPage = () => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [index, setIndex] = useState(15);
   const [metaProps, setMetaProps] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   const [showXrayUploadModal, setShowXrayUploadModal] = useState(false);
   const [xrayImage, setXrayImage] = useState(null);
@@ -571,6 +573,7 @@ const ProductDetailPage = () => {
     scrollToTop()
     var params = (authData && authData.id) ? `?user=${authData?.id}` : '';
 
+    setLoading(true)
     fetch(`${API}products/${slug}/${currentLanguage}${params}`).then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -587,6 +590,7 @@ const ProductDetailPage = () => {
         setAverageRating(average.toFixed(3.5));
         setProductDetail(data);
         setUpdateAproxPrice(!updateAproxPrice)
+        setLoading(false)
         
         let _metaProps = {
           tags: (data && data.seo_meta_tag) ? data.seo_meta_tag : '',
@@ -616,6 +620,7 @@ const ProductDetailPage = () => {
         setProductPrice(data.price != null ? parseInt(data.price) : 0);
 
       }).catch((error) => {
+        setLoading(false)
         console.log("Fetch error:", error);
       });
   }, [currentLanguage, lang, slug, navigate, counter, authData]);
@@ -648,7 +653,9 @@ const ProductDetailPage = () => {
     <>
       <TopBanner title={(productDetail && productDetail.title) ? productDetail.title : slug} />
       <MetaCreator {...metaProps} />
-
+      {loading && (
+          <Loader />
+      )}
 
       {showXrayUploadModal && (
   <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 import { ForgetForm, ThanksView } from './components';
 import ApiHook from "../../components/CustomHooks/ApiHook";
@@ -51,11 +52,12 @@ const ForgotPassword = (props) => {
 				{(showThanks) ? (
 					<ThanksView 
 						message={ t("passwords.forgot.thanks_message").replace("{x}", email) }
+						login={ t("passwords.back") }
                     />
 				) : (
 	          		<div className="col-sm-12 form-design">
-						<h2>{t("checkOut.Forgot Password")}</h2>
-						<p> {t("checkOut.send email")}</p>
+						<h2>{ t("checkOut.Forgot Password") }</h2>
+						<p> { t("checkOut.send email") }</p>
 	          			{(errorMsg) ? (
 		          			<div class="alert alert-danger" role="alert">
 							  	{t(errorMsg)}
@@ -63,6 +65,7 @@ const ForgotPassword = (props) => {
 						) : null}
 
 						<ForgetForm {...formProps} />
+						<Link className="back-login" to={`/login`}>{ t("passwords.back") }</Link>
 					</div>
 				)}
 			</div>

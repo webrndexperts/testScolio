@@ -374,7 +374,8 @@
             "invalid": "Ce jeton de réinitialisation du mot de passe est invalide.",
             "expired": "Le jeton a expiré.",
             "thanks_message": "Votre mot de passe a été réinitialisé. S'il vous plaît connectez-vous pour vérifier les choses."
-        }
+        },
+        "back": "Retour à la connexion"
     },
     "payments": {
         "stripe": "Carte de crédit",

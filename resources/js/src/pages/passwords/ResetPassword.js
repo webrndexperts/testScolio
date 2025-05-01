@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 import { ResetForm, ThanksView } from './components';
 import { checkForgetToken, resetPassword } from '../../Api';
@@ -75,6 +75,7 @@ const ResetPassword = (props) => {
 				{(showThanks) ? (
 					<ThanksView 
 						message={ t("passwords.reset.thanks_message") }
+						login={ t("passwords.back") }
                     />
 				) : (
 	          		<div className="col-sm-12 form-design">
@@ -88,6 +89,8 @@ const ResetPassword = (props) => {
 						{(status) ? (
 							<ResetForm {...resetProps} />
 						) : null}
+
+						<Link className="back-login" to={`/login`}>{ t("passwords.back") }</Link>
 					</div>
 				)}
 			</div>

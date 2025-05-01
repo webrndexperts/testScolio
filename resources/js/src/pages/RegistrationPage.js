@@ -50,7 +50,11 @@ const RegistrationPage = () => {
           localStorage.setItem("isLogin", true);
           setIsLogin(true)
           localStorage.setItem("userData", JSON.stringify(res));
-          navigate("/");
+          // Render to the old url. 
+          var lastPage = sessionStorage.getItem('lastUrl');
+          lastPage = (lastPage && typeof lastPage != 'undefined') ? lastPage : '/';
+
+          navigate(lastPage)
         }
       });
       reset();
@@ -180,7 +184,7 @@ const RegistrationPage = () => {
                     type="checkbox"
                     id="subscribe"
                     name="subscribe"
-                    {...register("subscribe", { required: true })}
+                    {...register("subscribe", {})}
                   ></input>
                   <p>
                     {t(

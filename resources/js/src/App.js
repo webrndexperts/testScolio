@@ -38,6 +38,8 @@ import useGeoLocation from "react-ipgeolocation";
 import StripeProvider from "./providers/StripeProvider";
 import { setLanguage, setUrlLanguage } from "./reducers/languageSlice";
 import LanguageRoute from "./components/LanguageRoute ";
+import RouteChangeHandler from "./components/RouteChangeHandler";
+
 const App = () => {
     const [loginData, setLoginData] = useState(localStorage.getItem("isLogin"));
     const { authData, authLogin } = useSelector((state) => state.auth);
@@ -108,19 +110,12 @@ const App = () => {
         if (currentLanguage == 'en_MY') {
             document.body.classList.add("my-header");
             document.body.classList.remove("id-header");
-            document.body.classList.remove("de-header");
         } else if (currentLanguage == 'id_ID') {
             document.body.classList.add("id-header");
             document.body.classList.remove("my-header");
-            document.body.classList.remove("de-header");
-        } else if(currentLanguage == 'de_DE') {
-            document.body.classList.add("de-header");
-            document.body.classList.remove("my-header");
-            document.body.classList.remove("id-header");
         } else {
             document.body.classList.remove("my-header");
             document.body.classList.remove("id-header");
-            document.body.classList.remove("de-header");
         }
 
     }, [i18n, currentLanguage]);
@@ -136,42 +131,30 @@ const App = () => {
         // AOS.refresh();
     }, []);
 
-    if (loading) {
-        return (
-            <>
-                <div className="language_spinner">
-                    <div
-                        className="spinner-border text-warning language_spinner"
-                        role="status"
-                    >
-                        <span className="sr-only">Loading...</span>
-                    </div>
-                    <span className="empty_layer"></span>
-                </div>
-            </>
-        );
-    }
+    // if (loading) {
+    //     return (
+    //         <>
+    //             <div className="language_spinner">
+    //                 <div
+    //                     className="spinner-border text-warning language_spinner"
+    //                     role="status"
+    //                 >
+    //                     <span className="sr-only">Loading...</span>
+    //                 </div>
+    //                 <span className="empty_layer"></span>
+    //             </div>
+    //         </>
+    //     );
+    // }
     return (
         <StripeProvider>
             <BrowserRouter>
+                <RouteChangeHandler />
+
                 <Routes>
                     <Route path="/" element={<Layout />}>
                         <Route index element={<Index />} />
                         <Route path="/not-found" element={<NotFoundPage />} />
-
-                        {/* {checkLanguage
-              ? languageRoutes.map((item, indKey) => {
-                  // console.log('~~~~~~~~~~~~~~', item)
-                  return <Route {...item} key={indKey} />;
-                })
-              : null}
-
-            {!checkLanguage
-              ? withoutLanguageRoutes.map((item, indKey) => {
-                  // console.log('~~~~~~~~~~~~~~', item)
-                  return <Route {...item} key={indKey} />;
-                })
-              : null} */}
 
                         {finalLang === "en_US"
                             ? withoutLanguageRoutes.map((item, indKey) => {
@@ -201,10 +184,10 @@ const App = () => {
                             element={<ResetPassword />}
                         />
                         <Route path="/new-checkout" element={<NewCheckout />} />
-                        {/* <Route
+                        <Route
                             path="/online-booking"
                             element={<OnlineBooking />}
-                        /> */}
+                        />
                         <Route path="/wishlists" element={<WishlistView />} />
 
                         <Route

@@ -325,7 +325,8 @@
             "invalid": "此密碼重置令牌無效。",
             "expired": "代幣已經過期。",
             "thanks_message": "您的密碼已被重置。 請登錄以檢查事情。"
-        }
+        },
+        "back": "返回登入"
     },
     "payments": {
         "stripe": "信用卡。",

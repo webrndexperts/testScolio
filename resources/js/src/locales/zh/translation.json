@@ -373,7 +373,8 @@
             "invalid": "此密码重置令牌无效。",
             "expired": "代币已经过期。",
             "thanks_message": "您的密码已被重置。 请登录以检查事情。"
-        }
+        },
+        "back": "返回登录"
     },
     "payments": {
         "stripe": "信用卡。",

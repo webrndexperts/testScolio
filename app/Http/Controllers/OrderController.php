@@ -172,7 +172,7 @@ class OrderController extends Controller
 		// return response()->json(['id' => $shipment_shipping_id , 'name' => $shipment_method_name ]);
 		// die('sdfsdfs');
 		\App::setLocale($request->lang);
-		dd($order_data);
+		// dd($order_data);
 
 			// Handle the case where 'Image' key doesn't exist or decoding failed
 		$updated_grouped_product_attributes = json_encode($order_data['grouped_product_attributes'], JSON_UNESCAPED_UNICODE);
@@ -279,7 +279,7 @@ class OrderController extends Controller
 			$shipping_address_1 = !empty($order_data['shippingStreet']) ? $order_data['shippingStreet'] : '';
 			$shipping_address_2 = !empty($order_data['shippingApartment']) ? $order_data['shippingApartment'] : '';
 			$shipping_city = !empty($order_data['shippingTown']) ? $order_data['shippingTown'] : '';
-			$shipping_state = !empty($order_data['shipping_state']) ? $order_data['shipping_state'] : '';
+			$shipping_state = !empty($order_data['shippingState']) ? $order_data['shippingState'] : '';
 			$shipping_postcode = !empty($order_data['shippingPostcode']) ? $order_data['shippingPostcode'] : '';
 			$shipping_phone = !empty($order_data['shippingPhone']) ? $order_data['shippingPhone'] : '';
 		}

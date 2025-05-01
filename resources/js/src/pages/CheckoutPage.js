@@ -1302,17 +1302,6 @@ const CheckoutPage = (props) => {
             <TopBanner title={t("main-nav.CHECKOUT")} />
             <div className="checkout-new-page">
                 <div className="row">
-                    {/* {stripeLoader && (
-              <div className="language_spinner">
-                  <div
-                      className="spinner-border text-warning language_spinner"
-                      role="status"
-                  >
-                      <span className="sr-only">Loading...</span>
-                  </div>
-                  <span className="empty_layer"></span>
-              </div>
-          )} */}
                     <div className="col-md-6">
                         {leftLoader ? (
                             <div className="btn-loader">
