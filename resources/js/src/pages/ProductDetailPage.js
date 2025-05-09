@@ -320,10 +320,10 @@ const ProductDetailPage = () => {
    */
   const onBuyNowClick = async () => {
 
-    if (productDetail?.product_type === "digital" && productDetail?.slug === "x-ray-review-analysis-service") {
-      setShowXrayUploadModal(true);
-      return;
-    }
+    // if (productDetail?.product_type === "digital" && productDetail?.slug === "x-ray-review-analysis-service") {
+    //   setShowXrayUploadModal(true);
+    //   return;
+    // }
 
     // Implement your add to cart logic here
     let itemDataWithLanguage;
@@ -344,10 +344,10 @@ const ProductDetailPage = () => {
    */
   const handleAddToCart = async () => {
     // Implement your add to cart logic here
-    if (productDetail?.product_type === "digital" && productDetail?.slug === "x-ray-review-analysis-service") {
-      setShowXrayUploadModal(true);
-      return;
-    }
+    // if (productDetail?.product_type === "digital" && productDetail?.slug === "x-ray-review-analysis-service") {
+    //   setShowXrayUploadModal(true);
+    //   return;
+    // }
 
     let itemDataWithLanguage;
     if (isVariable) {
