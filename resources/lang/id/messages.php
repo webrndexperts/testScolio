@@ -51,6 +51,7 @@ return [
         'Contact Number' => 'Nomor Kontak',
         'Country' => 'Negara',
         'Your Message' => 'Pesan Anda',
-        'Image' => 'Gambar',
+        'Image' => 'Lampiran',
+        'Download File' => 'Unduh File',
     ],
 ];

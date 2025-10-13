@@ -1,4 +1,7 @@
 {
+    "minimum": {
+        "amount": "L'importo del tuo ordine non è accettabile"
+    },
     "banner": {
         "straightenSpine": "Raddrizza la tua colonna senza chirurgia",
         "sayGoodbye": "Abbraccia una vita libera dalla scoliosi: sperimenta l'innovazione delle soluzioni non invasive della nostra pluripremiata clinica. ",
@@ -176,6 +179,9 @@
         "cus_address":"Indirizzo"
     },
     "checkOut": {
+        "razorpay": "Dopo aver cliccato su 'Paga con RazorPay', verrai reindirizzato a RazorPay per completare l'acquisto in modo sicuro.",
+        "invalid form": "Modulo non valido",
+        "select_shipping":"Si prega di selezionare il metodo di spedizione",
         "Shipping_method":"Metodo di spedizione ",
         "Forgot Password":"Ha dimenticato la password",
         "send email":"Inserisci la tua email e ti invieremo un link per reimpostare la password.",
@@ -245,7 +251,7 @@
         "scolio_posture_corrector_size": "Taglia del Correttore di Postura Scolio",
         "gender" : "Genere",
         "Male": "Maschio",
-        "Female": "Femmina",    
+        "Female": "Femmina",
         "weight" : "Peso",
         "tool" : "Attrezzo",
         "height" : "Altezza",

@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-
 import { trimInputValues } from "../components/Helper";
 import { useAuth } from "../context/authContext";
 import { login, applyCoupon, getAddress, checkCoupon } from "../Api";
@@ -18,14 +17,12 @@ import {
     selectUrlLanguage,
     setUrlLanguage,
 } from "../reducers/languageSlice";
-
-import {
-    useStripe,
-    useElements,
-    CardElement,
-    CardNumberElement,
-} from "@stripe/react-stripe-js";
-
+// import {
+//     useStripe,
+//     useElements,
+//     CardElement,
+//     CardNumberElement,
+// } from "@stripe/react-stripe-js";
 import { Country, State } from "country-state-city";
 import ApiHook from "../components/CustomHooks/ApiHook";
 import { replaceItem, removeDirectBuyItem } from "../reducers/cartSlice";
@@ -33,12 +30,10 @@ import { useDispatch } from "react-redux";
 import creditCardType from "credit-card-type";
 import { userLogin } from "../reducers/authSlice";
 import { toast } from "react-toastify";
-
 import { CartLogin } from "../reducers/cartLogin";
 import useDynamicTitle from "../hooks/useDynamicTitle";
 import { setCheckoutDetails } from "../hooks/customFunctions";
 import TopBanner from "../components/TopBanner";
-
 import PayPal from "../images/PayPal.png";
 import payment_me from "../images/payment_me.png";
 import papal from "../images/papal.svg";
@@ -57,28 +52,28 @@ import {
 import { StripeView, PaypalButton } from "../components/payments";
 import LoaderIco from "../images/button-loader.svg";
 import ReCAPTCHA from "react-google-recaptcha";
+import RazorPayButton from "../components/payments/RazorPayButton";
 
 const API = process.env.REACT_APP_API_URL;
 
 const CheckoutPage = (props) => {
-    const stripe = useStripe();
+    const isApiCalling = useRef(false);
+    const [isDataReady, setIsDataReady] = useState(false);
+    // const stripe = useStripe();
     const dispatch = useDispatch();
-    const elements = useElements();
+    // const elements = useElements();
     const [currentLanguage, urlLanguage] = ApiHook();
     const [paymentError, setPaymentError] = useState(null);
-
     const { cart, directCart } = useSelector((state) => state.cart);
-
     const { authData, authLogin } = useSelector((state) => state.auth);
     const { lang } = useParams();
-
     const { i18n, t } = useTranslation();
     const navigate = useNavigate();
     const { state } = useLocation();
     const [couponMsg, setCouponMsg] = useState(null);
     const [selectedOption, setSelectedOption] = useState(null);
     const [shippingDetail, setShippingDetail] = useState();
-    const [shippingChecked, setShippingChecked] = useState(false);
+    const [shippingChecked, setShippingChecked] = useState(true);
     const [taxRate, setTaxRate] = useState(9);
     const [couponCode, setCouponCode] = useState(null);
     const [couponDetail, setCouponDetail] = useState(null);
@@ -104,10 +99,9 @@ const CheckoutPage = (props) => {
     const [cartType, setCartType] = useState("cart");
     const [captchaToken, setCaptchaToken] = useState("");
     const [captchaErr, setCaptchaErr] = useState(false);
-
     const [shippigCharges, setShippigCharges] = useState(0);
     const [totalPrice, setTotalPrice] = useState("0");
-    const [paymentType, setPaymentType] = useState("stripe");
+    const [paymentType, setPaymentType] = useState("razorpay");
     const [totalQuantity, setTotalQuantity] = useState(0);
     const [couponPrice, setCouponPrice] = useState("0");
     const [taxPrice, setTaxPrice] = useState("0");
@@ -115,10 +109,10 @@ const CheckoutPage = (props) => {
     const [payedByPaypal, setPayedByPaypal] = useState(false);
     const formRef = useRef({});
     const paypalRef = useRef({});
-
     const [stripeError, setStripeError] = useState(null);
     const [triggerCouponCheck, setTriggerCouponCheck] = useState(true);
     const [digital, setDigital] = useState(false);
+    const [checkoutData, setCheckOutData] = useState(null);
     const {
         register: loginForm,
         handleSubmit: handleLogin,
@@ -140,9 +134,11 @@ const CheckoutPage = (props) => {
         getValues: billingGetValues,
         setValue: billingSetValue,
         reset: billingReset,
-        formState: { errors: billingError },
-    } = useForm();
-
+        trigger,
+        watch,
+        formState: { errors: billingError, isValid: isBillingFormValid },
+    } = useForm({ mode: "onChange" });
+    const phoneValue = watch("phone");
     const [formData, setFormData] = useState({
         firstname: "",
         email: "",
@@ -150,18 +146,6 @@ const CheckoutPage = (props) => {
         changepassword: "",
         lastname: "",
     });
-
-    // const newArray = cartValues.map((item) => ({
-    //     title: item.title,
-    //     slug: item.slug,
-    //     price: item.price,
-    //     dimension_height: item.dimension_height,
-    //     dimension_length: item.dimension_length,
-    //     dimension_width: item.dimension_weight,
-    //     product_id: item.id,
-    //     sku: item.sku,
-    //     quantity: item.quantity,
-    // }));
 
     const newArray = cartValues.map((item) => {
         const baseItem = {
@@ -173,19 +157,20 @@ const CheckoutPage = (props) => {
             dimension_width: item.dimension_weight,
             product_id: item.id,
             sku: item.sku,
-            quantity: item.quantity
+            quantity: item.quantity,
         };
-    
-        // Only add xray_upload_id for X-ray products with an upload
-        if (item.productType === 'digital' && 
-            item.slug === 'x-ray-review-analysis-service' && 
-            item.xrayUploadId) {
+
+        if (
+            item.productType === "digital" &&
+            item.slug === "x-ray-review-analysis-service" &&
+            item.xrayUploadId
+        ) {
             return {
                 ...baseItem,
-                xray_upload_id: item.xrayUploadId
+                xray_upload_id: item.xrayUploadId,
             };
         }
-        
+
         return baseItem;
     });
 
@@ -198,7 +183,6 @@ const CheckoutPage = (props) => {
         Customized: item.attriuteCustomized,
         Gender: item.attriuteGender,
         Height: item.attriuteHeight,
-        // Image: item.attriuteImg,
         Language: item.attriuteLang,
         Size: item.attriuteSize,
         Tool: item.attriuteTool,
@@ -220,37 +204,18 @@ const CheckoutPage = (props) => {
                 navigate(`${urlLanguage}/checkout`);
             }
         });
-
         loginReset();
     };
 
-    /**
-     * Function to check dimensions of the product in the cart
-     * for getting shipping amount.
-     *
-     * @return Object value of dimensions
-     */
-    // const getShippingDimensions = async () => {
-    // 	var obj = {
-    // 	   _length: 0 , _weight: 0, _quantity: 0, _height: 0 , _actualWeight: 0 , _totalWeight: 0 ,
-    //    }
-    //    cartValues.forEach(item => {
+    const isDataValid = () => {
+        const shippingCountry = billingGetValues("shippingCountry");
+        const billingCountry = billingGetValues("country");
+        return (
+            cartValues?.length > 0 &&
+            (shippingChecked ? shippingCountry : billingCountry)
+        );
+    };
 
-    // 	   if(cartValues && item.productType !== "aws3-bucket-product") {
-    // 		   obj._quantity = (obj._quantity) ? obj._quantity : parseInt(item.quantity);
-
-    // 		   obj._length = (obj._length) ? obj._length : parseFloat(item.dimension_length).toFixed(2);
-    // 		   obj._weight = (obj._weight) ? obj._weight : parseFloat(item.dimension_weight).toFixed(2);
-    // 		   obj._height = (obj._height) ? obj._height : parseFloat(item.dimension_height).toFixed(2);
-    // 		   obj._actualWeight = (obj._actualWeight) ? obj._actualWeight : parseFloat(item.product_actual_weight).toFixed(2);
-    // 		   obj._totalWeight = (obj._totalWeight) ? obj._totalWeight : parseFloat(item.product_actual_weight).toFixed(2);
-    // 			// obj._totalWeight += parseFloat(item.product_actual_weight).toFixed(2) * parseInt(item.quantity);
-    // 		}
-
-    //    });
-
-    //    return obj;
-    // }
     const getShippingDimensions = async () => {
         var obj = {
             _length: 0,
@@ -260,16 +225,14 @@ const CheckoutPage = (props) => {
             _actualWeight: 0,
             _totalWeight: 0,
         };
-        cart.forEach((item) => {
-            if (item.productType !== "aws3-bucket-product") {
-                obj._quantity += parseInt(item.quantity); // Sum quantities
 
-                // Assuming you are adding up dimensions. You may want to use max dimensions instead of sum depending on your logic.
+        cartValues.forEach((item) => {
+            if (item.productType !== "aws3-bucket-product") {
+                obj._quantity += parseInt(item.quantity);
                 obj._length += parseFloat(item.dimension_length || 0);
                 obj._weight += parseFloat(item.dimension_weight || 0);
                 obj._height += parseFloat(item.dimension_height || 0);
-
-                // Total actual weight based on product weight and quantity
+                obj._width += parseFloat(item.dimension_weight || 0);
                 obj._actualWeight += parseFloat(
                     item.product_actual_weight || 0
                 );
@@ -279,180 +242,245 @@ const CheckoutPage = (props) => {
             }
         });
 
-        // Fixing decimal points for the return values
-        obj._length = obj._length.toFixed(2);
-        obj._weight = obj._weight.toFixed(2);
-        obj._height = obj._height.toFixed(2);
-        obj._actualWeight = obj._actualWeight.toFixed(2);
-        obj._totalWeight = obj._totalWeight.toFixed(2);
+        obj._length = parseFloat(obj._length.toFixed(2));
+        obj._weight = parseFloat(obj._weight.toFixed(2));
+        obj._height = parseFloat(obj._height.toFixed(2));
+        obj._actualWeight = parseFloat(obj._actualWeight.toFixed(2));
+        obj._totalWeight = parseFloat(obj._totalWeight.toFixed(2));
 
         return obj;
     };
-    const ChangeAddressSubmit = async (type = "shipping") => {
-        const dimensions = await getShippingDimensions();
-        if (dimensions) {
-            let data = {};
-            setLeftLoader(true);
-            data["contact_name"] = authData && authData.id ? authData.name : "";
-            data["contact_email"] =
-                authData && authData.id
-                    ? authData.email
-                    : "info@scoliolife.com";
-            data["parcels_box_length"] = dimensions._length;
-            data["parcels_box_width"] = dimensions._weight;
-            data["parcels_box_height"] = dimensions._height;
-            data["items_quantity"] = dimensions._quantity;
-            data["items_description"] = cartValues[0]?.title;
-            data["items_category"] = "Health & Beauty";
-            data["items_declared_currency"] = "SGD";
-            data["items_actual_weight"] = dimensions._actualWeight;
-            data["items_declared_customs_value"] = 1;
-            data["total_actual_weight"] = dimensions._totalWeight;
 
-            if (type == "billing") {
-                data["country_alpha2"] = billingGetValues("country")
-                    ? billingGetValues("country")
-                    : "";
-                data["state"] = billingGetValues("state")
-                    ? billingGetValues("state")
-                    : "Lorem";
-                data["city"] = billingGetValues("town")
-                    ? billingGetValues("town")
-                    : "Lorem";
-                data["postal_code"] = billingGetValues("postcode")
-                    ? billingGetValues("postcode")
-                    : "12345";
-            } else if (type == "new") {
+    const ChangeAddressSubmit = async (type = "shipping") => {
+        if (isApiCalling.current) {
+            return;
+        }
+        if (!isDataValid()) {
+            setLeftLoader(false);
+            return;
+        }
+        try {
+            isApiCalling.current = true;
+            setLeftLoader(true);
+
+            const dimensions = await getShippingDimensions();
+            if (!dimensions) {
+                setLeftLoader(false);
+                errorToast("Failed to calculate dimensions");
+                isApiCalling.current = false;
+                return;
+            }
+
+            let data = {
+                contact_name:
+                    authData && authData.id ? authData.name : "Customer",
+                contact_email:
+                    authData && authData.id
+                        ? authData.email
+                        : "info@scoliolife.com",
+                parcels_box_length: dimensions._length,
+                parcels_box_width: dimensions._weight,
+                parcels_box_height: dimensions._height,
+                items_quantity: dimensions._quantity,
+                items_description: cartValues[0]?.title || "Health Product",
+                items_category: "Health & Beauty",
+                items_declared_currency: "SGD",
+                items_actual_weight: dimensions._actualWeight,
+                items_declared_customs_value: 1,
+                total_actual_weight: dimensions._totalWeight,
+                items_sku: cartValues[0]?.sku || "",
+                items_hs_code: cartValues[0]?.hs_code || "",
+                items_origin_country_alpha2: "SG",
+            };
+
+            if (type === "billing") {
+                data.country_alpha2 = billingGetValues("country") || "";
+                data.state = billingGetValues("state") || "Lorem";
+                data.city = billingGetValues("town") || "Lorem";
+                data.postal_code = billingGetValues("postcode") || "12345";
+            } else if (type === "new") {
                 const address = localStorage.getItem("shippingCartAddress")
                     ? JSON.parse(localStorage.getItem("shippingCartAddress"))
-                    : "";
-                data["country_alpha2"] = billingGetValues("country")
-                    ? billingGetValues("country")
-                    : address?.country_alpha2;
-                data["state"] = billingGetValues("state")
-                    ? billingGetValues("state")
-                    : address?.state;
-                data["city"] = billingGetValues("town")
-                    ? billingGetValues("town")
-                    : address?.city;
-                data["postal_code"] = billingGetValues("postcode")
-                    ? billingGetValues("postcode")
-                    : address?.postal_code;
+                    : {};
+                data.country_alpha2 =
+                    billingGetValues("country") ||
+                    address?.country_alpha2 ||
+                    "";
+                data.state =
+                    billingGetValues("state") || address?.state || "Lorem";
+                data.city =
+                    billingGetValues("town") || address?.city || "Lorem";
+                data.postal_code =
+                    billingGetValues("postcode") ||
+                    address?.postal_code ||
+                    "12345";
             } else {
-                data["country_alpha2"] = billingGetValues("shippingCountry")
-                    ? billingGetValues("shippingCountry")
-                    : "";
-                data["state"] = billingGetValues("shippingState")
-                    ? billingGetValues("shippingState")
-                    : "Lorem";
-                data["city"] = billingGetValues("shippingTown")
-                    ? billingGetValues("shippingTown")
-                    : "Lorem";
-                data["postal_code"] = billingGetValues("shippingPostcode")
-                    ? billingGetValues("shippingPostcode")
-                    : "12345";
+                data.country_alpha2 = billingGetValues("shippingCountry") || "";
+                data.state = billingGetValues("shippingState") || "Lorem";
+                data.city = billingGetValues("shippingTown") || "Lorem";
+                data.postal_code =
+                    billingGetValues("shippingPostcode") || "12345";
             }
 
-            try {
-                // localStorage.removeItem("checkAddressSelect")
-                const shippingData = await axios.post(
-                    `${API}shipping-rates`,
-                    data
-                );
-                setLeftLoader(false);
-                if (!localStorage.getItem("checkAddressSelect")) {
-                    localStorage.setItem(
-                        "checkAddressSelect",
-                        JSON.stringify(shippingData?.data?.data[0])
-                    );
-                } else {
-                    const isCourierPresent = shippingData?.data?.data.some(
-                        (courier) =>
-                            courier.courier_id ===
-                            JSON.parse(
-                                localStorage.getItem("checkAddressSelect")
-                            )?.courier_id
-                    );
-                    if (isCourierPresent) {
-                        setSelectedOption(
-                            JSON.parse(
-                                localStorage.getItem("checkAddressSelect")
-                            )
-                        );
-                        setShippigCharges(
-                            JSON.parse(
-                                localStorage.getItem("checkAddressSelect")
-                            )?.total_charge
-                        );
-                    } else {
-                        localStorage.removeItem("checkAddressSelect");
-                        localStorage.removeItem("shippingData");
-                        setShippigCharges(
-                            shippingData?.data?.data[0].total_charge
-                        );
-                        setSelectedOption(shippingData?.data?.data[0]);
-                    }
-                }
-                localStorage.setItem(
-                    "shippingData",
-                    JSON.stringify(shippingData?.data)
-                );
-                setShippingDetail(shippingData?.data);
-                setSelectedOption(shippingData?.data?.data[0]);
-                setShippigCharges(shippingData?.data?.data[0].total_charge);
-                localStorage.setItem(
-                    "checkAddressSelect",
-                    JSON.stringify(shippingData?.data?.data[0])
-                );
-                var focusDiv = document.getElementById("shipping-options");
-                // console.log(shippingData.data.decodedData)
+            const response = await axios.post(`${API}shipping-rates`, data);
 
-                if (focusDiv) {
-                    focusDiv.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                    });
-                }
-            } catch (error) {
-                setLeftLoader(false);
-                console.log("Shipping details----erorr", error);
+            setLeftLoader(false);
+
+            if (!response.data.success) {
+                errorToast(
+                    response.data.message ||
+                        response.data.error ||
+                        "Failed to retrieve shipping rates"
+                );
+                return;
             }
+
+            const { data: rates, shipping_information } = response.data;
+
+            localStorage.setItem("shippingData", JSON.stringify(response.data));
+            setShippingDetail(response.data);
+
+            let selectedOption = rates[0];
+            const storedOption = localStorage.getItem("checkAddressSelect")
+                ? JSON.parse(localStorage.getItem("checkAddressSelect"))
+                : null;
+
+            if (
+                storedOption &&
+                rates.some(
+                    (courier) => courier.courier_id === storedOption.courier_id
+                )
+            ) {
+                selectedOption = storedOption;
+            } else {
+                localStorage.removeItem("checkAddressSelect");
+            }
+
+            localStorage.setItem(
+                "checkAddressSelect",
+                JSON.stringify(selectedOption)
+            );
+            setSelectedOption(selectedOption);
+            setShippigCharges(selectedOption.total_charge);
+
+            const focusDiv = document.getElementById("shipping-options");
+            if (focusDiv) {
+                focusDiv.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+            }
+
+            isApiCalling.current = false;
+        } catch (error) {
+            setLeftLoader(false);
+            localStorage.removeItem("shippingData");
+            localStorage.removeItem("checkAddressSelect");
+            setShippingDetail(null);
+            setSelectedOption(null);
+            setShippigCharges(0);
+            console.error(
+                "Shipping details error:",
+                error.response?.data?.message || error.message
+            );
+            errorToast(error.response?.data?.message || error.message);
+            isApiCalling.current = false;
         }
     };
 
-    // Refetch shipping details when shipping form data changes
-    useEffect(() => {
-        if (!shippingChecked) {
+    // Check if all required shipping fields are filled
+    const areShippingFieldsFilled = () => {
+        const shippingCountry = billingGetValues("shippingCountry");
+        const shippingState = billingGetValues("shippingState");
+        const shippingTown = billingGetValues("shippingTown");
+        const shippingPostcode = billingGetValues("shippingPostcode");
+        return (
+            shippingCountry &&
+            shippingState &&
+            // shippingTown &&
+            // shippingPostcode &&
+            cartValues?.length > 0
+        );
+    };
+
+    // Check if all required billing fields are filled
+    const areBillingFieldsFilled = () => {
+        const country = billingGetValues("country");
+        const state = billingGetValues("state");
+        const town = billingGetValues("town");
+        const postcode = billingGetValues("postcode");
+        return (
+            country &&
+            state &&
+            // town &&
+            // postcode &&
+            cartValues?.length > 0
+        );
+    };
+
+    // Handler for onBlur events on shipping fields
+    const handleShippingFieldBlur = () => {
+        if (shippingChecked && areShippingFieldsFilled()) {
             ChangeAddressSubmit("shipping");
         }
-    }, [billingGetValues("shippingCountry")]);
+    };
 
-    // Refetch shipping details when billing form data changes
-    useEffect(() => {
-        if (shippingChecked) {
+    // Handler for onBlur events on billing fields
+    const handleBillingFieldBlur = () => {
+        if (!shippingChecked && areBillingFieldsFilled()) {
             ChangeAddressSubmit("billing");
         }
-    }, [billingGetValues("country")]);
+    };
 
-    // const handleCardElementChange = (element) => (event) => {
-    // 	if (event.complete) {
-    // 		clearErrors(element);
-    // 	} else if (event.error) {
-    // 		setError(element, {
-    // 			type: "manual",
-    // 			message: event.error.message,
-    // 		});
-    // 	}
-    // }
+    // Initial data readiness check
+    useEffect(() => {
+        if (cartValues?.length > 0 && !digital) {
+            setIsDataReady(true);
+        }
+    }, [cartValues,digital]);
 
-    /**
-     * Function to handle change of the card elements.
-     *
-     * @return
-     */
+    // Handle initial load with stored address
+    useEffect(() => {
+        if (localStorage.getItem("shippingCartAddress") && isDataReady && !digital) {
+            ChangeAddressSubmit("new");
+        }
+    }, [isDataReady,digital]);
+
+    // Trigger shipping API when shipping country or state changes and shippingChecked is true
+    useEffect(() => {
+        if (shippingChecked && isDataReady) {
+            if (!selectedOption) {
+                localStorage.removeItem("checkAddressSelect");
+            }
+
+            ChangeAddressSubmit("shipping");
+        }
+    }, [
+        billingGetValues("shippingCountry"),
+        billingGetValues("shippingState"),
+        shippingChecked,
+        isDataReady,
+        directCart,
+    ]);
+
+    // Trigger billing API when billing country or state changes and shippingChecked is false
+    useEffect(() => {
+        if (!shippingChecked && isDataReady) {
+            if (!selectedOption) {
+                localStorage.removeItem("checkAddressSelect");
+            }
+            ChangeAddressSubmit("billing");
+        }
+    }, [
+        billingGetValues("country"),
+        billingGetValues("state"),
+        shippingChecked,
+        isDataReady,
+        directCart,
+    ]);
+
     const handleCardElementChange = (event) => {
         const { complete, elementType } = event;
-
         if (complete && elementType === "card") {
             const cardBrand = event.brand;
             setCardType(cardBrand);
@@ -466,31 +494,17 @@ const CheckoutPage = (props) => {
         setcheckCondition(false);
     };
 
-    /**
-     * Function to handle change of the shipping types in checkout page.
-     *
-     * @return
-     */
     const handleOptionChange = (e) => {
         var vall = JSON.parse(e.target.value);
-
         localStorage.setItem("checkAddressSelect", e.target.value);
         setSelectedOption(vall);
         setShippigCharges(vall.total_charge);
     };
 
-    /**
-     * Function to get coupon data so that discount can be managed
-     * as per the requirements.
-     *
-     * @return
-     */
     const getCouponData = () => {
         var _coupon = sessionStorage.getItem("discountCoupon");
-
         if (_coupon && typeof _coupon != "undefined") {
             _coupon = JSON.parse(_coupon);
-
             if (_coupon && _coupon.data && _coupon.data.coupon_name) {
                 checkCoupon({
                     coupon: _coupon.data.coupon_name,
@@ -513,14 +527,8 @@ const CheckoutPage = (props) => {
         }
     };
 
-    /**
-     * Function to apply coupon code to the checkout page.
-     *
-     * @return
-     */
     const applyCouponCode = async (data) => {
         data["user_id"] = authData && authData.id ? authData.id : "";
-
         const trimData = trimInputValues(data);
         applyCoupon(trimData)
             .then((response) => {
@@ -536,9 +544,7 @@ const CheckoutPage = (props) => {
                         autoClose: 5000,
                     });
                 }
-
                 couponReset();
-
                 setTimeout(() => {
                     setCouponMsg(null);
                 }, 10000);
@@ -548,11 +554,6 @@ const CheckoutPage = (props) => {
             });
     };
 
-    /**
-     * Function to remove discounted coupon price.
-     *
-     * @return
-     */
     const RemoveDiscount = () => {
         setCouponDetail(null);
         setCouponMsg(null);
@@ -560,11 +561,6 @@ const CheckoutPage = (props) => {
         setCouponCode(null);
     };
 
-    /**
-     * Function to get current user's address.
-     *
-     * @return
-     */
     const getUserAddress = async () => {
         let data = JSON.parse(localStorage.getItem("userData")),
             _options = {
@@ -577,11 +573,10 @@ const CheckoutPage = (props) => {
                 setStates,
                 setShippingStates,
                 page: "checkout",
+                trigger,
             };
-
         if (data && typeof data != "undefined") {
             var { user_data } = data;
-
             if (user_data && user_data.id) {
                 getAddress(user_data.id)
                     .then((response) => {
@@ -595,20 +590,14 @@ const CheckoutPage = (props) => {
             }
         } else {
             setCheckoutDetails(billingSetValue, {}, _options);
+            await trigger();
         }
     };
 
-    /**
-     * Function to get the shipping details for the selected country.
-     *
-     * @return
-     */
     const getShippingDetails = () => {
         let data = JSON.parse(localStorage.getItem("shippingData"));
         setShippingDetail(data);
-
         var oldVal = localStorage.getItem("checkAddressSelect");
-
         if (oldVal && typeof oldVal != "undefined" && oldVal !== "null") {
             var _val = JSON.parse(oldVal);
             setSelectedOption(_val);
@@ -627,11 +616,6 @@ const CheckoutPage = (props) => {
         }
     };
 
-    /**
-     * Function to handle change of billing country.
-     *
-     * @return
-     */
     const handleCountryChange = (selectedCountryCode, changeValue) => {
         const stateList = State.getStatesOfCountry(selectedCountryCode);
         changeValue(stateList);
@@ -643,38 +627,40 @@ const CheckoutPage = (props) => {
         billingSetValue("state", "");
         setSelectedState(null);
         handleCountryChange(selectedVal?.isoCode, setStates);
-
-        // ChangeAddressSubmit("billing");
+        trigger(["country", "state"]);
+        if (!shippingChecked && isDataReady && areBillingFieldsFilled()) {
+            ChangeAddressSubmit("billing");
+        }
     };
 
-    /**
-     * Function to handle change of billing state.
-     *
-     * @return
-     */
     const onStateChange = (selected) => {
         setSelectedState(selected);
         billingSetValue("state", selected?.name);
+        trigger("state");
+        if (!shippingChecked && isDataReady && areBillingFieldsFilled()) {
+            ChangeAddressSubmit("billing");
+        }
     };
 
-    /**
-     * Function to handle change of shipping country.
-     *
-     * @return
-     */
     const onShippingCountryChange = (selectedVal) => {
         setSelectedShippingCountry(selectedVal);
         billingSetValue("shippingCountry", selectedVal?.isoCode);
         billingSetValue("shippingState", "");
         setSelectedShippingState(null);
         handleCountryChange(selectedVal?.isoCode, setShippingStates);
-
-        // ChangeAddressSubmit();
+        trigger(["shippingCountry", "shippingState"]);
+        if (shippingChecked && isDataReady && areShippingFieldsFilled()) {
+            ChangeAddressSubmit("shipping");
+        }
     };
 
     const onShippingStateChange = (selected) => {
         setSelectedShippingState(selected);
         billingSetValue("shippingState", selected?.name);
+        trigger("shippingState");
+        if (shippingChecked && isDataReady && areShippingFieldsFilled()) {
+            ChangeAddressSubmit("shipping");
+        }
     };
 
     const handleShippingCountryChange = (e) => {
@@ -692,17 +678,11 @@ const CheckoutPage = (props) => {
 
     const checkForCoupon = () => {
         var _coupon = sessionStorage.getItem("discountCoupon");
-
         if (_coupon && typeof _coupon != "undefined") {
             setCouponDetail(JSON.parse(_coupon));
         }
     };
 
-    /**
-     * Function to get the tax rates from the api call.
-     *
-     * @return
-     */
     const taxRates = async () => {
         let data = {
             tax_rate: "9.00",
@@ -717,11 +697,6 @@ const CheckoutPage = (props) => {
         }
     };
 
-    /**
-     * Function to change the payment option.
-     *
-     * @return
-     */
     const changePaymentMethod = (val) => {
         setPaymentType(val);
     };
@@ -734,42 +709,31 @@ const CheckoutPage = (props) => {
         }
     };
 
-    useEffect(() => {
-        if (shippingChecked) {
-            ChangeAddressSubmit("billing");
-        } else {
-            ChangeAddressSubmit("shipping");
-        }
-    }, [shippingChecked]);
-
-    /**
-     * Function to trigger the checkout api and save
-     * values to the database so to keep a record on that.
-     *
-     * @return
-     */
     const checkOutMethod = async (data) => {
         try {
             const checkOutDat = await axios.post(`${API}orders-checkout`, data);
-
             if (checkOutDat?.data?.status === "true") {
+                // if (paymentType !== "razorpay") {
                 if (cartType == "directCart") {
                     dispatch(removeDirectBuyItem());
                 } else {
                     dispatch(replaceItem([]));
                     localStorage.removeItem("cart");
                 }
+                setCheckOutData(checkOutDat);
                 localStorage.removeItem("paypalPay");
+                localStorage.removeItem("razorpayPay");
                 sessionStorage.removeItem("discountCoupon");
                 localStorage.removeItem("shippingData");
                 localStorage.removeItem("checkAddressSelect");
+                    navigate(
+                        `${urlLanguage}/order/complete/${checkOutDat?.data?.order_id}`,
+                        { state: checkOutDat?.data?.order_id }
+                    );
+                // }
                 setPayedByPaypal(false);
                 scrollToTop();
                 setStripeLoader(false);
-                navigate(
-                    `${urlLanguage}/order/complete/${checkOutDat?.data?.order_id}`,
-                    { state: checkOutDat?.data?.order_id }
-                );
             }
         } catch (error) {
             console.log("checkOut error===========", error);
@@ -777,26 +741,15 @@ const CheckoutPage = (props) => {
         }
     };
 
-    /**
-     * Function to generate any static random number of 6 digits.
-     *
-     * @return Number generated randomly.
-     */
     const generateRandomNumber = () => {
         const number = Math.floor(100000 + Math.random() * 900000);
         return number;
     };
 
-    /**
-     * Function to manage the paypal payments by saving them to the records.
-     *
-     * @return
-     */
     const paypalPaymentApprove = async (data) => {
         if (data && data.id) {
             setPayedByPaypal(true);
             localStorage.setItem("paypalPay", JSON.stringify(data));
-            // handlebilling(BillingSubmit)();
             formRef.current.requestSubmit();
         } else {
             setPayedByPaypal(false);
@@ -808,97 +761,100 @@ const CheckoutPage = (props) => {
         console.log("------------paypal payment failed", data);
     };
 
-    /**
-     * Function to create a token for the stripe payment
-     * and then make the payment to trigger next function @checkoutmethod.
-     *
-     * @return
-     */
-    const createStripePayment = async (data, cardElement) => {
-        try {
-            const { token, error } = await stripe.createToken(cardElement, {
-                name: authData && authData.id ? authData.name : "",
-                email:
-                    authData && authData.id
-                        ? authData.email
-                        : "scolio@customer.com",
-            });
+    // const createStripePayment = async (data, cardElement) => {
+    //     try {
+    //         const { token, error } = await stripe.createToken(cardElement, {
+    //             name: authData && authData.id ? authData.name : "",
+    //             email:
+    //                 authData && authData.id
+    //                     ? authData.email
+    //                     : "scolio@customer.com",
+    //         });
 
-            if (error) {
-                console.log("Error creating token:", error);
-                setStripeLoader(false);
-                setStripeError(error.message);
-            } else {
-                setPaymentError(null);
+    //         if (error) {
+    //             console.log("Error creating token:", error);
+    //             setStripeLoader(false);
+    //             setStripeError(error.message);
+    //         } else {
+    //             setPaymentError(null);
+    //             fetch(`${API}stripe-payment`, {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify({
+    //                     token: token.id,
+    //                     amount: parseFloat(totalPrice).toFixed(2),
+    //                     customer_name:
+    //                         authData && authData.id ? authData.name : "",
+    //                     customer_email:
+    //                         authData && authData.id
+    //                             ? authData.email
+    //                             : "scolio@customer.com",
+    //                     order_number:
+    //                         data && data["order_number"]
+    //                             ? data["order_number"]
+    //                             : "",
+    //                     captcha_token: captchaToken ? captchaToken : null,
+    //                     user_id: authData && authData.id ? authData.id : "",
+    //                     mode: process.env.REACT_APP_PAYMENT_MODE,
+    //                 }),
+    //             })
+    //                 .then((response) => response.json())
+    //                 .then((responsedata) => {
+    //                     console.log("payment success", responsedata);
+    //                     if (responsedata && responsedata.success) {
+    //                         data["payment_id"] = responsedata?.charge.id;
+    //                         checkOutMethod(data);
+    //                     } else {
+    //                         errorToast(responsedata.message);
+    //                         setStripeLoader(false);
+    //                     }
+    //                 })
+    //                 .catch((error) => {
+    //                     console.log("Error sending token to server:", error);
+    //                     setStripeLoader(false);
+    //                 });
+    //         }
+    //     } catch (error) {
+    //         console.log("An error occurred:", error);
+    //         setStripeLoader(false);
+    //         setPaymentError("An error occurred during payment.");
+    //     }
+    // };
 
-                fetch(`${API}stripe-payment`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        token: token.id,
-                        amount: parseFloat(totalPrice).toFixed(2),
-                        customer_name:
-                            authData && authData.id ? authData.name : "",
-                        customer_email:
-                            authData && authData.id
-                                ? authData.email
-                                : "scolio@customer.com",
-                        order_number:
-                            data && data["order_number"]
-                                ? data["order_number"]
-                                : "",
-                        captcha_token: captchaToken ? captchaToken : null,
-                        user_id: authData && authData.id ? authData.id : "",
-                        mode: process.env.REACT_APP_PAYMENT_MODE,
-                    }),
-                })
-                    .then((response) => response.json())
-                    .then((responsedata) => {
-                        console.log("payment success", responsedata);
-
-                        if (responsedata && responsedata.success) {
-                            data["payment_id"] = responsedata?.charge.id;
-                            checkOutMethod(data);
-                        } else {
-                            // toast.error(t('payments.error'));
-                            errorToast(responsedata.message);
-                            setStripeLoader(false);
-                        }
-                    })
-                    .catch((error) => {
-                        console.log("Error sending token to server:", error);
-                        setStripeLoader(false);
-                    });
-            }
-        } catch (error) {
-            console.log("An error occurred:", error);
-            setStripeLoader(false);
-            setPaymentError("An error occurred during payment.");
-        }
-    };
-
-    /**
-     * Function to show toast for the error messages.
-     *
-     * @return
-     */
     const errorToast = (message) => {
         toast.error(message, { className: "full-red-alert", autoClose: 5000 });
         var main = document.getElementById("stripe-card-view");
-
         if (main) {
             main.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     };
 
-    /**
-     * Function to handle form submissions for the checkout
-     * so that order can be placed.
-     *
-     * @return
-     */
+    const handlePaymentSuccess = (paymentData) => {
+        console.log(paymentData);
+        razorpayPaymentApprove(paymentData);
+    };
+
+    const handlePaymentError = (errorMessage) => {
+        setStripeLoader(false);
+        razorpayPaymentFailed({ description: errorMessage });
+    };
+
+    const razorpayPaymentApprove = async (data) => {
+        // const razorpayOrderId = localStorage.getItem('razropayOrderId')
+        if (data) {
+            // localStorage.setItem("razorpayPay", JSON.stringify(data));
+            formRef.current.requestSubmit();
+        } else {
+            toast.error(t("toast.payment.error"));
+        }
+    };
+
+    const razorpayPaymentFailed = async (error) => {
+        console.log("------------razorpay payment failed", error);
+        errorToast(error.description || "Razorpay payment failed");
+    };
     const BillingSubmit = async (data) => {
         var _couponName =
             couponDetail &&
@@ -906,13 +862,11 @@ const CheckoutPage = (props) => {
             couponDetail?.data?.coupon_name
                 ? couponDetail?.data?.coupon_name
                 : "";
-
         var _lang = "en";
         if (!currentLanguage.includes("en")) {
             var _arr = currentLanguage.split("_");
             _lang = _arr[1].toLowerCase();
         }
-
         data["userId"] = authData?.id;
         data["lang"] = _lang;
         data["language"] = currentLanguage;
@@ -920,13 +874,6 @@ const CheckoutPage = (props) => {
         data["shipping_id"] = selectedOption?.courier_id;
         data["shipping_rates_list"] = JSON.stringify(shippingRatesList);
         data["shippig_charges"] = shippigCharges;
-        // data["propductType"] =
-        //     cartValues &&
-        //     cartValues.length == 1 &&
-        //     cartValues[0].productType == "aws3-bucket-product"
-        //         ? "amazon"
-        //         : "normal";
-
         if (cartValues) {
             if (cartValues.some((item) => item.productType === "digital")) {
                 data["productType"] = "digital";
@@ -940,7 +887,7 @@ const CheckoutPage = (props) => {
                 data["productType"] = "normal";
             }
         }
-        data['same_address'] = shippingChecked;
+        data["same_address"] = shippingChecked;
         data["sub_total"] = parseFloat(totalPrice).toFixed(2);
         data["quantity"] = totalQuantity;
         data["total_amount"] = subTotalPrice;
@@ -959,7 +906,6 @@ const CheckoutPage = (props) => {
             var total_dimension_length = parseFloat(sum) + +(+parseFloat(_val));
             return parseFloat(total_dimension_length).toFixed(2);
         }, 0);
-
         data["dimension_weight"] = cartValues.reduce((sum, item) => {
             var _val = item.dimension_weight ? item.dimension_weight : 0;
             var total_dimension_weight = parseFloat(sum) + +(+parseFloat(_val));
@@ -973,12 +919,9 @@ const CheckoutPage = (props) => {
                 parseFloat(sum) + +(+parseFloat(_val));
             return parseFloat(total_product_actual_weight).toFixed(2);
         }, 0);
-
         data["grouped_product_attributes"] = grouped_product_attributes;
-        // data["grouped_product_attributes"] = grouped_product_attributes[0];
         data["stripe_total_price"] = totalPrice;
         data["payment_type"] = paymentType;
-
         const newRandomNumber = generateRandomNumber();
         data["order_number"] = newRandomNumber;
 
@@ -989,27 +932,39 @@ const CheckoutPage = (props) => {
                     checkOutMethod(data);
                 } else {
                     if (paymentType == "paypal") {
-                        // after paypal payment is done
                         var payed = localStorage.getItem("paypalPay");
                         payed = JSON.parse(payed);
-
                         data["payment_id"] = payed.id;
                         setStripeLoader(true);
                         checkOutMethod(data);
                     } else {
-                        // pay through stripe payment.
-                        if (!stripe) {
-                            console.log("Stripe.js has not yet loaded.");
-                            errorToast("Please try other payment method");
+                        // if (!stripe) {
+                        //     console.log("Stripe.js has not yet loaded.");
+                        //     errorToast("Please try other payment method");
+                        //     return;
+                        // }
+                        const isCouponCode = JSON.parse(
+                            sessionStorage.getItem("discountCoupon")
+                        );
+                        if (
+                            !isCouponCode &&
+                            totalPrice < process.env.REACT_APP_MININUM_AMOUNT
+                        ) {
+                            errorToast(
+                                t("minimum.amount", {
+                                    amount: process.env
+                                        .REACT_APP_MININUM_AMOUNT,
+                                })
+                            );
                             return;
                         }
-
-                        // const cardElement = elements.getElement(CardElement);
-
-                        // if (!cardElement) {
-                        // 	console.log("CardElement not found.");
-                        // 	return;
-                        // }
+                        const selectedCourirer = JSON.parse(
+                            localStorage.getItem("checkAddressSelect")
+                        );
+                        if (!digital && !selectedCourirer) {
+                            errorToast(t("checkOut.select_shipping"));
+                            return;
+                        }
 
                         // if (!captchaToken) {
                         //     setCaptchaErr(true);
@@ -1019,25 +974,37 @@ const CheckoutPage = (props) => {
                         //     });
                         //     return;
                         // }
-
-                        const cardElement =
-                            elements.getElement(CardNumberElement);
-
-                        const { error } = await stripe.createPaymentMethod({
-                            type: "card",
-                            card: cardElement,
-                        });
-
-                        if (error) {
-                            console.log("CardElement not found.", error);
-                            errorToast(error.message);
-                            setStripeError(error.message);
-                            return;
-                        }
-
+                        // const cardElement =
+                        //     elements.getElement(CardNumberElement);
+                        // const { error } = await stripe.createPaymentMethod({
+                        //     type: "card",
+                        //     card: cardElement,
+                        // });
+                        // if (error) {
+                        //     console.log("CardElement not found.", error);
+                        //     errorToast(error.message);
+                        //     setStripeError(error.message);
+                        //     return;
+                        // }
                         setStripeError(null);
                         setStripeLoader(true);
-                        createStripePayment(data, cardElement);
+
+                        // var razorpayPayed = localStorage.getItem("razorpayPay");
+                        // if (razorpayPayed) {
+                        //     razorpayPayed = JSON.parse(razorpayPayed);
+                        //     data["payment_id"] = razorpayPayed.payment_id;
+                        //     setStripeLoader(true);
+                        //     checkOutMethod(data);
+                        // }
+                        var razorpayOrderId  =
+                            localStorage.getItem("razropayOrderId");
+                        if (razorpayOrderId) {
+                            data["payment_id"] = razorpayOrderId ;
+                            setStripeLoader(true);
+                            checkOutMethod(data);
+                        }
+                        // setCheckOutData(data);
+                        // createStripePayment(data, cardElement);
                     }
                 }
             } else {
@@ -1050,11 +1017,7 @@ const CheckoutPage = (props) => {
             setcheckCondition(true);
         }
     };
-    /**
-     * Function to navigate page to checkout page..
-     *
-     * @return
-     */
+
     const navigateToCheckout = () => {
         navigate(`${urlLanguage}/checkout`);
     };
@@ -1065,7 +1028,6 @@ const CheckoutPage = (props) => {
                 setTriggerCouponCheck(false);
                 getCouponData();
             }
-
             billingSetValue("shippingFirstName", authData.name);
             billingSetValue("shippingEmail", authData.email);
             billingSetValue("firstName", authData.name);
@@ -1082,7 +1044,6 @@ const CheckoutPage = (props) => {
                 ? parseInt(isCouponCode?.data?.coupon_percent, 10)
                 : parseInt(isCouponCode?.coupon_percent, 10)
             : null;
-
         setCouponCode(percent);
         setCouponDetail(isCouponCode);
     }, [couponMsg]);
@@ -1099,7 +1060,6 @@ const CheckoutPage = (props) => {
             dispatch(setLanguage(i18n.language));
             navigateToCheckout();
         }
-
         if (typeof lang == "undefined") {
             dispatch(setUrlLanguage("en_US"));
             dispatch(setLanguage("en_US"));
@@ -1112,7 +1072,6 @@ const CheckoutPage = (props) => {
             if (Object.keys(billingError).length > 0) {
                 const firstErrorField = Object.keys(billingError)[0];
                 const errorElement = document.getElementById(firstErrorField);
-
                 if (errorElement) {
                     errorElement.scrollIntoView({
                         behavior: "smooth",
@@ -1127,19 +1086,41 @@ const CheckoutPage = (props) => {
     }, [billingError]);
 
     useEffect(() => {
-        // getCountryData();
-        // getShippingDetails();
         taxRates();
         getUserAddress();
         checkForCoupon();
     }, []);
 
+// Determine digital status based on cartValues
+const determineDigitalStatus = (cartItems) => {
+        const hasDigitalProduct = cartItems?.some(
+            (item) => item.productType === "digital"
+        );
+        const hasAwsProduct = cartItems?.some(
+            (item) => item.productType === "aws3-bucket-product"
+        );
+        const hasPhysicalProduct = cartItems?.some(
+            (item) =>
+                item.productType !== "digital" &&
+                item.productType !== "aws3-bucket-product"
+        );
+        return (hasDigitalProduct || hasAwsProduct) && !hasPhysicalProduct;
+};
+
     // useEffect(() => {
-    //     if (
-    //         cartValues &&
-    //         cartValues.length === 1 &&
-    //         cartValues[0].productType == "aws3-bucket-product"
-    //     ) {
+    //     const hasDigitalProduct = cartValues?.some(
+    //         (item) => item.productType === "digital"
+    //     );
+    //     const hasAwsProduct = cartValues?.some(
+    //         (item) => item.productType === "aws3-bucket-product"
+    //     );
+    //     const hasPhysicalProduct = cartValues?.some(
+    //         (item) =>
+    //             item.productType !== "digital" &&
+    //             item.productType !== "aws3-bucket-product"
+    //     );
+    //     console.log(hasDigitalProduct,hasAwsProduct,hasPhysicalProduct)
+    //     if ((hasDigitalProduct || hasAwsProduct) && !hasPhysicalProduct) {
     //         localStorage.removeItem("shippingData");
     //         localStorage.removeItem("shippingCartAddress");
     //         localStorage.removeItem("checkAddressSelect");
@@ -1149,24 +1130,28 @@ const CheckoutPage = (props) => {
     //     } else {
     //         getShippingDetails();
     //     }
-
     //     getCountryData();
     // }, [cartValues]);
 
     useEffect(() => {
-        const hasDigitalProduct = cartValues?.some(
-            (item) => item.productType === "digital"
-        );
-        const hasAwsProduct = cartValues?.some(
-            (item) => item.productType === "aws3-bucket-product"
-        );
-        const hasPhysicalProduct = cart?.some(
-            (item) =>
-                item.productType !== "digital" &&
-                item.productType !== "aws3-bucket-product"
-        );
-
-        if ((hasDigitalProduct || hasAwsProduct) && !hasPhysicalProduct) {
+        // if (directCart && directCart.length) {
+        //     setCartValues(directCart);
+        //     setCartType("directCart");
+        // } else {
+        //     setCartValues(cart);
+        //     setCartType("cart");
+        // }
+        let cartItems = [];
+        if (directCart && directCart.length) {
+            cartItems = directCart;
+            setCartType("directCart");
+        } else {
+            cartItems = cart;
+            setCartType("cart");
+        }
+        setCartValues(cartItems);
+        // Set digital status based on cartItems
+        if (determineDigitalStatus(cartItems)) {
             localStorage.removeItem("shippingData");
             localStorage.removeItem("shippingCartAddress");
             localStorage.removeItem("checkAddressSelect");
@@ -1174,24 +1159,14 @@ const CheckoutPage = (props) => {
             setShippigCharges(0);
             setDigital(true);
         } else {
+            setDigital(false);
             getShippingDetails();
         }
-
         getCountryData();
-    }, [cartValues]);
-
-    useEffect(() => {
-        if (directCart && directCart.length) {
-            setCartValues(directCart);
-            setCartType("directCart");
-        } else {
-            setCartValues(cart);
-            setCartType("cart");
-        }
     }, [directCart, cart]);
 
     const onCaptchaChange = (value) => {
-        setCaptchaToken(value); // Store the token generated by reCAPTCHA
+        setCaptchaToken(value);
         setCaptchaErr(false);
     };
 
@@ -1234,6 +1209,7 @@ const CheckoutPage = (props) => {
         shippingStates,
         onShippingCountryChange,
         onShippingStateChange,
+        handleShippingFieldBlur,
     };
 
     let billingProps = {
@@ -1247,6 +1223,7 @@ const CheckoutPage = (props) => {
         selectedState,
         onStateChange,
         states,
+        handleBillingFieldBlur,
     };
 
     let shipProviderProps = {
@@ -1271,6 +1248,7 @@ const CheckoutPage = (props) => {
         t,
         authData,
         paypalPaymentFailed,
+        isFormValid: isBillingFormValid,
     };
 
     let loginProps = {
@@ -1285,18 +1263,18 @@ const CheckoutPage = (props) => {
     let payProps = {
         setPaymentType,
         stripeProps,
+        amount: totalPrice,
+        currency: "SGD",
         t,
+        user: authData,
         onCaptchaChange,
         setCaptchaToken,
         captchaErr,
         paymentType,
-    };
-    useEffect(() => {
-        if (localStorage.getItem("shippingCartAddress")) {
-            ChangeAddressSubmit("new");
-        }
-    }, []);
 
+        onPaymentSuccess: handlePaymentSuccess, // Pass success callback
+        onPaymentError: handlePaymentError, // Pass error callback
+    };
     return (
         <Fragment>
             <TopBanner title={t("main-nav.CHECKOUT")} />
@@ -1308,26 +1286,7 @@ const CheckoutPage = (props) => {
                                 <img src={LoaderIco} alt="loader-button" />
                             </div>
                         ) : null}
-
                         <div className="checkout-left">
-                            {/*<h6 className='express-text'>{t("checkOut.Express Checkout")}</h6>
-							<div className='express-checkout-design'>
-								<div className={`payment-div ${(paymentType == 'paypal') ? 'active' : ''}`}>
-									<button type="button" onClick={() => changePaymentMethod('paypal')}>
-										<img src={PayPal} alt="" />
-									</button>
-								</div>
-
-								<div className={`payment-div ${(paymentType == 'stripe') ? 'active' : ''}`}>
-									<button type="button" className='payment_me' onClick={() => changePaymentMethod('stripe')}>
-										<img src={payment_me} alt="" />
-									</button>
-								</div>
-							</div>
-
-							<p className='or-design'>{t("checkOut.or")}</p>
-							<hr></hr>*/}
-
                             {!authLogin ? (
                                 <Fragment>
                                     <div className="login-check">
@@ -1340,45 +1299,32 @@ const CheckoutPage = (props) => {
                                             {t("checkOut.Click here to login")}
                                         </Link>
                                     </div>
-
                                     <CheckoutLogin {...loginProps} />
                                 </Fragment>
                             ) : null}
-
-                            {/*<input type="text" id="" name="" placeholder="Phone number or email" required/>*/}
-
                             <div className="deliver-check">
                                 <h2> {t("checkOut.Billing Address")}</h2>
-
                                 <form
                                     onSubmit={handlebilling(BillingSubmit)}
                                     ref={formRef}
                                 >
                                     <BillingAddressForm {...billingProps} />
-
                                     {!digital && (
                                         <ShippingOptions
                                             {...shipProviderProps}
                                         />
                                     )}
-
                                     {!digital && (
                                         <div className="shipping-checkbox">
                                             <label className="billing-same">
                                                 <input
                                                     type="checkbox"
                                                     name="sameadr"
-                                                    checked={
-                                                        shippingChecked ===
-                                                        false
-                                                            ? "checked"
-                                                            : ""
-                                                    }
+                                                    checked={shippingChecked}
                                                     onChange={
                                                         handleShippingAddress
                                                     }
                                                 />
-
                                                 <b className="text-dark">
                                                     {t(
                                                         "checkOut.Ship To A Different Address"
@@ -1387,25 +1333,17 @@ const CheckoutPage = (props) => {
                                             </label>
                                         </div>
                                     )}
-
-                                    {shippingChecked === false && !digital ? (
+                                    {shippingChecked && !digital ? (
                                         <Fragment>
-                                            {/*<h2 className='method-ses'>{t("checkOut.Ship To A Different Address")}</h2>*/}
                                             <ShippingAddressFields
                                                 {...shippingProps}
                                             />
                                         </Fragment>
                                     ) : null}
-
                                     {totalPrice != "0" ? (
                                         <PaymentsListView {...payProps} />
-                                    ) : null}
-                                    {/* <ReCAPTCHA
-                    sitekey={reCaptchaSiteKey} // Replace with your reCAPTCHA Enterprise site key
-                    onChange={onCaptchaChange}
-                  />
-             */}
-
+                                    ) : // <RazorPayButton   {...payProps}/>
+                                    null}
                                     <div className="checkbox-card">
                                         <input
                                             type="checkbox"
@@ -1418,7 +1356,6 @@ const CheckoutPage = (props) => {
                                             {t("checkOut.Information")}
                                         </label>
                                     </div>
-
                                     <p className="form-row validate-required mt-4">
                                         <label className="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
                                             <input
@@ -1457,7 +1394,6 @@ const CheckoutPage = (props) => {
                                             value="1"
                                         />
                                     </p>
-
                                     {!checkCondition && (
                                         <span className="woocommerce-terms-and-conditions-checkbox-text text-danger">
                                             {t(
@@ -1465,10 +1401,6 @@ const CheckoutPage = (props) => {
                                             )}{" "}
                                         </span>
                                     )}
-                                    {/* <span className="woocommerce-terms-and-conditions-checkbox-text text-danger">
-                    {t("checkOut.Please check the terms and conditions")}{" "}
-                  </span> */}
-
                                     {stripeLoader ? (
                                         <>
                                             <Circles
@@ -1496,18 +1428,36 @@ const CheckoutPage = (props) => {
                                       !payedByPaypal ? (
                                         <PaypalButton {...paypalProps} />
                                     ) : (
-                                        <button
-                                            className="checkout-submit"
-                                            type="submit"
-                                        >
-                                            {t("CART12.Proceed to checkout")}
-                                        </button>
+                                        // <button
+                                        //     className="checkout-submit"
+                                        //     type="submit"
+                                        // >
+                                        //     {t("CART12.Proceed to checkout")}
+                                        // </button>
+
+                                        <RazorPayButton
+                                            amount={totalPrice}
+                                            currency={"SGD"}
+                                            user={authData}
+                                            onPaymentSuccess={
+                                                handlePaymentSuccess
+                                            }
+                                            onPaymentError={handlePaymentError}
+                                            t={t}
+                                            billingError={billingError}
+                                            isFormValid={isBillingFormValid}
+                                            phone={phoneValue}
+                                            cart={cartValues}
+                                            checkoutData={checkoutData}
+                                            urlLanguage={urlLanguage}
+                                            cartType={cartType}
+                                            digital={digital}
+                                        />
                                     )}
                                 </form>
                             </div>
                         </div>
                     </div>
-
                     <CheckoutSidebar {...sidebarProps} />
                 </div>
             </div>

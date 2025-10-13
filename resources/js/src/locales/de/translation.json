@@ -1,4 +1,7 @@
 {
+     "minimum": {
+        "amount": "Ihr Bestellbetrag ist nicht akzeptabel"
+    },
     "banner": {
         "straightenSpine": "Richten Sie Ihre Wirbelsäule ohne Operation aus",
         "sayGoodbye": "Sagen Sie Ihrer Skoliose mit den bahnbrechenden nicht invasiven Methoden unserer preisgekrönten Klinik auf Wiedersehen.",
@@ -198,7 +201,7 @@
         "Send these credentials via email.":"Senden Sie diese Anmeldeinformationen per E-Mail.",
         "forgotPassword": "Haben Sie Ihr Passwort vergessen?"
     },
-   
+
     "order_Information": {
         "Dashboard":"Armaturenbrett",
         "Log out":"Ausloggen",
@@ -240,6 +243,9 @@
         "cus_address":"Adresse"
     },
     "checkOut":{
+        "razorpay": "Nachdem Sie auf 'Mit RazorPay bezahlen' geklickt haben, werden Sie zu RazorPay weitergeleitet, um Ihren Einkauf sicher abzuschließen.",
+        "invalid form": "Ungültiges Formular",
+        "select_shipping":"Bitte wählen Sie die Versandart",
         "Shipping_method":"Versandart",
         "Forgot Password":"Passwort vergessen",
         "send email":"Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.",

@@ -1,11 +1,11 @@
-@extends('layouts.app')
-@section('content')
+@extends('backend.layouts.master')
+@section('main-content')
  {!! Menu::render() !!}
 
 @endsection
   
 
 
-@push('script')
+@push('scripts')
     {!! Menu::scripts() !!}
 @endpush

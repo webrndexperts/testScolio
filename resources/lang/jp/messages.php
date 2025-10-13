@@ -51,6 +51,7 @@ return [
         'Contact Number' => '電話番号',
         'Country' => '国',
         'Your Message' => 'メッセージ内容',
-        'Image' => '画像',
+        'Image' => '添付ファイル',
+        'Download File' => 'ファイルをダウンロード',
     ],
 ];

@@ -53,7 +53,8 @@ return [
         'Contact Number'=>'Contact Number',
         'Country'=>'Country',
         'Your Message'=>'Your Message',
-        'Image'=>'Image',
+        'Image'=>'Attachments',
+        'Download File' => 'Download File',
     ],
 
 ];

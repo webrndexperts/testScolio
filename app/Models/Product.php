@@ -41,7 +41,7 @@ class Product extends Model
             // ->orderByDesc('rate')
             // ->orderByDesc('created_at');
     // }
-	
+
 	public function aws3_bucket_product(){
        // return $this->hasMany('App\Models\Aws3Bucket','product_id','id')->with('order')->orderBy('id','DESC');
         return $this->hasMany('App\Models\Aws3Bucket','product_id','id')->with('order')->orderBy('id','ASC');
@@ -55,24 +55,23 @@ class Product extends Model
     }
 	  // public static function getProductBySlug($slug, $language)
 	// {
-	
+
 		// $product = Product::with(['cat_info', 'rel_prods', 'product_review', 'aws3_bucket_product','product_dropdown_attribute'])
 			// ->where('slug', $slug)
 			// ->where('lang', $language)
 			// ->first();
 
-		
+
 		// if ($product) {
 			// return $product;
 		// } else {
-		
+
 			// return null;
 		// }
 	// }
-	
-	
-		
-	
+
+
+
 	public static function getProductBySlug($slug, $language)
    {
     $product = Product::with(['cat_info', 'rel_prods','product_review', 'aws3_bucket_product', 'product_dropdown_attribute'])
@@ -87,10 +86,10 @@ class Product extends Model
         return null;
     }
    }
-	
+
     /**
      * Attribute to get list of the wishlist added to particular user.
-     * 
+     *
      * @return Wishlist values.
      */
 	public function getWishlistAttribute() {
@@ -99,14 +98,14 @@ class Product extends Model
         if ($userId) {
             return $this->hasOne(Wishlist::class, 'product_id')->where('user_id', $userId)->first();
         }
-        
+
         return null;
     }
 
 	public static function getAllProductByLanguageApi( $lang = 'en_SG') {
         return Product::with(['cat_info'])->where('lang',$lang)->orderBy('id','DESC')->get();
     }
-	
+
     public static function countActiveProduct(){
         $data=Product::where('status','active')->count();
         if($data){
@@ -126,6 +125,6 @@ class Product extends Model
     public function brand(){
         return $this->hasOne(Brand::class,'id','brand_id');
     }
-	
+
 
 }

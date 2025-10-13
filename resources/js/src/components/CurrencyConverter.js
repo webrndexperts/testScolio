@@ -10,7 +10,6 @@ const CurrencyConverter = ({ currency }) => {
     const [loading, setLoading] = useState(false);
     
     const currentLanguage = useSelector(selectLanguage); 
-console.log(currency)
     const languageCurrencyMap = {
         en_US: { code: "USD", symbol: "$" }, // United States
         en_UK: { code: "GBP", symbol: "£" }, // United Kingdom

@@ -8,13 +8,6 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- <meta name="robots" content="index, follow"> --}}
-    {{-- @if(View::shared('shouldNoIndex'))
-    <meta name="robots" content="noindex, nofollow">
-    @else
-        <meta name="robots" content="index, follow">
-    @endif --}}
-
     @if(preg_match('/^(?:[a-z]{2}_[A-Z]{2}\/)?product\/exercices-de-scoliose/', Request::path()))
     <meta name="robots" content="noindex, nofollow">
     @else
@@ -73,7 +66,7 @@
             src="https://www.facebook.com/tr?id=999865305166859&ev=PageView&noscript=1" /></noscript>
     <!-- End Meta Pixel Code -->
     <!-- Google tag (gtag.js) -->
-   
+
 
     <script async src="https://www.googletagmanager.com/gtag/js?{{ $gtag ? $gtag->gtag : 'G-YE2CS9TKM0' }}"></script>
 
@@ -82,7 +75,8 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', "{{ $gtag ? $gtag->gtag : 'G-YE2CS9TKM0' }}" );
-
+        gtag('config', 'AW-1006314203');
+        gtag('config', 'AW-16748735355');
     </script>
 
 
@@ -99,7 +93,6 @@
     <script src="//cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="{{ url('/assets/js/floating-wpp.min.js') }}" defer="defer"></script>
-    
 </body>
 
 </html>

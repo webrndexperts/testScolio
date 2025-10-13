@@ -75,7 +75,7 @@ const ProductDetailPage = () => {
 
   const loadMore = () => {
     setIndex(index + 15);
-    
+
     if (index >= productDetail?.aws3_bucket_product?.length) {
       setIsCompleted(true);
     } else {
@@ -109,13 +109,45 @@ const ProductDetailPage = () => {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [showPrice, setShowPrice] = useState(false);
+  const [calculatedPrice, setCalculatedPrice] = useState(0);
 
-  
+
+  // Calculate price based on current selections
+  const calculatePrice = () => {
+    if (!itemData?.price) return 0;
+    
+    let finalPrice = parseFloat(itemData.price);
+    
+    if (slug === "exercise-dvd") {
+      if (customized === "Yes" && tool === "USB") {
+        finalPrice = 80;
+      } else if (customized === "Yes" && tool === "DVD") {
+        finalPrice += 55;
+      } else if (customized === "No") {
+        finalPrice = itemData.price;
+      } else {
+        finalPrice = itemData.price; // fallback/default for this product
+      }
+    } else if (slug !== "scoliosis-exercises") {
+      if (customized === "Yes") {
+        finalPrice += 55;
+      }
+    }
+    
+    return finalPrice;
+  };
+
+  // Update calculated price when relevant states change
+  useEffect(() => {
+    if (itemData?.price) {
+      const newPrice = calculatePrice();
+      setCalculatedPrice(newPrice);
+    }
+  }, [itemData, customized, tool, slug]);
+
   const handleSelectSize = (size, name) => {
-  
     if (name == "tool") {
       setTool(size);
-
     } else if (name == "language") {
       setLanguages(size);
     } else if (name == "size") {
@@ -145,7 +177,7 @@ const ProductDetailPage = () => {
   /**
    * Function to check variations are selected
    * and if not then sends error to the view to select options from variations.
-   * 
+   *
    * @return Object values.
    */
   const checkVariationsData = async () => {
@@ -273,17 +305,35 @@ const ProductDetailPage = () => {
   /**
    * Function to check if values are there in variations then add values to cart
    * or add that to directly for the checkout to buy single product.
-   * 
+   *
    * @return Boolen values.
    */
+
+  console.log(typeof tool, tool, customized, typeof customized)
   const checkVariableAndAddToCart = async (type = 'cart') => {
     if (selectedSize && consultationSize && languages && customized && tool && image && gender && height && weight) {
       let finalPrice = itemData.price;
-      if (customized) {
-        if (customized === "Yes") {
+      if (slug === "exercise-dvd") {
+        if (customized === "Yes" && tool === "USB") {
+          finalPrice = 80;
+        } else if (customized === "Yes" && tool === "DVD") {
           finalPrice += 55;
         } else if (customized === "No") {
-          finalPrice = itemData.price; // No change
+          finalPrice = itemData.price;
+        } else {
+          finalPrice = itemData.price; // fallback/default for this product
+        }
+      } else if (slug === "scoliosis-exercises") {
+        // Do not change anything for this slug, keep backend price logic
+        finalPrice = itemData.price;
+      } else {
+        // Existing logic for other products
+        if (customized) {
+          if (customized === "Yes") {
+            finalPrice += 55;
+          } else if (customized === "No") {
+            finalPrice = itemData.price; // No change
+          }
         }
       }
       let itemDataWithLanguage = {
@@ -315,7 +365,7 @@ const ProductDetailPage = () => {
 
   /**
    * Function to add product directly for the checkout to buy single product.
-   * 
+   *
    * @return
    */
   const onBuyNowClick = async () => {
@@ -324,6 +374,11 @@ const ProductDetailPage = () => {
     //   setShowXrayUploadModal(true);
     //   return;
     // }
+
+    // Clear stale shipping data from localStorage
+
+    localStorage.removeItem("shippingData");
+    localStorage.removeItem("checkAddressSelect");
 
     // Implement your add to cart logic here
     let itemDataWithLanguage;
@@ -339,7 +394,7 @@ const ProductDetailPage = () => {
 
   /**
    * Function to add values to cart
-   * 
+   *
    * @return
    */
   const handleAddToCart = async () => {
@@ -437,11 +492,11 @@ const ProductDetailPage = () => {
       setProductPrice(parseInt(productDetail?.price));
     }
   }
-  
+
   const uploadImage = async (event) => {
     const { CustomizedImgage = null } = event;
     let _retImg = null;
-    
+
     if(CustomizedImgage && typeof CustomizedImgage != 'undefined' && CustomizedImgage.length) {
       const formData = new FormData();
       formData.append("CustomizedImgage", CustomizedImgage[0]);
@@ -460,31 +515,31 @@ const ProductDetailPage = () => {
       alert('Please upload an image and provide your email');
       return;
     }
-  
+
     try {
       // Upload the image
       const formData = new FormData();
       formData.append('xray_image', xrayImage);
       formData.append('email', email);
       formData.append('product_id', productDetail.id);
-      
+
       if (authData?.id) {
         formData.append('user_id', authData.id);
       }
-  
+
       const response = await axios.post(`${API}xray-upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-  
+
       // Add the upload reference to the cart item
       const itemDataWithXray = {
         ...itemData,
         xrayUploadId: response.data.upload_id,
         requiresXray: true
       };
-  
+
       // Dispatch to cart based on which action triggered this
       if (isProductAddedDirectly) {
         dispatch(addToDirectCart(itemDataWithXray));
@@ -493,7 +548,7 @@ const ProductDetailPage = () => {
         dispatch(addToCart(itemDataWithXray));
         navigate(`${urlLanguage}/cart`);
       }
-  
+
       setShowXrayUploadModal(false);
     } catch (error) {
       console.error('Error uploading X-ray:', error);
@@ -518,33 +573,6 @@ const ProductDetailPage = () => {
     else{
       dispatch(addToCart(itemData));
     }
-
-
-    // const formData = new FormData();
-    // formData.append("files", file);
-    // console.log("event", event);
-    // console.log("formData", formData);
-    // fetch(
-    //   "https://rndexperts.in/backend-laravel/api/v1/product/aws3/uploadimages",
-    //   {
-    //     method: "POST",
-    //     body: formData,
-    //   }
-    // )
-    //   .then(async (response) => {
-    //     if (!response.ok) {
-    //       throw new Error(
-    //         `File upload failed: ${response.status} - ${response.statusText}`
-    //       );
-    //     }
-    //     const imageResponse = await response.json();
-    //     console.log("Image upload successful:", imageResponse);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error uploading file:", error);
-    //   });
-        
-        // navigate(`${urlLanguage}/cart`);
   }
 
   const onAddCartClick = (URL) => {
@@ -584,14 +612,14 @@ const ProductDetailPage = () => {
           value: parseInt(obj.rate, 10),
         }));
 
-      
+
         const sum = numericData.reduce((acc, obj) => acc + obj.value, 0);
         const average = sum / data.product_review.length;
         setAverageRating(average.toFixed(3.5));
         setProductDetail(data);
         setUpdateAproxPrice(!updateAproxPrice)
         setLoading(false)
-        
+
         let _metaProps = {
           tags: (data && data.seo_meta_tag) ? data.seo_meta_tag : '',
           title: (data && data.seo_meta_title) ? data.seo_meta_title : '',
@@ -637,7 +665,7 @@ const ProductDetailPage = () => {
       })
       .then((response) => {
         const data = response.data;
-        
+
         setAwsData(data)
         })
         .catch((error) => {
@@ -646,9 +674,8 @@ const ProductDetailPage = () => {
     }catch(err){
       console.log(err)
     }
-    
-  }, [authData,authData?.id])
 
+  }, [authData,authData?.id])
   return (
     <>
       <TopBanner title={(productDetail && productDetail.title) ? productDetail.title : slug} />
@@ -663,26 +690,26 @@ const ProductDetailPage = () => {
       <div className="modal-content">
         <div className="modal-header">
           <h5 className="modal-title">Upload X-ray Image</h5>
-          <button 
-            type="button" 
-            className="btn-close" 
+          <button
+            type="button"
+            className="btn-close"
             onClick={() => setShowXrayUploadModal(false)}
           ></button>
         </div>
         <div className="modal-body">
           <p className="mb-4">Please upload your X-ray image for analysis</p>
-          
+
           <div className="mb-3">
             <label htmlFor="xrayUpload" className="form-label">X-ray Image</label>
-            <input 
-              className="form-control" 
-              type="file" 
+            <input
+              className="form-control"
+              type="file"
               id="xrayUpload"
               accept="image/*"
-              onChange={(e) => setXrayImage(e.target.files[0])} 
+              onChange={(e) => setXrayImage(e.target.files[0])}
             />
           </div>
-          
+
           <div className="mb-3">
             <label htmlFor="xrayEmail" className="form-label">Email address</label>
             <input
@@ -698,16 +725,16 @@ const ProductDetailPage = () => {
           </div>
         </div>
         <div className="modal-footer">
-          <button 
-            type="button" 
-            className="btn btn-secondary" 
+          <button
+            type="button"
+            className="btn btn-secondary"
             onClick={() => setShowXrayUploadModal(false)}
           >
             Cancel
           </button>
-          <button 
-            type="button" 
-            className="btn btn-primary" 
+          <button
+            type="button"
+            className="btn btn-primary"
             onClick={handleXrayUploadSubmit}
           >
             Upload & Continue
@@ -759,20 +786,23 @@ const ProductDetailPage = () => {
                         </span>
                       </Fragment>
                     )}
-                    
+
                     <p
                       dangerouslySetInnerHTML={{
                         __html: productDetail?.description,
                       }}
                     ></p>
                     {productDetail?.product_type === "variable-product" && (
-                      <ProductDropdown onSelectSize={handleSelectSize} />
+                      <ProductDropdown 
+                        onSelectSize={handleSelectSize} 
+                        calculatedPrice={calculatedPrice}
+                      />
                     )}
                     {showAlert && (
                       <p style={{ color: "red" }}>
                         {/* Please select a size before adding to cart. */}
                         {t("product-detail.select-some-product")}
-                    
+
                       </p>
                     )}
 
@@ -948,7 +978,7 @@ const ProductDetailPage = () => {
                           onClick={() => setRead((prevOpen) => !prevOpen)}
                         >
                            {t("Patients.read_more")}
-                        
+
                         </p>
                       </div>
                     ) : (
@@ -963,7 +993,7 @@ const ProductDetailPage = () => {
                           onClick={() => setRead((prevOpen) => !prevOpen)}
                         >
                           {t("Patients.read_less")}
-                          
+
                         </p>
                       </div>
                     )}
@@ -1030,7 +1060,7 @@ const ProductDetailPage = () => {
                         {t("product-detail.Confused")}
                       </p>
                     )}
-                    {/*  ((authData && authData.id) && (awsData && awsData?.data?.length)) ? true : false; 
+                    {/*  ((authData && authData.id) && (awsData && awsData?.data?.length)) ? true : false;
                           (initialPosts.length && !initialPosts[0]?.order && !initialPosts[0]?.order?.id))
                     */}
                     {(!CheckLogin || (awsData && awsData?.data?.length === 0)) && (
@@ -1040,7 +1070,7 @@ const ProductDetailPage = () => {
                       >
                         <label htmlFor="product_purchase_type">
                         {t("product-detail.Choose Product")}
-                    
+
                         </label>
                         <select
                           name="product_purchase_type"
@@ -1050,14 +1080,14 @@ const ProductDetailPage = () => {
                         >
                           <option value="" className="enuiry_meta">
                           {t("product-detail.Select an option")}
-                        
+
                           </option>
                           <option
                             value="stream_plus_download"
                             className="enuiry_meta"
                           >
                             {t("product-detail.Stream Scoliosis Exercises")}
-                           
+
                           </option>
                           <option
                             value="customised_streaming"
@@ -1070,7 +1100,7 @@ const ProductDetailPage = () => {
                         {errors.productOption && (
                           <p className="validations">
                             {t("product-detail.option")}
-                           
+
                           </p>
                         )}
                         <input
@@ -1096,7 +1126,7 @@ const ProductDetailPage = () => {
                               {errors.CustomizedImgage && (
                                 <p className="validations">
                                   {t("product-detail.Upload")}
-                                
+
                                 </p>
                               )}
                             </div>{" "}
@@ -1290,7 +1320,7 @@ const ProductDetailPage = () => {
 const ProductPriceView = (props) => {
   const { price, currency = "SGD" } = props;
   const [priceVal, setPriceVal] = useState(`$0.00 ${currency}`);
-  
+
   // create values
   const createValue = (val) => {
     return `$${parseFloat(val).toFixed(2)} ${currency}`;

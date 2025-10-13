@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 
-function ProductDropdown({ onSelectSize }) {
+function ProductDropdown({ onSelectSize, calculatedPrice }) {
   const [languages, setLanguages] = useState("");
   const [customized, setCustomized] = useState("");
   const [tool, setTool] = useState("");
@@ -325,7 +325,7 @@ function ProductDropdown({ onSelectSize }) {
           />
         </div>
       )}
-      {toolUSD && <div className="wau_wrapper_div">$55.00 SGD</div>}
+      {toolUSD && <div className="wau_wrapper_div">${calculatedPrice ? parseFloat(calculatedPrice).toFixed(2) : '0.00'} SGD</div>}
     </React.Fragment>
   );
 }

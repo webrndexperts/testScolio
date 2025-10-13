@@ -1,4 +1,7 @@
 {
+     "minimum": {
+        "amount": "您的订单金额不可接受"
+    },
     "banner": {
         "straightenSpine": "没有手术矫正脊柱",
         "sayGoodbye": "拥抱没有脊柱侧弯的生活：体验我们屡获殊荣的诊所的非侵入性解决方案的创新。",
@@ -176,6 +179,9 @@
         "cus_address":"地址"
     },
     "checkOut":{
+        "razorpay": "点击“使用 RazorPay 支付”后，您将被重定向至 RazorPay 以安全地完成购买。",
+        "invalid form": "无效的表单",
+        "select_shipping":"请选择配送方式",
         "Shipping_method":"郵寄方式",
         "Forgot Password":"忘記密碼 ",
         "send email":"輸入您的電子郵件，我們將向您發送用於重設密碼的連結。",

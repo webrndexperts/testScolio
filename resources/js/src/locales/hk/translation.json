@@ -1,4 +1,7 @@
 {
+    "minimum": {
+        "amount": "您的訂單金額不被接受"
+    },
     "banner": {
         "straightenSpine": "不需手術，矯正您的脊椎",
         "sayGoodbye": "我們屢獲殊榮的診所以突破性的非侵入性方法為您告別脊柱側彎。",
@@ -145,6 +148,9 @@
         "cus_address":"地址"
     },
     "checkOut": {
+        "razorpay": "點擊「使用 RazorPay 付款」後，您將被重定向到 RazorPay 安全完成購買。",
+        "invalid form": "表單無效",
+        "select_shipping":"請選擇送貨方式",
         "Returning customer?": "回頭客？",
         "Click here to login": "點擊這裡登入",
         "If you have shopped with us before, please enter yourdetails below. If you are a new customer, please proceed to the Billing section.": "如果您之前曾在我們這裡購物，請在下方輸入您的詳細資料。如果您是新客戶，請繼續前往結算部分。",

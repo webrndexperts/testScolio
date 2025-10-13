@@ -1,8 +1,12 @@
 {
+    "minimum": {
+        "amount": "Your order amount is not acceptable"
+    },
+
     "banner": {
         "straightenSpine": "Straighten Your Spine Without Surgery",
         "sayGoodbye": "Embrace a Life Free from Scoliosis: Experience the Innovation of Our Award-Winning Clinic's <br /> Non-Invasive Solutions.",
-        "treatScoliosis": "Treat Your Scoliosis Today",
+        "treatScoliosis": "Correct Your Scoliosis Today",
         "sayGoodbyeMY": "Embrace a Life Free from Scoliosis: Discover the Innovation of Our Award-Winning Clinic's Non-Invasive Solutions, now in Kuala Lumpur, Malaysia!"
     },
     "mom-testimonial": "Singaporean Mum's Scoliosis Experience",
@@ -11,7 +15,7 @@
         "subs": "Subscribe",
         "email": "Your email here....",
         "We Are Featured In": "We Are Featured In",
-        "The benefits of the world-class scoliosis treatment at ScolioLife™Clinic include": "The benefits of the world-class scoliosis treatment at ScolioLife™Clinic include "
+        "The benefits of the world-class scoliosis treatment at ScolioLife™Clinic include": "The benefits of the world-class scoliosis therapy at ScolioLife™Clinic include "
     },
     "footer-section": {
         "contact": "Contact Info",
@@ -21,9 +25,9 @@
         "facebook": "Like Us On Facebook"
     },
     "specials": {
-        "treated": "Scoliosis Treated",
+        "treated": "Scoliosis Therapy",
         "braced": "Scolioalign Braced",
-        "oversea_treated": "Overseas Patient Treated",
+        "oversea_treated": "Overseas Patient Therapy",
         "product_sold": "Scoliosis Product Sold"
     },
     "Patients": {
@@ -178,6 +182,9 @@
         "cus_address":"Address"
     },
     "checkOut":{
+        "razorpay": "After clicking 'Pay with RazorPay', you will be redirected to RazorPay to complete your purchase securely.",
+        "invalid form": "Invalid Form",
+        "select_shipping":"Please select shipping method",
         "Shipping_method":"Shipping method",
         "Forgot Password":"Forgot Password",
         "send email":"Enter your email and we'll send you a link to reset your password.",
@@ -238,7 +245,7 @@
         "description_tabs" : "Description",
         "additional_info_tabs" : "Additional Info",
         "ratings_tabs" : "Ratings"
-        
+
     },
     "product_dropdown":{
         "customized_report" : "Customized Report",
@@ -295,13 +302,13 @@
        "Michelle Goh Actress" : "Michelle Goh Actress",
        "Jakub Koniar  International Model": "Jakub Koniar  International Model",
        "Peter Tong Model And Actor": "Peter Tong Model And Actor",
-       "Olya Dzuba International Model" : "Olya Dzuba International Model", 
+       "Olya Dzuba International Model" : "Olya Dzuba International Model",
        "Richard Garcia Professional Footballer For  Premiere League For Hull City And Internationally For Australia ": "Richard Garcia Professional Footballer For  Premiere League For Hull City And Internationally For Australia ",
        "Paul Foster  Actor, Model And Host": "Paul Foster  Actor, Model And Host",
        "Antonino Russo International Model":  "Antonino Russo International Model",
        "Jayce Izuma International Model": "Jayce Izuma International Model",
        "Julian Low Acteur, Mannequin, Hôte": "Julian Low Acteur, Mannequin, Hôte",
-       "Patrick Holford Nutritionist And Author":"Patrick Holford Nutritionist And Author", 
+       "Patrick Holford Nutritionist And Author":"Patrick Holford Nutritionist And Author",
        "Yohan Passos International Model": "Yohan Passos International Model",
        "Melody Reilly International Model":  "Melody Reilly International Model",
        "Jee Choi International Model": "Jee Choi International Model",
@@ -311,7 +318,7 @@
        "Ekaterina Ilyukhina International Model":  "Ekaterina Ilyukhina International Model",
        "Natalia Gandina International Model": "Natalia Gandina International Model",
        "Ekaterina Nushtaeva International Model": "Ekaterina Nushtaeva International Model",
-       "Irina LysiukInternational Model": "Irina LysiukInternational Model", 
+       "Irina LysiukInternational Model": "Irina LysiukInternational Model",
        "Ekaterina Shaydurova International Model": "Ekaterina Shaydurova International Model",
        "Marina Vorobeva International Model":  "Marina Vorobeva International Model",
        "Michael TetsuoInternational Model":  "Michael TetsuoInternational Model",
@@ -352,7 +359,7 @@
         "Product": "Product",
         "Coupon": "Coupon:",
         "Shipping" : "Shipping"
-       
+
     },
     "whatsApp": {
         "title": "Chat with us on WhatsApp!",

@@ -52,4 +52,8 @@ class Widgets extends Model
         }
         return 0;
     }
+
+    public static function getAllDisclaimerLanguageApi($lang='en_SG'){
+        return 	Widgets::where('widgets_type', 'Disclaimer')->where('lang', $lang)->orderBy('id', 'ASC')->take(1)->get();
+    }
 }

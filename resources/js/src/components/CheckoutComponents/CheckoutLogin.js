@@ -20,7 +20,7 @@ const CheckoutLogin = (props) => {
 					onSubmit={handleLogin(Loginuser)}
 				>
 					<div className="col-md-6">
-						<label for="inputEmail4" className="form-label">
+						<label htmlFor="inputEmail4" className="form-label">
 							{t("checkOut.Username Or Email")} <span>*</span>
 						</label>
 						<input
@@ -38,7 +38,7 @@ const CheckoutLogin = (props) => {
 
 					<div className="col-md-6">
 						<label
-							for="inputPassword4"
+							htmlFor="inputPassword4"
 							className="form-label"
 						>
 							{t("checkOut.Password")} <span>*</span>

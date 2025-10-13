@@ -13,14 +13,14 @@ const ShippingOptions = (props) => {
 						{shippingDetail?.data?.map((item, index) => {
 					
 							return (
-								<li className="shipping__list_item">
+								<li className="shipping__list_item" key={index}>
 									<input
 										type="radio"
 										id={`option${index + 1}`}
 										name="options"
 										value={JSON.stringify(item)}
 										checked={
-											selectedOption?.courier_id === item.courier_id && selectedOption?.total_charge == item.total_charge
+											selectedOption?.courier_id === item.courier_id
 										}
 										onChange={handleOptionChange}
 									/>

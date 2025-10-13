@@ -1,101 +1,122 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { ImagePanorama, Viewer } from 'panolens';
-import { useSelector } from 'react-redux';
-import { selectLanguage } from '../reducers/languageSlice';
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import { ImagePanorama, Viewer } from "panolens";
+import { useSelector } from "react-redux";
+import { selectLanguage } from "../reducers/languageSlice";
 
-import Img1 from '../images/Waiting-Area-scaled.jpg';
-import Img2 from '../images/Front-Reception-scaled.jpg';
-import Img3 from '../images/Treatment-Room-scaled.jpg';
-import Img4 from '../images/Exercise-Room-scaled.jpg';
+import Img1 from "../images/Waiting-Area-scaled.jpg";
+import Img2 from "../images/Front-Reception-scaled.jpg";
+import Img3 from "../images/Treatment-Room-scaled.jpg";
+import Img4 from "../images/Exercise-Room-scaled.jpg";
+
+import MyImg1 from "../images/my-waiting.jpg";
+import MyImg2 from "../images/my-front.jpg";
+import MyImg3 from "../images/my-treatment.jpg";
+import MyImg4 from "../images/my-gym.jpg";
 
 const ImageRotator = (props) => {
-	const { id = 'rotatorCount', image } = props;
-	const containerRef = useRef(null);
-	const panorama = useRef(null);
-	const viewer = useRef(null);
-	const [fullPage, setFullPage] = useState(false);
-	const currentLanguage = useSelector(selectLanguage);
-	const getImageForLanguage = () => {
-		let ImgVal;
-		
-		  if (image === 'Img2') { ImgVal = Img2; }
-		  else if (image === 'Img3') { ImgVal = Img3; }
-		  else if (image === 'Img4') { ImgVal = Img4; }
-		  else { ImgVal = Img1; } // Default to Img1
+    const { id = "rotatorCount", image } = props;
+    const containerRef = useRef(null);
+    const panorama = useRef(null);
+    const viewer = useRef(null);
+    const [fullPage, setFullPage] = useState(false);
+    const currentLanguage = useSelector(selectLanguage);
+	
+    // const getImageForLanguage = () => {
+    // 	let ImgVal;
 
+    // 	  if (image === 'Img2') { ImgVal = Img2; }
+    // 	  else if (image === 'Img3') { ImgVal = Img3; }
+    // 	  else if (image === 'Img4') { ImgVal = Img4; }
+    // 	  else { ImgVal = Img1; } // Default to Img1
 
-		return ImgVal;
-	}
-	const createRotator = (ImgVal) => {
-		if (panorama.current || viewer.current) {
-	      	containerRef.current.innerHTML = '';
-	    }
+    // 	return ImgVal;
+    // }
 
-	    panorama.current = new ImagePanorama(ImgVal);
+    const getImageForLanguage = () => {
+        const isMalaysia = currentLanguage === "en_MY";
 
-	    viewer.current = new Viewer({ container: containerRef.current });      
-	    viewer.current.add(panorama.current);
-	    viewer.current.enableAutoRate();
-	    viewer.current.autoRotateSpeed = 1;
+        if (image === "Img2") return isMalaysia ? MyImg2 : Img2;
+        if (image === "Img3") return isMalaysia ? MyImg3 : Img3;
+        if (image === "Img4") return isMalaysia ? MyImg4 : Img4;
 
-	    var div = document.getElementById(id);
-	    if (div) {
-	    	var _last = div.lastChild;
+        // Default to Img1 / MyImg1
+        return isMalaysia ? MyImg1 : Img1;
+    };
 
-	    	if (_last) {
-		      	var numChildren = _last.children.length,
-		      	span = _last.children[numChildren - 2];
+    const createRotator = (ImgVal) => {
+        if (panorama.current || viewer.current) {
+            containerRef.current.innerHTML = "";
+        }
 
-		      	_last.classList.add('older-icons');
-		      	span.style.display = 'none';
-		    }
-	    }
-	}
+        panorama.current = new ImagePanorama(ImgVal);
 
-	const zoomIn = () => {
-		const fov = viewer.current.camera.fov - 5; // Adjust zoom increment as needed
-		viewer.current.camera.fov = Math.max(30, fov); // Limit FOV to prevent extreme zoom
-		viewer.current.camera.updateProjectionMatrix();
-	}
+        viewer.current = new Viewer({ container: containerRef.current });
+        viewer.current.add(panorama.current);
+        viewer.current.enableAutoRate();
+        viewer.current.autoRotateSpeed = 1;
 
-	const zoomOut = () => {
-		const fov = viewer.current.camera.fov + 5; // Adjust zoom increment as needed
-		viewer.current.camera.fov = Math.min(100, fov); // Limit FOV to prevent extreme zoom
-		viewer.current.camera.updateProjectionMatrix();
-	}
+        var div = document.getElementById(id);
+        if (div) {
+            var _last = div.lastChild;
 
-	const toggleFullscreen = () => {
-		if (document.fullscreenElement) {
-			document.exitFullscreen();
-			setFullPage(false);
-		} else {
-			containerRef.current.requestFullscreen().catch((err) => {
-				console.log('Failed to enter fullscreen mode:', err);
-			});
+            if (_last) {
+                var numChildren = _last.children.length,
+                    span = _last.children[numChildren - 2];
 
-			setFullPage(true);
-		}
-	}
+                _last.classList.add("older-icons");
+                span.style.display = "none";
+            }
+        }
+    };
 
-	useEffect(() => {
-		const ImgVal = getImageForLanguage();
-		createRotator(ImgVal);
-	}, [currentLanguage]); // Trigger update when language or image changes
+    const zoomIn = () => {
+        const fov = viewer.current.camera.fov - 5; // Adjust zoom increment as needed
+        viewer.current.camera.fov = Math.max(30, fov); // Limit FOV to prevent extreme zoom
+        viewer.current.camera.updateProjectionMatrix();
+    };
 
-	return (
-		<Fragment>
-			<div ref={containerRef} style={{ width: '100%', height: '300px', margin: '0 auto' }} id={id}></div>
+    const zoomOut = () => {
+        const fov = viewer.current.camera.fov + 5; // Adjust zoom increment as needed
+        viewer.current.camera.fov = Math.min(100, fov); // Limit FOV to prevent extreme zoom
+        viewer.current.camera.updateProjectionMatrix();
+    };
 
-			<div className="custom-buttons" >
-				<div className='Zoom-in'onClick={zoomIn}>
-					<i className="fa fa-plus" aria-hidden="true"></i>
-				</div>
-				<div className='Zoom-out'onClick={zoomOut}>
-					<i className="fa fa-minus" aria-hidden="true"></i>
-				</div>
-			</div>
-		</Fragment>
-	)
-}
+    const toggleFullscreen = () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+            setFullPage(false);
+        } else {
+            containerRef.current.requestFullscreen().catch((err) => {
+                console.log("Failed to enter fullscreen mode:", err);
+            });
+
+            setFullPage(true);
+        }
+    };
+
+    useEffect(() => {
+        const ImgVal = getImageForLanguage();
+        createRotator(ImgVal);
+    }, [currentLanguage]); // Trigger update when language or image changes
+
+    return (
+        <Fragment>
+            <div
+                ref={containerRef}
+                style={{ width: "100%", height: "300px", margin: "0 auto" }}
+                id={id}
+            ></div>
+
+            <div className="custom-buttons">
+                <div className="Zoom-in" onClick={zoomIn}>
+                    <i className="fa fa-plus" aria-hidden="true"></i>
+                </div>
+                <div className="Zoom-out" onClick={zoomOut}>
+                    <i className="fa fa-minus" aria-hidden="true"></i>
+                </div>
+            </div>
+        </Fragment>
+    );
+};
 
 export default ImageRotator;

@@ -203,7 +203,7 @@ const setCartSetValues = (setValue, values) => {
  * 
  * @return Boolen.
  */
-const setCheckoutDetails = (setValue, response, options = null) => {
+const setCheckoutDetails = async (setValue, response, options = null) => {
 	let values = { options };
 
 	if(response && response.status) {
@@ -238,8 +238,8 @@ const setCheckoutDetails = (setValue, response, options = null) => {
 			setValue('shippingEmail', billing_email);
 		}
 	}
-
 	setCartSetValues(setValue, values);
+	await options.trigger()
 
 	return true;
 }

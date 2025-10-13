@@ -51,6 +51,7 @@ return [
         'Contact Number' => 'Telefonnummer',
         'Country' => 'Land',
         'Your Message' => 'Ihre Nachricht',
-        'Image' => 'Bild',
+        'Image' => 'Anhänge',
+        'Download File' => 'Datei herunterladen',
     ],
 ];

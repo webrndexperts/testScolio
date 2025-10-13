@@ -23,7 +23,7 @@ import Track from '../Pagess/Scoliotrack';
 import Clinic from '../Pagess/Clinic';
 import AccountDetail from '../Pagess/AccountDetail';
 import OrdersComponent from '../Pagess/Orderss';
-import ConsultationForm from '../Pagess/BookConsulation';
+// import ConsultationForm from '../Pagess/BookConsulation';
 import Index from '../pages/Index';
 import ThanksOrderView from '../pages/ThanksOrderView';
 import OnlineBooking from '../pages/OnlineBooking';
@@ -129,10 +129,10 @@ const languageRoutes = [
 		path: "/:lang/order/complete/:orderId",
 		element: <ThanksOrderView />
 	},
-	{
-		path: "/:lang/ConsultationForm",
-		element: <ConsultationForm />
-	},
+	// {
+	// 	path: "/:lang/ConsultationForm",
+	// 	element: <ConsultationForm />
+	// },
 	{
 		path: "/:lang/online-booking",
 		element: <OnlineBooking />
@@ -241,10 +241,10 @@ const withoutLanguageRoutes = [
 		path: "/order/complete/:orderId",
 		element: <ThanksOrderView />
 	},
-	{
-		path: "/ConsultationForm",
-		element: <ConsultationForm />
-	},
+	// {
+	// 	path: "/ConsultationForm",
+	// 	element: <ConsultationForm />
+	// },
 	{
 		path: "/online-booking",
 		element: <OnlineBooking />

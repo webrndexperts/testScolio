@@ -1,4 +1,7 @@
 {
+    "minimum": {
+        "amount": "Le montant de votre commande n'est pas acceptable"
+    },
     "banner": {
         "straightenSpine": "Redressez votre colonne vertébrale sans chirurgie",
         "sayGoodbye": "Adoptez une vie sans scoliose: découvrez l'innovation des solutions non invasives de notre clinique primée.",
@@ -176,6 +179,9 @@
         "cus_address":"Adresse"
     },
     "checkOut":{
+        "razorpay": "Après avoir cliqué sur 'Payer avec RazorPay', vous serez redirigé vers RazorPay pour finaliser votre achat en toute sécurité.",
+        "invalid form": "Formulaire invalide",
+        "select_shipping":"Veuillez sélectionner le mode de livraison",
         "Shipping_to" : "Expédition à",
         "Shipping_method":"Mode de livraison",
         "Forgot Password":"Mot de passe oublié ",

@@ -52,14 +52,50 @@
           <textarea class="form-control" readonly>{{$post->description}}</textarea>
         </div>
 
-       @if($post->photo)
+       {{-- @if($post->photo)
 		<div class="form-group">
 			<label for="inputTitle" class="col-form-label">Image</label>
 			@foreach(json_decode($post->photo) as $imageUrl)
 				<img src="{{ $imageUrl }}" alt="{{ basename($imageUrl) }}" style="max-width: 110px;">
 			@endforeach
 		</div>
-	   @endif
+	   @endif --}}
+
+
+          @if($post->photo)
+          <div class="form-group">
+              <label for="inputTitle" class="col-form-label">Attachments</label>
+              @foreach(json_decode($post->photo) as $fileUrl)
+                  @php
+                      $ext = strtolower(pathinfo($fileUrl, PATHINFO_EXTENSION));
+                  @endphp
+
+                  @if(in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                      <div style="margin-bottom:10px;">
+                          <img src="{{ $fileUrl }}" alt="{{ basename($fileUrl) }}" style="max-width: 110px; display:block;">
+                      </div>
+                  @elseif(in_array($ext, ['pdf']))
+                      <div style="margin-bottom:10px;">
+                          <a href="{{ $fileUrl }}" target="_blank" class="btn btn-danger btn-sm">
+                              <i class="fas fa-file-pdf"></i> View PDF
+                          </a>
+                      </div>
+                  @elseif(in_array($ext, ['doc', 'docx', 'xls', 'xlsx', 'csv']))
+                      <div style="margin-bottom:10px;">
+                          <a href="{{ $fileUrl }}" target="_blank" class="btn btn-success btn-sm">
+                              <i class="fas fa-file-excel"></i> Download File ({{ strtoupper($ext) }})
+                          </a>
+                      </div>
+                  @else
+                      <div style="margin-bottom:10px;">
+                          <a href="{{ $fileUrl }}" target="_blank" class="btn btn-secondary btn-sm">
+                              <i class="fas fa-download"></i> Download File
+                          </a>
+                      </div>
+                  @endif
+              @endforeach
+          </div>
+      @endif
 
 		
 		

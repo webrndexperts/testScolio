@@ -45,6 +45,7 @@
 		<option value="Opening Hours" {{(($post->widgets_type=='Opening Hours')? 'selected' : '')}}>Opening Hours</option>
 		<option value="Scoliosis Results" {{(($post->widgets_type=='Scoliosis Results')? 'selected' : '')}}>Scoliosis Results</option>
 		<option value="Our Promise" {{(($post->widgets_type=='Our Promise')? 'selected' : '')}}>Our Promise</option>
+		<option value="Disclaimer" {{(($post->widgets_type=='Disclaimer')? 'selected' : '')}}>Disclaimer</option>
 		</select>
 		</div>
 

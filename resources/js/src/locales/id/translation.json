@@ -1,4 +1,7 @@
 {
+    "minimum": {
+        "amount": "Jumlah pesanan Anda tidak dapat diterima"
+    },
     "banner": {
         "straightenSpine": "Meluruskan tulang belakang tanpa operasi",
         "sayGoodbye": "Rangkullah Kehidupan yang Bebas dari Skoliosis: Rasakan Inovasi dari Solusi Non-Invasif Klinik Kami yang Memenangkan Penghargaan.",
@@ -176,6 +179,9 @@
         "cus_address":"Alamat"
     },
     "checkOut":{
+        "razorpay": "Setelah mengklik 'Bayar dengan RazorPay', Anda akan diarahkan ke RazorPay untuk menyelesaikan pembelian Anda dengan aman.",
+        "invalid form": "Formulir tidak valid",
+        "select_shipping":"Silakan pilih metode pengiriman",
         "Shipping_method":"Metode pengiriman",
         "Forgot Password":"Tidak ingat kata sandi",
         "send email":"Masukkan email Anda dan kami akan mengirimkan Anda tautan untuk mengatur ulang kata sandi Anda.",
@@ -237,7 +243,7 @@
         "description_tabs" : "Deskripsi",
         "additional_info_tabs" : "Informasi tambahan",
         "ratings_tabs" : "Peringkat"
-        
+
     },
     "product_dropdown":{
         "customized_report" : "Laporan yang Disesuaikan ",

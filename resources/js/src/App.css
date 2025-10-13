@@ -748,9 +748,6 @@ div#mobile_nav {
     padding: 80px 0;
 }
 
-.lang-item {
-    cursor: pointer;
-}
 
 .treatments-wrpper {
     background: #f4962f;
@@ -7262,6 +7259,20 @@ img.alignleft.attachment-medium.size-medium.posture_steps_img {
     width: auto;
 }
 @media (max-width: 767px) {
+    .quick-links {
+    padding-top: 25px;
+}
+.disclaimer-text p {
+    margin-right: 0 !important;
+}
+.footer-section .row {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.footer-section .col-sm-3 {
+    order: 8;
+}
     .discount-code-nam form.discount-form {
         display: block !important;
     }
@@ -10410,4 +10421,93 @@ h5.Shipping-infos {
     50% {
         transform: translateY(-15px);
     }
+}
+/* @keyframes show-text {
+  0% {
+    max-width: 0%;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  100% {
+    max-width: 100%;
+    opacity: 1;
+    overflow: visible;
+  }
+}
+
+.razorpay-button .slide-in-text {
+  display: inline-block;
+  animation: show-text 1s ease forwards;
+  max-width: 0%;
+  overflow: hidden;
+  white-space: nowrap;
+} */
+.razorpay-button-container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.razorpay-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-text-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.pay-with-text {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 2.5s forwards;
+  margin-right: 4px;
+}
+
+.razorpay-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: stayCenterThenSlideRight 3s ease-out forwards;
+  display: flex;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes stayCenterThenSlideRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  83.33% { /* 2.5s / 3s */
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+    position: static;
+  }
+}
+.disclaimer-text p {
+    margin-left: 0;
+    font-size: 14px !important;
+}
+
+.sg_disabled_lang {
+    opacity: 0.5;
+    cursor: auto;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }

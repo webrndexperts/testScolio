@@ -26,7 +26,9 @@
         "nguyendachuy/laravel-menu": "^1.0",
         "omise/omise-php": "^2.18",
         "pusher/pusher-php-server": "^5.0",
+        "razorpay/razorpay": "^2.9",
         "spatie/laravel-newsletter": "^4.11.0",
+        "spatie/laravel-sitemap": "^6.4",
         "srmklive/paypal": "~3.0",
         "stripe/stripe-php": "^13.10",
         "unisharp/laravel-filemanager": "^2.4.0"

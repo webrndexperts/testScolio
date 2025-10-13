@@ -119,9 +119,25 @@
                            <td
                               style="border:1px solid #e5e5e5;padding:12px">
 
-                              @foreach(json_decode($details['photo']) as $imageUrl)
+                              {{-- @foreach(json_decode($details['photo']) as $imageUrl)
                               <img src="{{ $imageUrl }}" alt="{{ basename($imageUrl) }}" style="max-width: 110px;">
-                                 @endforeach
+                                 @endforeach --}}
+
+                              @foreach(json_decode($details['photo']) as $fileUrl)
+                                 @php $ext = strtolower(pathinfo($fileUrl, PATHINFO_EXTENSION)); @endphp
+
+                                 @if(in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                    <div style="margin-bottom:10px;">
+                                          <img src="{{ $fileUrl }}" alt="{{ basename($fileUrl) }}" style="max-width: 110px; display:block;">
+                                    </div>
+                                 @else
+                                    <div style="margin-bottom:10px;">
+                                          <a href="{{ $fileUrl }}" target="_blank" style="color:#0073aa;">
+                                             {{ __('messages.myEmail.Download File') }} ({{ strtoupper($ext) }})
+                                          </a>
+                                    </div>
+                                 @endif
+                              @endforeach
 
                            </td>
                         </tr>

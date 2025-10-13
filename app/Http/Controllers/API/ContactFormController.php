@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\ContactForm;
 use App\Models\Settings;
+use App\Services\RecaptchaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
@@ -14,6 +15,12 @@ use Newsletter;
 
 class ContactFormController extends Controller
 {
+	public $recaptchaService;
+	public function __construct()
+	{
+		$secret = env('GOOGLE_RECAPTCHA_SECRET_KEY');
+        $this->recaptchaService = new RecaptchaService($secret);
+	}
 
 	public function contact_form_store(Request $request)
 	{
@@ -22,6 +29,12 @@ class ContactFormController extends Controller
 		$data = $request->all();
 
 		\App::setLocale($request->language);
+
+		$captcha_token = $request->recaptcha;
+        $captcha_response = $this->recaptchaService->verify($captcha_token);
+        if (!$captcha_response['success']) {
+            return response()->json(['success' => false, 'message' => 'Captcha validation failed.']);
+        }
 
 		// Check if files were uploaded
 		if ($request->hasFile('files')) {
@@ -88,7 +101,7 @@ class ContactFormController extends Controller
 			//$recipientEmail = 'webdev20222@gmail.com';
 			//$recipientEmail = 'shibashishoo007@gmail.com';
 			$sent_mail = Mail::to($user_email)->send(new MyMail($details));
-			$admin_sent_mail = Mail::to($recipientEmail)->cc($ccEmail)->send(new AdminCfMail($details));
+			// $admin_sent_mail = Mail::to($recipientEmail)->cc($ccEmail)->send(new AdminCfMail($details));
 
 			//$sent_mail = Mail::to($user_email)->send(new MyMail($details));
 			//if (!Newsletter::isSubscribed($user_email)) {

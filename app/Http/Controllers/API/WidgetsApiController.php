@@ -9,132 +9,137 @@ use Illuminate\Support\Facades\Cache;
 
 class WidgetsApiController extends Controller
 {
-  public function index()
+    public function index()
     {
         $xrays = Widgets::getAllWidgetsLanguageApi();
-		//dd($xrays);
+        //dd($xrays);
         return response()->json($xrays);
     }
 
     public function filterByLanguage($language)
     {
-		$cacheKey = "WidgetsfilterByLanguage_{$language}";
-		$data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
+        $cacheKey = "WidgetsfilterByLanguage_{$language}";
+        $data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
             // If the data is not in the cache, fetch it from the database or other source
             return Widgets::getAllWidgetsLanguageApi($language); // Replace with your actual data retrieval logic
-      });
-		
+        });
+
         return response()->json($data);
-    }	
-	 
-	 public function filterByBottomImage($language)
+    }
+
+    public function filterByBottomImage($language)
     {
-		//dd($language);
-		//$cacheKey = "WidgetsfilterBottomImage_{$language}";
-		//$data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
-            // If the data is not in the cache, fetch it from the database or other source
-            $data = Widgets::getAllBottomImageApi($language); // Replace with your actual data retrieval logic
-     // });
-		
+        //dd($language);
+        //$cacheKey = "WidgetsfilterBottomImage_{$language}";
+        //$data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
+        // If the data is not in the cache, fetch it from the database or other source
+        $data = Widgets::getAllBottomImageApi($language); // Replace with your actual data retrieval logic
+        // });
+
         return response()->json($data);
-    }	
-	
-	
-	public function ContactInfoWidget(){
-		
-	  $xrays = Widgets::getAllContactInfoLanguageApi();
+    }
+
+
+    public function ContactInfoWidget()
+    {
+
+        $xrays = Widgets::getAllContactInfoLanguageApi();
         return response()->json($xrays);
-		
-	}
-	
-	public function filterByLanguageContactWidgetInfo($language)
+
+    }
+
+    public function filterByLanguageContactWidgetInfo($language)
     {
-	//	$cacheKey = "filterByLanguageContactWidgetInfo_{$language}";
-		//$data = Cache::remember($cacheKey, now()->addMinutes(1), function () use ($language) {
-            // If the data is not in the cache, fetch it from the database or other source
-          //  return Widgets::getAllContactInfoLanguageApi($language); // Replace with your actual data retrieval logic
-       // });
-		 $data_test = Widgets::getAllContactInfoLanguageApi($language);
+        //	$cacheKey = "filterByLanguageContactWidgetInfo_{$language}";
+        //$data = Cache::remember($cacheKey, now()->addMinutes(1), function () use ($language) {
+        // If the data is not in the cache, fetch it from the database or other source
+        //  return Widgets::getAllContactInfoLanguageApi($language); // Replace with your actual data retrieval logic
+        // });
+        $data_test = Widgets::getAllContactInfoLanguageApi($language);
         //$xrays = Widgets::getAllContactInfoLanguageApi($language);
         return response()->json($data_test);
     }
-	
-	public function TelephoneWidget(){
-		
-	  $xrays = Widgets::getAllTelephoneLanguageApi();
-        return response()->json($xrays);
-		
-	}
-	
-	public function filterByLanguageTelephoneWidget($language)
+
+    public function TelephoneWidget()
     {
-	//	$cacheKey = "filterByLanguageTelephoneWidget_{$language}";
-		//$data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
-            // If the data is not in the cache, fetch it from the database or other source
-            $data = Widgets::getAllTelephoneLanguageApi($language); // Replace with your actual data retrieval logic
-       // });
-		
+
+        $xrays = Widgets::getAllTelephoneLanguageApi();
+        return response()->json($xrays);
+
+    }
+
+    public function filterByLanguageTelephoneWidget($language)
+    {
+        //	$cacheKey = "filterByLanguageTelephoneWidget_{$language}";
+        //$data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
+        // If the data is not in the cache, fetch it from the database or other source
+        $data = Widgets::getAllTelephoneLanguageApi($language); // Replace with your actual data retrieval logic
+        // });
+
         //$xrays = Widgets::getAllTelephoneLanguageApi($language);
         return response()->json($data);
     }
-	
-	
-	public function OpeningHoursWidget(){
-		
-	  $xrays = Widgets::getAllOpeningHoursLanguageApi();
-        return response()->json($xrays);
-		
-	}
-	
-	public function filterByLanguageOpeningHoursWidget($language)
+
+
+    public function OpeningHoursWidget()
     {
-		
-		$cacheKey = "filterByLanguageOpeningHoursWidget_{$language}";
-		$data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
+
+        $xrays = Widgets::getAllOpeningHoursLanguageApi();
+        return response()->json($xrays);
+
+    }
+
+    public function filterByLanguageOpeningHoursWidget($language)
+    {
+
+        $cacheKey = "filterByLanguageOpeningHoursWidget_{$language}";
+        $data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
             // If the data is not in the cache, fetch it from the database or other source
             return Widgets::getAllOpeningHoursLanguageApi($language); // Replace with your actual data retrieval logic
         });
-		
-       // $xrays = Widgets::getAllOpeningHoursLanguageApi($language);
+
+        // $xrays = Widgets::getAllOpeningHoursLanguageApi($language);
         return response()->json($data);
     }
-	
-	public function ScoliosisResultsSidebarWidget(){
-		
-	  $xrays = Widgets::getAllScoliosisResultsLanguageApi();
-        return response()->json($xrays);
-		
-	}
-	
-	public function filterByLanguageScoliosisResultsSidebar($language)
+
+    public function ScoliosisResultsSidebarWidget()
     {
-		$cacheKey = "filterByLanguageScoliosisResultsSidebar_{$language}";
-		$data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
+
+        $xrays = Widgets::getAllScoliosisResultsLanguageApi();
+        return response()->json($xrays);
+
+    }
+
+    public function filterByLanguageScoliosisResultsSidebar($language)
+    {
+        $cacheKey = "filterByLanguageScoliosisResultsSidebar_{$language}";
+        $data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
             // If the data is not in the cache, fetch it from the database or other source
             return Widgets::getAllScoliosisResultsLanguageApi($language); // Replace with your actual data retrieval logic
         });
-		
-       // $xrays = Widgets::getAllScoliosisResultsLanguageApi($language);
+
+        // $xrays = Widgets::getAllScoliosisResultsLanguageApi($language);
         return response()->json($data);
     }
-	
 
-	public function OurPromiseSidebarWidget(){
-		
-	  $xrays = Widgets::getAllOurPromiseLanguageApi();
-        return response()->json($xrays);
-		
-	}
-	
-	public function filterByLanguageOurPromiseSidebar($language)
+
+    public function OurPromiseSidebarWidget()
     {
-		$cacheKey = "filterByLanguageOurPromiseSidebar_{$language}";
-		$data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
+
+        $xrays = Widgets::getAllOurPromiseLanguageApi();
+        return response()->json($xrays);
+
+    }
+
+    public function filterByLanguageOurPromiseSidebar($language)
+    {
+        $cacheKey = "filterByLanguageOurPromiseSidebar_{$language}";
+        $data = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($language) {
             // If the data is not in the cache, fetch it from the database or other source
             return Widgets::getAllOurPromiseLanguageApi($language); // Replace with your actual data retrieval logic
         });
-		
-      //  $xrays = Widgets::getAllOurPromiseLanguageApi($language);
+
+        //  $xrays = Widgets::getAllOurPromiseLanguageApi($language);
         return response()->json($data);
     }
 
@@ -148,11 +153,11 @@ class WidgetsApiController extends Controller
     public function store(Request $request)
     {
         // $validatedData = $request->validate([
-            // 'name' => 'required',
-            // 'description' => 'required',
-            // 'lang' => 'required',
+        // 'name' => 'required',
+        // 'description' => 'required',
+        // 'lang' => 'required',
         // ]);
-       $validatedData = $request->all();
+        $validatedData = $request->all();
         $xray = Widgets::create($validatedData);
 
         return response()->json($xray, 201);
@@ -160,11 +165,11 @@ class WidgetsApiController extends Controller
 
     public function update(Request $request, $id)
     {
-		$validatedData = $request->all();
+        $validatedData = $request->all();
         // $validatedData = $request->validate([
-            // 'name' => 'required',
-            // 'description' => 'required',
-            // 'lang' => 'required',
+        // 'name' => 'required',
+        // 'description' => 'required',
+        // 'lang' => 'required',
         // ]);
 
         $xray = Widgets::findOrFail($id);
@@ -179,6 +184,13 @@ class WidgetsApiController extends Controller
         $xray->delete();
 
         return response()->json(null, 204);
+    }
+
+
+    public function filterByLanguageDisclaimerWidget($language)
+    {
+        $data = Widgets::getAllDisclaimerLanguageApi($language);
+        return response()->json($data);
     }
 
 }

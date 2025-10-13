@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import TopBanner from "../components/TopBanner";
@@ -7,47 +7,52 @@ import { useSelector } from "react-redux";
 import { selectLanguage } from "../reducers/languageSlice";
 import { useNavigate } from "react-router-dom";
 import ApiHook from "../components/CustomHooks/ApiHook";
+import { getOnlineBookingUrl } from "../Api";
 
 const OnlineBooking = () => {
     const { t } = useTranslation();
     let metaProps = { title: t("page.online-booking") };
     const navigate = useNavigate();
-    const [currentLanguage,urlLanguage] = ApiHook();
+    const [currentLanguage, urlLanguage] = ApiHook();
+    const [bookingUrl, setBookingUrl] = useState("");
 
     useEffect(() => {
         navigate(`${urlLanguage}/online-booking`);
     }, [currentLanguage, navigate, urlLanguage]);
+
+    useEffect(() => {
+        const fetchBookingUrl = async () => {
+            const data = await getOnlineBookingUrl();
+            const matched = data.find(
+                (item) => item.language === currentLanguage
+            );
+            const fallback = data.find((item) => item.language === "default");
+            setBookingUrl(matched ? matched.url : fallback?.url || "");
+        };
+
+        fetchBookingUrl();
+    }, [currentLanguage]);
 
     return (
         <Fragment>
             <TopBanner title={t("page.online-booking")} />
             <MetaCreator {...metaProps} />
 
-            {currentLanguage === "en_MY" ? (
+            {bookingUrl && (
                 <div className="custom-iframe">
                     <iframe
-                        src="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2TqAIY5UIPxzP-EDaEkKISdkTf2qniUQmsIQw="
+                        src={bookingUrl}
                         style={{
                             border: "0",
                             width: "100%",
-                            height: "600",
-                            frameBorder: "0",
+                            height: "600px",
                         }}
-                    />
-                </div>
-            ) : (
-                <div className="custom-iframe">
-                    <iframe
-                        src="https://calendar.google.com/calendar/appointments/AcZssZ2ZSvJEdJjQgBwtDftJ1R_ne-M7HEtSlAg7fUk=?gv=true"
-                        style={{
-                            border: "0",
-                            width: "100%",
-                            height: "600",
-                            frameBorder: "0",
-                        }}
+                        frameBorder="0"
+                        allowFullScreen
                     />
                 </div>
             )}
+            
         </Fragment>
     );
 };

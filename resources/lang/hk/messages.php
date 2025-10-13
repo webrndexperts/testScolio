@@ -51,6 +51,7 @@ return [
         'Contact Number' => '聯絡電話',
         'Country' => '國家',
         'Your Message' => '您的訊息',
-        'Image' => '圖片',
+        'Image' => '附件',
+        'Download File' => '下載檔案',
     ],
 ];

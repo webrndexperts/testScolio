@@ -29,7 +29,7 @@ class MenuItemController extends Controller
 
         $pages = Menus::with('items')->where('menu_type', 'header')->where('lang', $language)->orderBy('id', 'ASC')->get(); // Replace with your actual data retrieval logic
      //   });
-		
+     
         return response()->json($pages);
 		
     } catch (QueryException $exception) {

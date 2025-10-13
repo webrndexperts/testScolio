@@ -17,6 +17,7 @@
 		<option value="Opening Hours">Opening Hours</option>
 		<option value="Scoliosis Results">Scoliosis Results</option>
 		<option value="Our Promise">Our Promise</option>
+		<option value="Disclaimer">Disclaimer</option>
 		</select>
 		
 		  @error('post_name')

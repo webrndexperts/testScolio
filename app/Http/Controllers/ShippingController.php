@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\RecaptchaService;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use App\Models\Shipping;
 use GuzzleHttp\Client;
@@ -10,6 +11,7 @@ use App\Models\Coupon;
 use Illuminate\Support\Facades\RateLimiter;
 use Cartalyst\Stripe\Stripe;
 use Log;
+use Validator;
 
 class ShippingController extends Controller
 {
@@ -26,168 +28,243 @@ class ShippingController extends Controller
         $secret = env('GOOGLE_RECAPTCHA_SECRET_KEY');
         $this->recaptchaService = new RecaptchaService($secret);
     }
+    private function formatShippingError($errors)
+    {
+        $errors = (array)$errors;
+        $error = reset($errors) ?: 'Invalid shipping data';
+
+        if (stripos($error, 'No shipping solutions available') !== false) {
+            return 'No shipping options available for the provided information';
+        }
+
+        if (preg_match('/([\w\[\]\.]+)\s*(must be greater than 0|can\'t be blank|is not a valid JSON format)/i', $error, $matches)) {
+            $fieldPath = $matches[1];
+            $condition = $matches[2];
+
+            $field = preg_replace('/\[.*?\]|\b(parcels|box|items|dimensions)\b\.*/i', '', $fieldPath);
+            $field = trim($field, '.');
+
+            $fieldMap = [
+                'length' => 'Parcel length',
+                'width' => 'Parcel width',
+                'height' => 'Parcel height',
+                'actual_weight' => 'Item weight',
+                'dimensions' => 'Item dimensions',
+                'declared_currency' => 'Declared currency',
+                'declared_customs_value' => 'Declared customs value',
+                'sku' => 'Item SKU',
+                'hs_code' => 'HS code',
+                'origin_country_alpha2' => 'Origin country',
+            ];
+
+            $conditionMap = [
+                'must be greater than 0' => 'must be greater than 0',
+                'can\'t be blank' => 'is required',
+                'is not a valid JSON format' => 'is invalid',
+            ];
+
+            $friendlyField = $fieldMap[strtolower($field)] ?? ucwords(str_replace('_', ' ', $field));
+            $friendlyCondition = $conditionMap[strtolower($condition)] ?? $condition;
+
+            return "$friendlyField $friendlyCondition";
+        }
+
+        // Fallback: clean up and capitalize the original error
+        $cleanError = preg_replace('/\[.*?\]|\b(parcels|box|items|dimensions)\b\.*/i', '', $error);
+        $cleanError = trim($cleanError, '.');
+        return ucwords(str_replace('_', ' ', $cleanError)) ?: 'Invalid shipping data';
+    }
 
     public function getShippingRates(Request $request)
     {
         try {
+            // Validate required fields
+            $validator = Validator::make($request->all(), [
+                'country_alpha2' => 'required|string',
+                'line_1' => 'nullable|string',
+                'state' => 'required|string',
+                'city' => 'required|string',
+                'postal_code' => 'required|string',
+                'contact_email' => 'required|email',
+                'contact_name' => 'required|string',
+                'items_quantity' => 'required|integer|min:1',
+                'items_actual_weight' => 'required|numeric|min:0',
+                'total_actual_weight' => 'required|numeric|min:0',
+            ]);
+            // dd($validator);
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation errors',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
 
-            $get_all_meta = $request->all();
-            // dd($get_all_meta);
-            $country_alpha2 = !empty($get_all_meta['country_alpha2']) ? $get_all_meta['country_alpha2'] : '';
-            $line_1 = !empty($get_all_meta['line_1']) ? $get_all_meta['line_1'] : '';
-            $state = !empty($get_all_meta['state']) ? $get_all_meta['state'] : '';
-            $city = !empty($get_all_meta['city']) ? $get_all_meta['city'] : '';
-            $postal_code = !empty($get_all_meta['postal_code']) ? $get_all_meta['postal_code'] : '';
-            $contact_email = !empty($get_all_meta['contact_email']) ? $get_all_meta['contact_email'] : '';
-            $contact_name = !empty($get_all_meta['contact_name']) ? $get_all_meta['contact_name'] : '';
-            $parcels_box_slug = !empty($get_all_meta['parcels_box_slug']) ? $get_all_meta['parcels_box_slug'] : '';
-            $parcels_box_length = !empty($get_all_meta['parcels_box_length']) ? $get_all_meta['parcels_box_length'] : 20;
-            $parcels_box_width = !empty($get_all_meta['parcels_box_width']) ? $get_all_meta['parcels_box_width'] : 4;
-            $parcels_box_height = !empty($get_all_meta['parcels_box_height']) ? $get_all_meta['parcels_box_height'] : 10;
-            $items_quantity = !empty($get_all_meta['items_quantity']) ? $get_all_meta['items_quantity'] : '';
-            $items_description = !empty($get_all_meta['items_description']) ? $get_all_meta['items_description'] : '';
-            $items_category = !empty($get_all_meta['items_category']) ? $get_all_meta['items_category'] : '';
-            $items_sku = !empty($get_all_meta['items_sku']) ? $get_all_meta['items_sku'] : '';
-            $items_hs_code = !empty($get_all_meta['items_hs_code']) ? $get_all_meta['items_hs_code'] : '';
-            $items_origin_country_alpha2 = !empty($get_all_meta['items_origin_country_alpha2']) ? $get_all_meta['items_origin_country_alpha2'] : '';
-            $items_actual_weight = !empty($get_all_meta['items_actual_weight']) ? $get_all_meta['items_actual_weight'] : '';
-            $items_declared_currency = !empty($get_all_meta['items_declared_currency']) ? $get_all_meta['items_declared_currency'] : '';
-            $items_declared_customs_value = !empty($get_all_meta['items_declared_customs_value']) ? $get_all_meta['items_declared_customs_value'] : '';
-            $total_actual_weight = !empty($get_all_meta['total_actual_weight']) ? $get_all_meta['total_actual_weight'] : '';
-            $formattedValueTotal_actual_weight = number_format($total_actual_weight / 100, 2);
-            // $formattedValueTotal_actual_weight = number_format($total_actual_weight / 100, 2);
+            // Prepare request data with defaults
+            $data = [
+                "origin_address" => [
+                    "state" => "Singapore",
+                    "city" => "Singapore",
+                    "company_name" => "ScolioLife Pte Ltd",
+                    "contact_email" => "drkevinlau@scoliolife.com",
+                    "contact_name" => "Kevin Lau",
+                    "postal_code" => "238862",
+                    "country_alpha2" => "SG",
+                    "line_1" => "302 Orchard Rd10-02",
+                    "line_2" => "Tong Building"
+                ],
+                "destination_address" => [
+                    "country_alpha2" => $request->input('country_alpha2'),
+                    "line_1" => $request->input('line_1'),
+                    "state" => $request->input('state'),
+                    "city" => $request->input('city'),
+                    "postal_code" => $request->input('postal_code'),
+                    "contact_email" => $request->input('contact_email'),
+                    "contact_name" => $request->input('contact_name')
+                ],
+                "incoterms" => "DDU",
+                "insurance" => ["is_insured" => false],
+                "courier_selection" => [
+                    "show_courier_logo_url" => false,
+                    "apply_shipping_rules" => true
+                ],
+                "shipping_settings" => [
+                    "units" => [
+                        "weight" => "g",
+                        "dimensions" => "cm"
+                    ]
+                ],
+                "parcels" => [
+                    [
+                        "box" => [
+                            "length" => $request->input('parcels_box_length', 20),
+                            "width" => $request->input('parcels_box_width', 4),
+                            "height" => $request->input('parcels_box_height', 10)
+                        ],
+                        "items" => [
+                            [
+                                "quantity" => $request->input('items_quantity'),
+                                "description" => $request->input('items_description', ''),
+                                "category" => $request->input('items_category', ''),
+                                "sku" => $request->input('items_sku', ''),
+                                "hs_code" => $request->input('items_hs_code', ''),
+                                "origin_country_alpha2" => $request->input('items_origin_country_alpha2', ''),
+                                "actual_weight" => $request->input('items_actual_weight'),
+                                "declared_currency" => $request->input('items_declared_currency', ''),
+                                "declared_customs_value" => $request->input('items_declared_customs_value', 0)
+                            ]
+                        ],
+                        "total_actual_weight" => number_format($request->input('total_actual_weight') / 100, 2)
+                    ]
+                ]
+            ];
 
-            //	dd($formattedValue);
             $client = new Client();
 
-            $response = $client->request('POST', 'https://api.easyship.com/2023-01/rates', [
-                'body' => json_encode([
-                    "origin_address" => [
-                        "state" => "Singapore",
-                        "city" => "Singapore",
-                        "company_name" => "ScolioLife Pte Ltd",
-                        "contact_email" => "drkevinlau@scoliolife.com",
-                        "contact_name" => "Kevin Lau",
-                        "postal_code" => "238862",
-                        "country_alpha2" => "SG",
-                        "line_1" => "302 Orchard Rd10-02",
-                        "line_2" => "Tong Building"
+            try {
+                $response = $client->request('POST', 'https://api.easyship.com/2023-01/rates', [
+                    'body' => json_encode($data),
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer prod_aCe51Xp2E13KzAj4VONiGU8lBzSZ8Fsr5QXSbCF9x+Q=',
+                        'Content-Type' => 'application/json',
                     ],
-                    "destination_address" => [
-                        "country_alpha2" => $country_alpha2,
-                        "line_1" => $line_1,
-                        "state" => $state,
-                        "city" => $city,
-                        "postal_code" => $postal_code,
-                        "contact_email" => $contact_email,
-                        "contact_name" => $contact_name
-                    ],
-                    "incoterms" => "DDU",
-                    "insurance" => ["is_insured" => false],
-                    "courier_selection" => ["show_courier_logo_url" => false, "apply_shipping_rules" => true],
-                    "shipping_settings" => ["units" => ["weight" => "g", "dimensions" => "cm"]],
-                    "parcels" => [
-                        [
-                            "box" => [
-                                //"slug" => $parcels_box_slug, 
-                                "length" => $parcels_box_length,
-                                "width" => $parcels_box_width,
-                                "height" => $parcels_box_height
-                            ],
-                            "items" => [
-                                [
-                                    "quantity" => $items_quantity,
-                                    "description" => $items_description,
-                                    "category" => $items_category,
-                                    "sku" => $items_sku,
-                                    "hs_code" => $items_hs_code,
-                                    "origin_country_alpha2" => $items_origin_country_alpha2,
-                                    "actual_weight" => $items_actual_weight,
-                                    "declared_currency" => $items_declared_currency,
-                                    "declared_customs_value" => $items_declared_customs_value
-                                ]
-                            ],
-                            "total_actual_weight" => $formattedValueTotal_actual_weight
-                        ]
-                    ]
-                ]),
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer prod_aCe51Xp2E13KzAj4VONiGU8lBzSZ8Fsr5QXSbCF9x+Q=',
-                    'Content-Type' => 'application/json',
-                ],
-            ]);
+                    'http_errors' => false // Don't throw exceptions for HTTP errors
+                ]);
 
+                $statusCode = $response->getStatusCode();
+                $body = $response->getBody()->getContents();
+                $decodedData = json_decode($body, true);
+                // dd($decodedData);
+                // Handle API response errors
+                if ($statusCode !== 200) {
+                    // $errorMessage = $decodedData['error']['details'][0] ?? 'Unknown error from shipping API';
+                    $errorDetails = $decodedData['error']['details'] ?? ['Unknown error from shipping API'];
+                    $formattedMessage = $this->formatShippingError($errorDetails);
+                    return response()->json([
+                        'success' => false,
+                        'message' => $formattedMessage,
+                        'error' => 'Shipping API error',
+                        'status_code' => $statusCode
+                    ], 400);
+                }
 
-            $body = $response->getBody();
+                // Prepare rates array
+                $ratesArray = [];
 
-            $body->rewind();
-
-
-            $jsonData = $body->getContents();
-            $decodedData = json_decode($jsonData, true);
-
-            if ($decodedData !== null && isset($decodedData['rates'])) {
-                if (!empty($country_alpha2 == 'SG')) {
+                // Add free store pickup for Singapore
+                if ($request->input('country_alpha2') === 'SG') {
                     $ratesArray[] = [
-                        'courier_id' => 'ff652d3e-60c7-4376-bcf8-b774db7cee88',
+                        'courier_id' => 'store-pick-up-e89b-426614174000',
                         'courier_name' => 'Store Pick Up: Free (302 Orchard Road #10-02A, Singapore 238862)',
                         'total_charge' => 0.00,
                         'currency' => 'SGD',
                     ];
                 }
-                foreach ($decodedData['rates'] as $key => $rate) {
-                    $data_courier_id = $rate['courier_id'];
-                    $data_courier_name = $rate['courier_name'];
-                    $data_total_charge = $rate['total_charge'];
-                    $data_currency = $rate['currency'];
 
-                    $ratesArray[] = [
-                        'courier_id' => $data_courier_id,
-                        'courier_name' => $data_courier_name,
-                        'total_charge' => $data_total_charge,
-                        'currency' => $data_currency,
-                    ];
-
-                    $shipping_information = [
-                        'country' => $country_alpha2,
-                        'address' => $line_1,
-                        'state' => $state,
-                        'city' => $city,
-                        'postal_code' => $postal_code,
-                    ];
+                // Add rates from API response
+                if (!empty($decodedData['rates'])) {
+                    foreach ($decodedData['rates'] as $rate) {
+                        $ratesArray[] = [
+                            'courier_id' => $rate['courier_id'],
+                            'courier_name' => $rate['courier_name'],
+                            'total_charge' => $rate['total_charge'],
+                            'currency' => $rate['currency'],
+                        ];
+                    }
                 }
+                // Check if no shipping options are available
+                if (empty($ratesArray)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'No shipping solutions available for the provided information',
+                        'error' => 'Please verify your shipping address or contact support.',
+                        'status_code' => 404
+                    ], 404);
+                }
+                // Prepare shipping information
+                $shippingInformation = [
+                    'country' => $request->input('country_alpha2'),
+                    'address' => $request->input('line_1'),
+                    'state' => $request->input('state'),
+                    'city' => $request->input('city'),
+                    'postal_code' => $request->input('postal_code'),
+                ];
 
-                $response = [
+                // Return success response
+                return response()->json([
                     'success' => true,
-                    'message' => 'EasyShip list saved successfully',
+                    'message' => empty($ratesArray) ? 'No shipping options available' : 'Shipping rates retrieved successfully',
                     'data' => $ratesArray,
-                    'decodedData' => $decodedData,
-                    'shipping_information' => $shipping_information,
-                ];
+                    'shipping_information' => $shippingInformation,
+                    'meta' => [
+                        'total_options' => count($ratesArray),
+                        'has_options' => !empty($ratesArray)
+                    ]
+                ]);
 
-                return response()->json($response, 201);
-            } else {
-                $response = [
+            } catch (RequestException $e) {
+                // Handle Guzzle request exceptions
+                $errorMessage = $e->getResponse()
+                    ? json_decode($e->getResponse()->getBody()->getContents(), true)['message'] ?? $e->getMessage()
+                    : $e->getMessage();
+
+                return response()->json([
                     'success' => false,
-                    'message' => 'Failed to decode JSON response',
-                    'data' => null,
-                ];
-
-                return response()->json($response, 500);
+                    'message' => 'Shipping API request failed',
+                    'error' => $errorMessage
+                ], 500);
             }
+
         } catch (\Exception $e) {
-
-            $response = [
+            // Handle any other unexpected exceptions
+            return response()->json([
                 'success' => false,
-                'message' => $e->getMessage(),
-            ];
-
-            return response()->json($response, 500);
+                'message' => 'Internal server error',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
     }
-
 
 
     public function getShippingList()
@@ -353,7 +430,7 @@ class ShippingController extends Controller
 
 
     /**
-     * EasyShip Method for Create,Update,Delete 
+     * EasyShip Method for Create,Update,Delete
      */
 
     public function indexPaymentMethod()
@@ -429,13 +506,13 @@ class ShippingController extends Controller
     }
 
     protected function getStripeKeys($request)
-    {   
-        // $key = env('STRIPE_RK');
+    {
+        $key = env('STRIPE_SECERT_KEY');
         $stripe = new Stripe('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'); // Live secret key for scoliolife
 
         if (array_key_exists('mode', $request->all())) {
-            $stripe = new Stripe('sk_test_r210BvUvkJxZC4eCmnC08YCa00a2oze7Ke');
-            // $stripe = new Stripe($key);
+            // $stripe = new Stripe('sk_test_r210BvUvkJxZC4eCmnC08YCa00a2oze7Ke');
+            $stripe = new Stripe($key);
         }
 
         return $stripe;
@@ -466,11 +543,11 @@ class ShippingController extends Controller
         $customerEmail = !empty($request->customer_email) ? $request->customer_email : '';
         $orderNumber = !empty($request->order_number) ? $request->order_number : '';
         $customerName = !empty($request->customer_name) ? $request->customer_name : '';
-        
-        if ($amount < env('MININUM_AMOUNT')) {
-            return response()->json(['success' => false, 'message' => "Can't procced with this amount."]);
-        }
-       
+
+        // if ($amount < env('MININUM_AMOUNT')) {
+        //     return response()->json(['success' => false, 'message' => "Can't procced with this amount."]);
+        // }
+
         // $captcha_token = $request->captcha_token;
         // $captcha_response = $this->recaptchaService->verify($captcha_token);
         // if (!$captcha_response['success']) {

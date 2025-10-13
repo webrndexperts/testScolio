@@ -1,4 +1,7 @@
 {
+    "minimum": {
+        "amount": "El monto de su pedido no es aceptable"
+    },
     "banner": {
         "straightenSpine": "Endereza tu columna vertebral sin cirugía",
         "sayGoodbye": "Disfruta de una vida libre de escoliosis: experimenta la innovación de las soluciones no invasivas de nuestra galardona clínica",
@@ -178,6 +181,9 @@
         "cus_address":"Dirección"
     },
     "checkOut":{
+        "razorpay": "Después de hacer clic en 'Pagar con RazorPay', será redirigido a RazorPay para completar su compra de forma segura.",
+        "invalid form": "Formulario no válido",
+        "select_shipping":"Por favor seleccione el método de envío",
         "Shipping_method":"Método de envío",
         "Forgot Password":"Has olvidado tu contraseña",
         "send email":"Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.",
