@@ -1007,7 +1007,7 @@ i.fas.fa-unlock {
     z-index: 9;
 }
 
-.video-wrapper iframe {
+.video-wrapper iframe,.video-grid-single iframe  {
     border-radius: 15px;
 }
 
@@ -1861,7 +1861,7 @@ img.open-hour {
 }
 
 section.video-patients {
-    width: 50%;
+    width: 75%;
     margin: auto;
     text-align: center;
     padding: 80px 0;
@@ -1870,8 +1870,11 @@ section.video-patients {
 section.video-patients h2 {
     font-size: 40px;
     font-weight: 600;
+    margin-bottom: 28px;
 }
-
+.video-grid iframe {
+    border-radius: 15px;
+}
 .my-form .single-input option {
     color: #000 !important;
 }
@@ -2231,6 +2234,9 @@ th.coupon_name {
 }
 
 @media only screen and (max-width: 767px) {
+    .video-grid {
+    grid-template-columns: 1fr !important;
+}
     .read-more-popup img {
         width: 100% !important;
         padding: 0;
@@ -3671,11 +3677,17 @@ h1.worldwide-design {
     margin-top: 40px
 }
 
-section.video-patients div {
+/* .section.video-patients div {
     width: 100% !important;
     height: 550px !important;
+} */
+.video-grid-single div {
+    height: 520px !important;
 }
-
+.video-grid-single {
+    width: 75%;
+    margin: auto;
+}
 .world-patient img {
     width: 23%;
     border: 1px solid #888 !important;
@@ -7262,6 +7274,12 @@ img.alignleft.attachment-medium.size-medium.posture_steps_img {
     .quick-links {
     padding-top: 25px;
 }
+.video-grid-single {
+    width: 100% !important;
+}
+.video-grid-single div {
+    height: 228px !important;
+}
 .disclaimer-text p {
     margin-right: 0 !important;
 }
@@ -10510,4 +10528,10 @@ h5.Shipping-infos {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }

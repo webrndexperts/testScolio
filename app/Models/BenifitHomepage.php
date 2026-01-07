@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class BenifitHomepage extends Model
 {
     protected $table = 'homepage_benifits_clinic';
-    protected $fillable=['homebenifit_parent_id','count_numbers','post_type','video_url','title','lang','slug','description','photo','status'];
+    protected $fillable=['homebenifit_parent_id','count_numbers','post_type','video_url', 'extra_video_urls','title','lang','slug','description','photo','status'];
+
+    protected $casts = [ 'extra_video_urls' => 'array' ];
 
 
     public static function getAllBenifitHomePage(){

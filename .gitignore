@@ -1,6 +1,8 @@
 node_modules
 # /public/hot
 vendor
+!public/**/vendor/
+!public/**/vendor/**
 .env
 .env.production
 # .env.backup

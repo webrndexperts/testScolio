@@ -62,6 +62,24 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
       </div> 
+      <div class="form-group" id="hiddenField">
+          <label for="extra_video_urls" class="col-form-label">
+             Extra Video Urls (separate multiple URLs with commas)
+          </label>
+          <input
+              id="extra_video_urls"
+              type="text"
+              name="extra_video_urls"
+              class="form-control"
+              value="{{ !empty($post->extra_video_urls) ? implode(', ', $post->extra_video_urls) : '' }}"
+              placeholder="https://youtube.com/1, https://youtube.com/2"
+          >
+
+          @error('extra_video_urls')
+              <span class="text-danger">{{ $message }}</span>
+          @enderror
+      </div>
+
 	   @endif	
       @if($post->post_type=='benifits-clinic')
       <div class="form-group" id="hiddenField">

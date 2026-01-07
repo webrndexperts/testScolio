@@ -34,21 +34,33 @@ const VideoSection = () => {
 
         fetchData();
     }, [API]);
-
+    
     return (
         <>
-            {isDataLoaded?.map((item, index) => (
+            {isDataLoaded?.map((item, index) => {
+                let allVideos = [];
+                if (item.extra_video_urls && item.extra_video_urls.length > 0) {
+                    allVideos = [item.video_url, ...item.extra_video_urls].filter(Boolean).slice(0, 4);
+                } else {
+                    allVideos = [item.video_url];
+                }
+
+                return (
                 <section className="video-patients" key={`key-${index}`}  data-aos="fade-up">
                   <h2>{item?.title}</h2>
-             
-                    <ReactPlayer
-                        url={item.video_url}
-                        controls
-                        width="850px"
-                        height="420px"
-                    />
+                        <div className={`${item.extra_video_urls && item.extra_video_urls.length > 0 ? 'video-grid' : 'video-grid-single'}`}>
+                            {allVideos.map((url, i) => (
+                                <div className="video-item" key={i}>
+                                    <ReactPlayer
+                                        url={url}
+                                        controls
+                                        width="100%"
+                                    />
+                                </div>
+                            ))}
+                        </div>
                 </section>
-            ))}
+            )})}
         </>
     );
 };

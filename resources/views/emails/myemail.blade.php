@@ -126,17 +126,17 @@
                               @foreach(json_decode($details['photo']) as $fileUrl)
                                  @php $ext = strtolower(pathinfo($fileUrl, PATHINFO_EXTENSION)); @endphp
 
-                                 @if(in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                 {{-- @if(in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) --}}
                                     <div style="margin-bottom:10px;">
                                           <img src="{{ $fileUrl }}" alt="{{ basename($fileUrl) }}" style="max-width: 110px; display:block;">
                                     </div>
-                                 @else
+                                 {{-- @else --}}
                                     <div style="margin-bottom:10px;">
                                           <a href="{{ $fileUrl }}" target="_blank" style="color:#0073aa;">
                                              {{ __('messages.myEmail.Download File') }} ({{ strtoupper($ext) }})
                                           </a>
                                     </div>
-                                 @endif
+                                 {{-- @endif --}}
                               @endforeach
 
                            </td>
