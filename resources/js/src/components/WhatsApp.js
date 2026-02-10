@@ -55,7 +55,7 @@ const WhatsApp = () => {
             setUserNumber(
                 contactData.whatsapp_number
                     ? formatWhatsAppNumber(contactData.whatsapp_number)
-                    : "6589078900"
+                    : "6589078900",
             );
         }
     }, [contactData]);
@@ -69,15 +69,20 @@ const WhatsApp = () => {
         const button = container.querySelector(".floating-whatsapp-button");
         if (!button) return;
 
-        if (currentLanguage === "en_SG") {
-            button.classList.add("whatsapp-btn-en_SG");
-            button.classList.remove("whatsapp-btn-en_MY");
-        } else if (currentLanguage === "en_MY") {
-            button.classList.add("whatsapp-btn-en_MY");
-            button.classList.remove("whatsapp-btn-en_SG");
-        } else {
-            button.classList.remove("whatsapp-btn-en_MY");
-            button.classList.remove("whatsapp-btn-en_SG");
+        const langClassMap = {
+            en_SG: "whatsapp-btn-en_SG",
+            en_MY: "whatsapp-btn-en_MY",
+            id_ID: "whatsapp-btn-id_ID",
+        };
+
+        // Remove all known language classes
+        Object.values(langClassMap).forEach((cls) => {
+            button.classList.remove(cls);
+        });
+
+        // Add current language class if exists
+        if (langClassMap[currentLanguage]) {
+            button.classList.add(langClassMap[currentLanguage]);
         }
     }, [currentLanguage]);
 

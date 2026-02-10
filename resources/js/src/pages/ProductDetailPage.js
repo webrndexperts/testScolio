@@ -660,7 +660,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     try{
-      const response = axios.post('https://scoliolife.com/api/v1/get-aws-bucket-order' , {
+      const response = axios.post(`${API}get-aws-bucket-order` , {
         user_id : (authData && authData.id) ? authData.id : null
       })
       .then((response) => {

@@ -204,7 +204,16 @@ const Result = () => {
           <div className="row">
             {XrayData &&
               <div className='filterby-age dddd'>
-
+                
+                <div className="filter-text">
+                  <h4>{t('filterText.heading')}</h4>
+                  <p>
+                    {t('filterText.before')}{" "}
+                    <strong>{t('filterText.highlight')}</strong>{" "}
+                    {t('filterText.after')}
+                  </p>
+                </div>
+                                
                 <select className='select-age' onChange={(e) => { setAgeValue(e.target.value) }} placeholder='filter by age'>
                   <option value=''>filter by age</option>
                   <option value='1-10'>1-10</option>
@@ -215,26 +224,6 @@ const Result = () => {
                   <option value='more'>50+</option>
                 </select>
 
-
-                {/*
-                  <select className='select-age' onChange={FilterByAge} placeholder='filter by age'>
-                    <option value=''>filter by age</option>
-                    <option value='10'>10</option>
-                    <option value='11'>11</option>
-                    <option value='12'>12</option>
-                    <option value='13'>13</option>
-                    <option value='14'>14</option>
-                  </select>
-                  
-                  <select className='select-Curve' onChange={FilterByCurveDegree}>
-                    <option value=''>filter by curve_degree</option>
-                    <option value='30'>30</option>
-                    <option value='35'>35</option>
-                    <option value='40'>40</option>
-                    <option value='45'>45</option>
-                    <option value='50'>50</option>
-                  </select>
-                */}
               </div>
             }
             <div className='results-videos'>

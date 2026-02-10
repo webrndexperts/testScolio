@@ -51,13 +51,22 @@
         </tr>
     </thead>
     <tbody>
-	
+	@php $groupedAttributes = json_decode($details['grouped_product_attributes'], true) ?? null; @endphp
 	@foreach ($details['ordermailProducts'] as $index => $orderItemInfo)
         @php
         // Get the corresponding grouped_product_attributes for this product
-        $groupedAttributes = $details['grouped_product_attributes'][$index] ?? null;
-        $size = $groupedAttributes['Size'] ?? '';
-        $lang = $groupedAttributes['Language'] ?? '';
+        $att = $groupedAttributes[$index] ?? [];
+        $size = $att['Size'] ?? '';
+        $lang = $att['Language'] ?? '';
+        $customize = $att['CustomizedImgage'] ?? '';
+
+        $basePrice = $orderItemInfo->product->price;
+        $finalPrice = $basePrice;
+
+        if ($orderItemInfo->product->slug === 'scoliosis-exercises' && !empty($customize)) {
+            $finalPrice = $basePrice * 2; // 55 -> 110
+        }
+
         @endphp		
 
             <tr>
@@ -73,7 +82,8 @@
         {{ $lang }}
     </td>
     <td style="color:#636363;border:1px solid #e5e5e5;padding:12px">
-        <span><span>$</span>{{number_format($orderItemInfo->product->price,2)}} SGD</span>		</td>
+        <span><span>$</span>{{number_format($finalPrice,2)}} SGD</span>		
+    </td>
 </tr>
 @endforeach 	
 	

@@ -33,7 +33,7 @@ const VideoSection = () => {
         };
 
         fetchData();
-    }, [API]);
+    }, [API,currentLanguage]);
     
     return (
         <>

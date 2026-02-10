@@ -6,6 +6,8 @@ use App\Models\OrderAddressInfo;
 use App\Models\XrayImg;
 use App\Services\OrderService;
 use App\Services\ShippingService;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
@@ -178,7 +180,7 @@ class OrderController extends Controller
 		\App::setLocale($request->lang);
 		// dd($order_data);
 
-			// Handle the case where 'Image' key doesn't exist or decoding failed
+		// Handle the case where 'Image' key doesn't exist or decoding failed
 		$updated_grouped_product_attributes = json_encode($order_data['grouped_product_attributes'], JSON_UNESCAPED_UNICODE);
 
 		// dd($updated_grouped_product_attributes);
@@ -219,7 +221,7 @@ class OrderController extends Controller
 		) {
 			$order_id = Order::create($order_meta);
 			Log::info('Order created with ID:', [$order_id]);
-			foreach($order_data['product_items'] as $item) {
+			foreach ($order_data['product_items'] as $item) {
 
 				if (isset($item['xray_upload_id'])) {
 					$order_product_meta['xray_upload_id'] = $item['xray_upload_id'];
@@ -229,7 +231,7 @@ class OrderController extends Controller
 						->update([
 							'order_id' => $order_id->id,
 							'status' => 'completed'
-						]); 
+						]);
 					// Trigger analysis process (you can queue this)
 				}
 			}
@@ -303,7 +305,7 @@ class OrderController extends Controller
 			'shipping_phone' => $shipping_phone,
 		];
 
-		if($order_id->id) {
+		if ($order_id->id) {
 			OrderAddressInfo::create($get_user_order_info);
 		}
 		// if(!empty($order_data['userId'])){
@@ -316,275 +318,274 @@ class OrderController extends Controller
 
 		if (!empty($order_id)) {
 			//$product_id = '';
-		$productItemsArray = $order_data['product_items'];
-		$order_number = $order_data['order_number']; 
-	    // dd($productItemsArray);		
+			$productItemsArray = $order_data['product_items'];
+			$order_number = $order_data['order_number'];
+			// dd($productItemsArray);		
 			foreach ($productItemsArray as $item) {
-			//	$product_id = $item['product_id'];
+				//	$product_id = $item['product_id'];
 				$order_product_meta = [
 					'order_id' => $order_number,
 					'product_id' => $item['product_id'],
 					'quantity' => $item['quantity'],
 					'status' => 'active'
 				];
-			$OrderProduct = OrderProductMeta::create($order_product_meta);
+				$OrderProduct = OrderProductMeta::create($order_product_meta);
 			}
 
-		}else{
+		} else {
 
-		$response = [
-			'status' => 'error',
-			'message' => 'Not able to insert order'
-		];
+			$response = [
+				'status' => 'error',
+				'message' => 'Not able to insert order'
+			];
 		}
 
 		if ($order_id) {
-	    $created_order_date = !empty($order_id->created_at->format('F d, Y')) ? $order_id->created_at->format('F d, Y') : '';
-		$full_name = $order_data['firstName'] . ' ' . $order_data['lastName'];
-		$order_discount_couponcode = !empty($order_data['discount_couponcode']) ? $order_data['discount_couponcode'] : '';
-		$coupon_price = (array_key_exists('coupon_price', $order_data) && !empty($order_data['coupon_price'])) ? $order_data['coupon_price'] : '';
-		// if($order_discount_couponcode){
-		// $single_coupon = Coupon::where('code', $order_discount_couponcode)->first();
-		// $get_single_coupon = $single_coupon->value;	
-		// }else{
-		 // $get_single_coupon = '0.00';	
-		// }		
-		$ordermailProducts = OrderProductMeta::with('product')->where('order_id', $order_data['order_number'])->get();
-		$order_information_mail = [
-	        'firstName' => $order_data['firstName'],
-	        'lastName' => $order_data['lastName'],
-			'order_number' => $order_data['order_number'],
-	        'quantity' => $order_data['quantity'],
-	        'price' => $order_data['sub_total'],
-	        'total_amount' => $order_data['total_amount'],
-	        'gst_tax' => $order_data['gst_tax'],
-			'total_price' => $order_data['sub_total'],
-			'country' => $order_data['country'],
-			'postcode' => $order_data['postcode'],
-			'city' => $order_data['town'],
-			'street' => $order_data['street'],
-			'coupon_discount' => $coupon_price,
-			'phone' => $order_data['phone'],
-			'email' => $order_data['email'],
-			'grouped_product_attributes' => isset($updated_grouped_product_attributes) ? $updated_grouped_product_attributes : '',
-			'payment_method' => $order_data['payment_type'],
-			'created_order_date' => $created_order_date,
-			'shipping_method_name' => !empty($order_data['shipping_method_name']) ? $order_data['shipping_method_name'] : 'Store Pick Up',
-			'shipping_price' =>  !empty($order_data['shippig_charges']) ? $order_data['shippig_charges'] : '',
-			'ordermailProducts' => $ordermailProducts
-	    ];
-		$user_email = $order_data['email'];
-		$settings = Settings::first();
-		$recipientEmail = !empty($settings->email) ? $settings->email : 'clinic.sg@scoliolife.com';
-		$ccEmail = ['drkevinlau@scoliolife.com' , 'webrndexperts@gmail.com'];
+			$created_order_date = !empty($order_id->created_at->format('F d, Y')) ? $order_id->created_at->format('F d, Y') : '';
+			$full_name = $order_data['firstName'] . ' ' . $order_data['lastName'];
+			$order_discount_couponcode = !empty($order_data['discount_couponcode']) ? $order_data['discount_couponcode'] : '';
+			$coupon_price = (array_key_exists('coupon_price', $order_data) && !empty($order_data['coupon_price'])) ? $order_data['coupon_price'] : '';
+			// if($order_discount_couponcode){
+			// $single_coupon = Coupon::where('code', $order_discount_couponcode)->first();
+			// $get_single_coupon = $single_coupon->value;	
+			// }else{
+			// $get_single_coupon = '0.00';	
+			// }		
+			$ordermailProducts = OrderProductMeta::with('product')->where('order_id', $order_data['order_number'])->get();
+			$order_information_mail = [
+				'firstName' => $order_data['firstName'],
+				'lastName' => $order_data['lastName'],
+				'order_number' => $order_data['order_number'],
+				'quantity' => $order_data['quantity'],
+				'price' => $order_data['sub_total'],
+				'total_amount' => $order_data['total_amount'],
+				'gst_tax' => $order_data['gst_tax'],
+				'total_price' => $order_data['sub_total'],
+				'country' => $order_data['country'],
+				'postcode' => $order_data['postcode'],
+				'city' => $order_data['town'],
+				'street' => $order_data['street'],
+				'coupon_discount' => $coupon_price,
+				'phone' => $order_data['phone'],
+				'email' => $order_data['email'],
+				'grouped_product_attributes' => isset($updated_grouped_product_attributes) ? $updated_grouped_product_attributes : '',
+				'payment_method' => $order_data['payment_type'],
+				'created_order_date' => $created_order_date,
+				'shipping_method_name' => !empty($order_data['shipping_method_name']) ? $order_data['shipping_method_name'] : 'Store Pick Up',
+				'shipping_price' => !empty($order_data['shippig_charges']) ? $order_data['shippig_charges'] : '',
+				'ordermailProducts' => $ordermailProducts
+			];
+			$user_email = $order_data['email'];
+			$settings = Settings::first();
+			$recipientEmail = !empty($settings->email) ? $settings->email : 'clinic.sg@scoliolife.com';
+			$ccEmail = ['drkevinlau@scoliolife.com', 'webrndexperts@gmail.com'];
 
-		try {
-			//code...
-			// $admin_sent_mail = Mail::to('shibashishoo007@gmail.com')->send(new OrderEMail($order_information_mail));
-			// $admin_sent_mail = Mail::to($recipientEmail)->cc($ccEmail)->send(new OrderEMail($order_information_mail));
-			$user_sent_mail = Mail::to($user_email)->send(new OrderEMail($order_information_mail));
-		} catch (\Exception $th) {
-			//throw $th;
-			Log::error('Mail sending Failed ', [$th->getMessage()]);
-		}
-	    // if (!Newsletter::isSubscribed($user_email)) { 'clinic.sg@scoliolife.com
-	     // $check_mailchimp_user = Newsletter::subscribe($user_email);
-		// }
-
+			try {
+				//code...
+				// $admin_sent_mail = Mail::to($recipientEmail)->cc($ccEmail)->send(new OrderEMail($order_information_mail));
+				$user_sent_mail = Mail::to($user_email)->send(new OrderEMail($order_information_mail));
+			} catch (\Exception $th) {
+				//throw $th;
+				Log::error('Mail sending Failed ', [$th->getMessage()]);
+			}
+			// if (!Newsletter::isSubscribed($user_email)) { 'clinic.sg@scoliolife.com
+			// $check_mailchimp_user = Newsletter::subscribe($user_email);
+			// }
 
 
-		$quantity =  !empty($order_data['quantity']) ? $order_data['quantity'] : '';
-		$dimension_height =  !empty($order_data['dimension_height']) ? $order_data['dimension_height'] : 0;
-		$dimension_length =  !empty($order_data['dimension_length']) ? $order_data['dimension_length'] : 0;
-		$dimension_weight =  !empty($order_data['dimension_weight']) ? $order_data['dimension_weight'] : 0;
-		$product_actual_weight =  !empty($order_data['product_actual_weight']) ? $order_data['product_actual_weight'] : '';
-		$shipment_shipping_id =  !empty($order_data['shipping_id']) ? $order_data['shipping_id'] : '';
-		$shipment_method_name =  !empty($order_data['shipping_method_name']) ? $order_data['shipping_method_name'] : '';
 
-		// $product = Product::find($product_id);
-		// dd($product);
-	    // $product_name = !empty($product->name) ? $product->name : '';
-	    // $product_sku = !empty($product->product_sku) ? $product->product_sku : '';
-		if($propductType == 'normal'){
+			$quantity = !empty($order_data['quantity']) ? $order_data['quantity'] : '';
+			$dimension_height = !empty($order_data['dimension_height']) ? $order_data['dimension_height'] : 0;
+			$dimension_length = !empty($order_data['dimension_length']) ? $order_data['dimension_length'] : 0;
+			$dimension_weight = !empty($order_data['dimension_weight']) ? $order_data['dimension_weight'] : 0;
+			$product_actual_weight = !empty($order_data['product_actual_weight']) ? $order_data['product_actual_weight'] : '';
+			$shipment_shipping_id = !empty($order_data['shipping_id']) ? $order_data['shipping_id'] : '';
+			$shipment_method_name = !empty($order_data['shipping_method_name']) ? $order_data['shipping_method_name'] : '';
 
-
-		if(!empty($product_actual_weight) || !empty($dimension_height) || !empty($dimension_length) || !empty($dimension_weight)  ){
+			// $product = Product::find($product_id);
+			// dd($product);
+			// $product_name = !empty($product->name) ? $product->name : '';
+			// $product_sku = !empty($product->product_sku) ? $product->product_sku : '';
+			if ($propductType == 'normal') {
 
 
-		$client = new Client();
-
-		$parcels = [];
-	    foreach ($order_data['product_items'] as $index => $product) {
-	        // $sku = $order_data['sku'][$index]['sku'];
-	        $quantity = $product['quantity'];
-
-	        // You can replace these with the actual product details (e.g., description, category)
-	        $parcels[] = [
-	            "box" => [
-	                "slug" => $product['slug'], // Box slug, adjust based on the box used
-	                "length" => $product['dimension_length'], // Product dimensions
-	                "width" => $product['dimension_width'], 
-	                "height" => $product['dimension_height'],
-	            ],
-	            "items" => [
-	                [
-	                    "description" => $product['title'], // Replace with actual product description
-	                    "category" => "Health & Beauty", // Replace with actual category
-	                    "sku" =>$product['sku'], // Product SKU
-	                    "quantity" => $quantity, // Product quantity
-	                    "declared_customs_value" => $product['price'], // Customs value based on total price
-	                    "declared_currency" => "SGD", // Currency
-	                    "actual_weight" => $product_actual_weight, // Product weight
-	                    "origin_country_alpha2" => $order_data['country'], // Origin country
-	                ]
-	            ],
-	            "total_actual_weight" => $product_actual_weight, // Total weight
-	        ];
-	    }
-
-		 $save_order_shipment = $client->request('POST', 'https://api.easyship.com/2023-01/shipments', [
-	        'body' => json_encode([
-	           "origin_address" => [
-
-				"state" => null,
-				"city" => "Singapore",
-				"company_name" => "ScolioLife Pte Ltd",
-				"contact_email" => "drkevinlau@scoliolife.com",
-				"contact_phone" => "+852-3008-5678",
-				"contact_name" => "Kevin Lau",
-				"postal_code" => "238862",
-				"country_alpha2" => "SG",
-				"line_1" => "302 Orchard Rd10-02",
-				"line_2" => "Tong Building"
-			    ],
-				"destination_address" => [
-				"state" => !empty($order_data['state']) ? $order_data['state'] : 'null',
-				"city" =>  !empty($order_data['town']) ? $order_data['town'] : '',
-				"company_name" => !empty($order_data['company']) ? $order_data['company'] : '',
-				"contact_email" => !empty($order_data['email']) ? $order_data['email'] : '',
-				"contact_phone" => !empty($order_data['phone']) ? $order_data['phone'] : '',
-				"contact_name" => $full_name,
-				"postal_code" => !empty($order_data['postcode']) ? $order_data['postcode'] : '',
-				"country_alpha2" => !empty($order_data['country']) ? $order_data['country'] : '',
-				"line_1" => !empty($order_data['street']) ? $order_data['street'] : '',
-				"line_2" => !empty($order_data['apartment']) ? $order_data['apartment'] : ''
-			    ],
-	      "incoterms" => "DDU",
-			"insurance" => [
-				"is_insured" => false
-			],
-
-			"courier_selection" => [
-				"allow_courier_fallback" => false,
-				"apply_shipping_rules" => true,
-				"selected_courier_id" => $shipment_shipping_id
-			],
-			"courier" => [ // Add courier information here
-
-	        "id" => $shipment_shipping_id,
-	        "name" => $shipment_method_name
-	        ],
-			"shipping_settings" => [
-				"additional_services" => [
-					"qr_code" => "none"
-				],
-				"units" => [
-					"weight" => "g",
-					"dimensions" => "cm"
-				],
-				"buy_label" => false,
-				"buy_label_synchronous" => false,
-				"printing_options" => [
-					"format" => "png",
-					"label" => "4x6",
-					"commercial_invoice" => "A4",
-					"packing_slip" => "4x6"
-				]
-			],
-			"order_data" => [
-	            "buyer_selected_courier_name" => $shipment_method_name,
-			],
-			"parcels" => $parcels
-	        ]),
-	        'headers' => [
-	 	    	'accept' => 'application/json',
-			    'authorization' => 'Bearer prod_aCe51Xp2E13KzAj4VONiGU8lBzSZ8Fsr5QXSbCF9x+Q=',
-		     	'content-type' => 'application/json',
-	        ],
-	    ]);
-
-		$data = $save_order_shipment;
-		$body = $save_order_shipment->getBody();
-
-		$body->rewind();
+				if (!empty($product_actual_weight) || !empty($dimension_height) || !empty($dimension_length) || !empty($dimension_weight)) {
 
 
-		$jsonData = $body->getContents();
-		$decodedData = json_decode($jsonData, true);
+					$client = new Client();
 
-		// dd($jsonData);
-		}
-	 }
-		//if($order_id->id){
-		// Delete abandon carts where user_id exists in orders
-		// $delete_user_abandon_cart = AbandonCart::whereIn('user_id', function ($query) {
+					$parcels = [];
+					foreach ($order_data['product_items'] as $index => $product) {
+						// $sku = $order_data['sku'][$index]['sku'];
+						$quantity = $product['quantity'];
+
+						// You can replace these with the actual product details (e.g., description, category)
+						$parcels[] = [
+							"box" => [
+								"slug" => $product['slug'], // Box slug, adjust based on the box used
+								"length" => $product['dimension_length'], // Product dimensions
+								"width" => $product['dimension_width'],
+								"height" => $product['dimension_height'],
+							],
+							"items" => [
+								[
+									"description" => $product['title'], // Replace with actual product description
+									"category" => "Health & Beauty", // Replace with actual category
+									"sku" => $product['sku'], // Product SKU
+									"quantity" => $quantity, // Product quantity
+									"declared_customs_value" => $product['price'], // Customs value based on total price
+									"declared_currency" => "SGD", // Currency
+									"actual_weight" => $product_actual_weight, // Product weight
+									"origin_country_alpha2" => $order_data['country'], // Origin country
+								]
+							],
+							"total_actual_weight" => $product_actual_weight, // Total weight
+						];
+					}
+
+					$save_order_shipment = $client->request('POST', 'https://api.easyship.com/2023-01/shipments', [
+						'body' => json_encode([
+							"origin_address" => [
+
+								"state" => null,
+								"city" => "Singapore",
+								"company_name" => "ScolioLife Pte Ltd",
+								"contact_email" => "drkevinlau@scoliolife.com",
+								"contact_phone" => "+852-3008-5678",
+								"contact_name" => "Kevin Lau",
+								"postal_code" => "238862",
+								"country_alpha2" => "SG",
+								"line_1" => "302 Orchard Rd10-02",
+								"line_2" => "Tong Building"
+							],
+							"destination_address" => [
+								"state" => !empty($order_data['state']) ? $order_data['state'] : 'null',
+								"city" => !empty($order_data['town']) ? $order_data['town'] : '',
+								"company_name" => !empty($order_data['company']) ? $order_data['company'] : '',
+								"contact_email" => !empty($order_data['email']) ? $order_data['email'] : '',
+								"contact_phone" => !empty($order_data['phone']) ? $order_data['phone'] : '',
+								"contact_name" => $full_name,
+								"postal_code" => !empty($order_data['postcode']) ? $order_data['postcode'] : '',
+								"country_alpha2" => !empty($order_data['country']) ? $order_data['country'] : '',
+								"line_1" => !empty($order_data['street']) ? $order_data['street'] : '',
+								"line_2" => !empty($order_data['apartment']) ? $order_data['apartment'] : ''
+							],
+							"incoterms" => "DDU",
+							"insurance" => [
+								"is_insured" => false
+							],
+
+							"courier_selection" => [
+								"allow_courier_fallback" => false,
+								"apply_shipping_rules" => true,
+								"selected_courier_id" => $shipment_shipping_id
+							],
+							"courier" => [ // Add courier information here
+
+								"id" => $shipment_shipping_id,
+								"name" => $shipment_method_name
+							],
+							"shipping_settings" => [
+								"additional_services" => [
+									"qr_code" => "none"
+								],
+								"units" => [
+									"weight" => "g",
+									"dimensions" => "cm"
+								],
+								"buy_label" => false,
+								"buy_label_synchronous" => false,
+								"printing_options" => [
+									"format" => "png",
+									"label" => "4x6",
+									"commercial_invoice" => "A4",
+									"packing_slip" => "4x6"
+								]
+							],
+							"order_data" => [
+								"buyer_selected_courier_name" => $shipment_method_name,
+							],
+							"parcels" => $parcels
+						]),
+						'headers' => [
+							'accept' => 'application/json',
+							'authorization' => 'Bearer prod_aCe51Xp2E13KzAj4VONiGU8lBzSZ8Fsr5QXSbCF9x+Q=',
+							'content-type' => 'application/json',
+						],
+					]);
+
+					$data = $save_order_shipment;
+					$body = $save_order_shipment->getBody();
+
+					$body->rewind();
+
+
+					$jsonData = $body->getContents();
+					$decodedData = json_decode($jsonData, true);
+
+					// dd($jsonData);
+				}
+			}
+			//if($order_id->id){
+			// Delete abandon carts where user_id exists in orders
+			// $delete_user_abandon_cart = AbandonCart::whereIn('user_id', function ($query) {
 			// $query->select('user_id')
-				  // ->from(with(new Order)->getTable());
-		// })->delete();
+			// ->from(with(new Order)->getTable());
+			// })->delete();
 
-		// $delete_user_wishlist_cart = Wishlist::whereIn('user_id', function ($query) {
+			// $delete_user_wishlist_cart = Wishlist::whereIn('user_id', function ($query) {
 			// $query->select('user_id')
-				  // ->from(with(new Order)->getTable());
-		// })->delete();
+			// ->from(with(new Order)->getTable());
+			// })->delete();
 
-		//}
+			//}
 
 
-		$response = [
-			'status' => 'true',
-			'message' => 'Order successfully saved.',
-			'order_id' => $order_id->id, 
-			//'delete_user_wishlist_cart' => $delete_user_wishlist_cart, 
-			'admin_sent_mail' => 'send mail successfully',
-			'user_sent_mail' => 'send mail successfully',
-			//'save_order_shipment' => $save_order_shipment,
-			// 'decodedData' => $decodedData,			
-			// 'data' => $jsonData,			
-		];
+			$response = [
+				'status' => 'true',
+				'message' => 'Order successfully saved.',
+				'order_id' => $order_id->id,
+				//'delete_user_wishlist_cart' => $delete_user_wishlist_cart, 
+				'admin_sent_mail' => 'send mail successfully',
+				'user_sent_mail' => 'send mail successfully',
+				//'save_order_shipment' => $save_order_shipment,
+				// 'decodedData' => $decodedData,			
+				// 'data' => $jsonData,			
+			];
 
 		} else {
-		$response = [
-			'status' => 'error',
-			'message' => 'Failed to save order.',
-			'sent_mail_check' => 'not sent mail',
-			//'save_order_shipment' => 'not save order shipment',
-		];
+			$response = [
+				'status' => 'error',
+				'message' => 'Failed to save order.',
+				'sent_mail_check' => 'not sent mail',
+				//'save_order_shipment' => 'not save order shipment',
+			];
 		}
 		\App::setLocale('en');
 		return response()->json($response);
 
 
 		// dd($status);
-	    // if($order)
+		// if($order)
 
-	    // $users=User::where('role','admin')->first();
-	    // $details=[
-	        // 'title'=>'New order created',
-	        // 'actionURL'=>route('order.show',$order->id),
-	        // 'fas'=>'fa-file-alt'
-	    // ];
-	    // Notification::send($users, new StatusNotification($details));
-	    // if(request('payment_method')=='paypal'){
-	        // return redirect()->route('payment')->with(['id'=>$order->id]);
-	    // }
-	    // else{
-	        // session()->forget('cart');
-	        // session()->forget('coupon');
-	    // }
-	    // Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
+		// $users=User::where('role','admin')->first();
+		// $details=[
+		// 'title'=>'New order created',
+		// 'actionURL'=>route('order.show',$order->id),
+		// 'fas'=>'fa-file-alt'
+		// ];
+		// Notification::send($users, new StatusNotification($details));
+		// if(request('payment_method')=='paypal'){
+		// return redirect()->route('payment')->with(['id'=>$order->id]);
+		// }
+		// else{
+		// session()->forget('cart');
+		// session()->forget('coupon');
+		// }
+		// Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
 
-	    // request()->session()->flash('success','Your product successfully placed in order');
-	    // return redirect()->route('home');
+		// request()->session()->flash('success','Your product successfully placed in order');
+		// return redirect()->route('home');
 	}
 
 
@@ -731,33 +732,29 @@ class OrderController extends Controller
 		$pdf = PDF::loadview('backend.order.pdf', compact('order'));
 		return $pdf->download($file_name);
 	}
-	// Income chart
 	public function incomeChart(Request $request)
 	{
-		$year = \Carbon\Carbon::now()->year;
-		$items = Order::with(['cart_info'])->whereYear('created_at', $year)->where('status', 'completed')->get()
-			->groupBy(function ($d) {
-				return \Carbon\Carbon::parse($d->created_at)->format('m');
-			});
-		// dd($items);
-		$result = [];
-		foreach ($items as $month => $item_collections) {
-			foreach ($item_collections as $item) {
-				// dd($item);
-				$amount = $item->sum('total_amount');
-				$m = intval($month);
-				// return $m;
-				isset($result[$m]) ? $result[$m] += $amount : $result[$m] = $amount;
-			}
-		}
-		$data = [];
-		for ($i = 1; $i <= 12; $i++) {
-			$monthName = date('F', mktime(0, 0, 0, $i, 1));
-			$data[$monthName] = (!empty($result[$i])) ? number_format((float) ($result[$i]), 2, '.', '') : 0.0;
-		}
-		return $data;
-	}
+		$year = Carbon::now()->year;
 
+		$sales = Order::whereYear('created_at', $year)
+			->where('status', 'completed')
+			->select(
+				DB::raw('MONTH(created_at) as month'),
+				DB::raw('SUM(sub_total) as total')
+			)
+			->groupBy('month')
+			->pluck('total', 'month');
+
+		$data = [];
+
+		// Ensure all 12 months exist
+		for ($i = 1; $i <= 12; $i++) {
+			$monthName = Carbon::create()->month($i)->format('F');
+			$data[$monthName] = round($sales[$i] ?? 0, 2);
+		}
+
+		return response()->json($data);
+	}
 	public function singleOrderShowAPi(Request $request)
 	{
 		$order = Order::getsingleOrderAPI($request->id);

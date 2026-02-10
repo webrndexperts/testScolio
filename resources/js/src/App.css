@@ -10535,3 +10535,6 @@ h5.Shipping-infos {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
+.filter-text h4 {
+    color: #F4922D;
+}

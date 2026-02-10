@@ -411,6 +411,11 @@
     },
     "page":{
         "online-booking": "Online-Buchung"
+    },
+    "filterText": {
+        "heading": "Finden Sie Fälle, die Ihrem ähneln",
+        "before": "Verwenden Sie die Option",
+        "highlight": "Nach Alter filtern",
+        "after": "um Skoliose-Verbesserungsfälle von Patienten Ihrer Altersgruppe zu erkunden."
     }
-
 }

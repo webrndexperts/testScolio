@@ -64,16 +64,22 @@
       </div> 
       <div class="form-group" id="hiddenField">
           <label for="extra_video_urls" class="col-form-label">
-             Extra Video Urls (separate multiple URLs with commas)
+             Extra Video Urls (separate multiple URLs with new lines)
           </label>
-          <input
+          {{-- <input
               id="extra_video_urls"
               type="text"
               name="extra_video_urls"
               class="form-control"
               value="{{ !empty($post->extra_video_urls) ? implode(', ', $post->extra_video_urls) : '' }}"
               placeholder="https://youtube.com/1, https://youtube.com/2"
-          >
+          > --}}
+
+        <textarea
+            id="extra_video_urls"
+            name="extra_video_urls"
+            class="form-control"
+            rows="4">{{ !empty($post->extra_video_urls) ? implode("\n", $post->extra_video_urls) : '' }}</textarea>
 
           @error('extra_video_urls')
               <span class="text-danger">{{ $message }}</span>

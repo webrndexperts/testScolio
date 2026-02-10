@@ -1,1 +1,177 @@
-var __defProp=Object.defineProperty,__getOwnPropSymbols=Object.getOwnPropertySymbols,__hasOwnProp=Object.prototype.hasOwnProperty,__propIsEnum=Object.prototype.propertyIsEnumerable,__defNormalProp=(e,t,r)=>t in e?__defProp(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r,__spreadValues=(e,t)=>{for(var r in t||(t={}))__hasOwnProp.call(t,r)&&__defNormalProp(e,r,t[r]);if(__getOwnPropSymbols)for(var r of __getOwnPropSymbols(t))__propIsEnum.call(t,r)&&__defNormalProp(e,r,t[r]);return e};(self.webpackChunk=self.webpackChunk||[]).push([[596],{6807:(e,t,r)=>{var o,a=Object.create,n=Object.defineProperty,s=Object.getOwnPropertyDescriptor,l=Object.getOwnPropertyNames,i=Object.getPrototypeOf,p=Object.prototype.hasOwnProperty,u=(e,t,r,o)=>{if(t&&"object"==typeof t||"function"==typeof t)for(let a of l(t))p.call(e,a)||a===r||n(e,a,{get:()=>t[a],enumerable:!(o=s(t,a))||o.enumerable});return e},h=(e,t,r)=>(((e,t,r)=>{t in e?n(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r})(e,"symbol"!=typeof t?t+"":t,r),r),y={};((e,t)=>{for(var r in t)n(e,r,{get:t[r],enumerable:!0})})(y,{default:()=>f}),e.exports=(o=y,u(n({},"__esModule",{value:!0}),o));var c=((e,t,r)=>(r=null!=e?a(i(e)):{},u(!t&&e&&e.__esModule?r:n(r,"default",{value:e,enumerable:!0}),e)))(r(7294)),d=r(8045),m=r(1776);class f extends c.Component{constructor(){super(...arguments),h(this,"callPlayer",d.callPlayer),h(this,"onDurationChange",(()=>{const e=this.getDuration();this.props.onDuration(e)})),h(this,"mute",(()=>{this.callPlayer("setMuted",!0)})),h(this,"unmute",(()=>{this.callPlayer("setMuted",!1)})),h(this,"ref",(e=>{this.container=e}))}componentDidMount(){this.props.onMount&&this.props.onMount(this)}load(e){const{controls:t,config:r,onError:o,playing:a}=this.props,[,n]=e.match(m.MATCH_URL_DAILYMOTION);this.player?this.player.load(n,{start:(0,d.parseStartTime)(e),autoplay:a}):(0,d.getSDK)("https://api.dmcdn.net/all.js","DM","dmAsyncInit",(e=>e.player)).then((a=>{if(!this.container)return;const s=a.player;this.player=new s(this.container,{width:"100%",height:"100%",video:n,params:__spreadValues({controls:t,autoplay:this.props.playing,mute:this.props.muted,start:(0,d.parseStartTime)(e),origin:window.location.origin},r.params),events:{apiready:this.props.onReady,seeked:()=>this.props.onSeek(this.player.currentTime),video_end:this.props.onEnded,durationchange:this.onDurationChange,pause:this.props.onPause,playing:this.props.onPlay,waiting:this.props.onBuffer,error:e=>o(e)}})}),o)}play(){this.callPlayer("play")}pause(){this.callPlayer("pause")}stop(){}seekTo(e,t=!0){this.callPlayer("seek",e),t||this.pause()}setVolume(e){this.callPlayer("setVolume",e)}getDuration(){return this.player.duration||null}getCurrentTime(){return this.player.currentTime}getSecondsLoaded(){return this.player.bufferedTime}render(){const{display:e}=this.props,t={width:"100%",height:"100%",display:e};return c.default.createElement("div",{style:t},c.default.createElement("div",{ref:this.ref}))}}h(f,"displayName","DailyMotion"),h(f,"canPlay",m.canPlay.dailymotion),h(f,"loopOnEnded",!0)}}]);
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["reactPlayerDailyMotion"], {
+  /***/
+  "./node_modules/react-player/lib/players/DailyMotion.js": (
+    /*!**************************************************************!*\
+      !*** ./node_modules/react-player/lib/players/DailyMotion.js ***!
+      \**************************************************************/
+    /***/
+    (module, __unused_webpack_exports, __webpack_require__) => {
+      var __create = Object.create;
+      var __defProp2 = Object.defineProperty;
+      var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+      var __getOwnPropNames = Object.getOwnPropertyNames;
+      var __getProtoOf = Object.getPrototypeOf;
+      var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+      var __defNormalProp2 = (obj, key, value) => key in obj ? __defProp2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+      var __export = (target, all) => {
+        for (var name in all)
+          __defProp2(target, name, { get: all[name], enumerable: true });
+      };
+      var __copyProps = (to, from, except, desc) => {
+        if (from && typeof from === "object" || typeof from === "function") {
+          for (let key of __getOwnPropNames(from))
+            if (!__hasOwnProp2.call(to, key) && key !== except)
+              __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        }
+        return to;
+      };
+      var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+        // If the importer is in node compatibility mode or this is not an ESM
+        // file that has been converted to a CommonJS file using a Babel-
+        // compatible transform (i.e. "__esModule" has not been set), then set
+        // "default" to the CommonJS "module.exports" for node compatibility.
+        isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
+        mod
+      ));
+      var __toCommonJS = (mod) => __copyProps(__defProp2({}, "__esModule", { value: true }), mod);
+      var __publicField = (obj, key, value) => {
+        __defNormalProp2(obj, typeof key !== "symbol" ? key + "" : key, value);
+        return value;
+      };
+      var DailyMotion_exports = {};
+      __export(DailyMotion_exports, {
+        default: () => DailyMotion
+      });
+      module.exports = __toCommonJS(DailyMotion_exports);
+      var import_react = __toESM(__webpack_require__(
+        /*! react */
+        "./node_modules/react/index.js"
+      ));
+      var import_utils = __webpack_require__(
+        /*! ../utils */
+        "./node_modules/react-player/lib/utils.js"
+      );
+      var import_patterns = __webpack_require__(
+        /*! ../patterns */
+        "./node_modules/react-player/lib/patterns.js"
+      );
+      const SDK_URL = "https://api.dmcdn.net/all.js";
+      const SDK_GLOBAL = "DM";
+      const SDK_GLOBAL_READY = "dmAsyncInit";
+      class DailyMotion extends import_react.Component {
+        constructor() {
+          super(...arguments);
+          __publicField(this, "callPlayer", import_utils.callPlayer);
+          __publicField(this, "onDurationChange", () => {
+            const duration = this.getDuration();
+            this.props.onDuration(duration);
+          });
+          __publicField(this, "mute", () => {
+            this.callPlayer("setMuted", true);
+          });
+          __publicField(this, "unmute", () => {
+            this.callPlayer("setMuted", false);
+          });
+          __publicField(this, "ref", (container) => {
+            this.container = container;
+          });
+        }
+        componentDidMount() {
+          this.props.onMount && this.props.onMount(this);
+        }
+        load(url) {
+          const { controls, config, onError, playing } = this.props;
+          const [, id] = url.match(import_patterns.MATCH_URL_DAILYMOTION);
+          if (this.player) {
+            this.player.load(id, {
+              start: (0, import_utils.parseStartTime)(url),
+              autoplay: playing
+            });
+            return;
+          }
+          (0, import_utils.getSDK)(SDK_URL, SDK_GLOBAL, SDK_GLOBAL_READY, (DM) => DM.player).then((DM) => {
+            if (!this.container)
+              return;
+            const Player = DM.player;
+            this.player = new Player(this.container, {
+              width: "100%",
+              height: "100%",
+              video: id,
+              params: __spreadValues({
+                controls,
+                autoplay: this.props.playing,
+                mute: this.props.muted,
+                start: (0, import_utils.parseStartTime)(url),
+                origin: window.location.origin
+              }, config.params),
+              events: {
+                apiready: this.props.onReady,
+                seeked: () => this.props.onSeek(this.player.currentTime),
+                video_end: this.props.onEnded,
+                durationchange: this.onDurationChange,
+                pause: this.props.onPause,
+                playing: this.props.onPlay,
+                waiting: this.props.onBuffer,
+                error: (event) => onError(event)
+              }
+            });
+          }, onError);
+        }
+        play() {
+          this.callPlayer("play");
+        }
+        pause() {
+          this.callPlayer("pause");
+        }
+        stop() {
+        }
+        seekTo(seconds, keepPlaying = true) {
+          this.callPlayer("seek", seconds);
+          if (!keepPlaying) {
+            this.pause();
+          }
+        }
+        setVolume(fraction) {
+          this.callPlayer("setVolume", fraction);
+        }
+        getDuration() {
+          return this.player.duration || null;
+        }
+        getCurrentTime() {
+          return this.player.currentTime;
+        }
+        getSecondsLoaded() {
+          return this.player.bufferedTime;
+        }
+        render() {
+          const { display } = this.props;
+          const style = {
+            width: "100%",
+            height: "100%",
+            display
+          };
+          return /* @__PURE__ */ import_react.default.createElement("div", { style }, /* @__PURE__ */ import_react.default.createElement("div", { ref: this.ref }));
+        }
+      }
+      __publicField(DailyMotion, "displayName", "DailyMotion");
+      __publicField(DailyMotion, "canPlay", import_patterns.canPlay.dailymotion);
+      __publicField(DailyMotion, "loopOnEnded", true);
+    }
+  )
+}]);

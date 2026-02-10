@@ -108,7 +108,6 @@
         "Rated": "評分",
         "out of": "最多"
     },
-
     "loginReg": {
         "Log In": "登入",
         "Register": "註冊",
@@ -138,19 +137,19 @@
         "address": "地址",
         "Address1": "地址1",
         "Address2": "地址2",
-        "aaaaaaaaaaaaa ":"Dirección 1",
-        "Address_two ":"Dirección 2",
+        "aaaaaaaaaaaaa ": "Dirección 1",
+        "Address_two ": "Dirección 2",
         "View": "五",
         "your_order": "您的訂單",
-        "msg" : "您的訂單將在工作日內24小時內處理。我們將在您的訂單發貨後通過電子郵件通知您。"
+        "msg": "您的訂單將在工作日內24小時內處理。我們將在您的訂單發貨後通過電子郵件通知您。"
     },
-    "custom_Order_info" : {
-        "cus_address":"地址"
+    "custom_Order_info": {
+        "cus_address": "地址"
     },
     "checkOut": {
         "razorpay": "點擊「使用 RazorPay 付款」後，您將被重定向到 RazorPay 安全完成購買。",
         "invalid form": "表單無效",
-        "select_shipping":"請選擇送貨方式",
+        "select_shipping": "請選擇送貨方式",
         "Returning customer?": "回頭客？",
         "Click here to login": "點擊這裡登入",
         "If you have shopped with us before, please enter yourdetails below. If you are a new customer, please proceed to the Billing section.": "如果您之前曾在我們這裡購物，請在下方輸入您的詳細資料。如果您是新客戶，請繼續前往結算部分。",
@@ -194,29 +193,28 @@
         "PRODUCT CATEGORIES": "产品类别",
         "scolfoloio_heading": "脊柱側彎結果"
     },
-    "single_product_tabs":{
-        "description_tabs" : "描述",
-        "additional_info_tabs" : "附加信息",
-        "ratings_tabs" : "评级"
+    "single_product_tabs": {
+        "description_tabs": "描述",
+        "additional_info_tabs": "附加信息",
+        "ratings_tabs": "评级"
     },
-    "product_dropdown":{
-        "customized_report" : "定製報告。",
-        "varition_language" : "語言",
-        "choose_an_option" : "選擇一個選擇。",
-        "support_knee_guard_size" : "支持膝關節衛隊大小。",
+    "product_dropdown": {
+        "customized_report": "定製報告。",
+        "varition_language": "語言",
+        "choose_an_option": "選擇一個選擇。",
+        "support_knee_guard_size": "支持膝關節衛隊大小。",
         "scolio_posture_corrector_size": "斯科里奥姿势矫正器尺寸",
-
-        "gender" : "性彆",
+        "gender": "性彆",
         "Male": "男性",
         "Female": "女性",
-        "weight" : "重量",
-        "tool" : "工具",
-        "height" : "高度",
-        "size" : "尺寸",
-        "upload_an_image:" : "上傳圖片：",
-        "add_to_cart" : "加入購物車。",
+        "weight": "重量",
+        "tool": "工具",
+        "height": "高度",
+        "size": "尺寸",
+        "upload_an_image:": "上傳圖片：",
+        "add_to_cart": "加入購物車。",
         "buy_now": "立即购买",
-        "contact_us" : "聯係我們",
+        "contact_us": "聯係我們",
         "consultation": "谘詢類型。",
         "consultationOption": {
             "First Private Teleconsultation (Zoom or Meet)": "首次私人远程咨询（Zoom或Meet）",
@@ -357,7 +355,13 @@
             "login": "請先登錄。"
         }
     },
-    "page":{
+    "page": {
         "online-booking": "网上预订"
+    },
+    "filterText": {
+        "heading": "尋找與你相似的病例",
+        "before": "使用選項",
+        "highlight": "按年齡篩選",
+        "after": "來查看與你年齡組別相同的脊柱側彎改善案例。"
     }
 }

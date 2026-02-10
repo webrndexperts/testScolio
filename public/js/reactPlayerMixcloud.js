@@ -1,1 +1,166 @@
-var __defProp=Object.defineProperty,__defProps=Object.defineProperties,__getOwnPropDescs=Object.getOwnPropertyDescriptors,__getOwnPropSymbols=Object.getOwnPropertySymbols,__hasOwnProp=Object.prototype.hasOwnProperty,__propIsEnum=Object.prototype.propertyIsEnumerable,__defNormalProp=(e,r,t)=>r in e?__defProp(e,r,{enumerable:!0,configurable:!0,writable:!0,value:t}):e[r]=t,__spreadValues=(e,r)=>{for(var t in r||(r={}))__hasOwnProp.call(r,t)&&__defNormalProp(e,t,r[t]);if(__getOwnPropSymbols)for(var t of __getOwnPropSymbols(r))__propIsEnum.call(r,t)&&__defNormalProp(e,t,r[t]);return e},__spreadProps=(e,r)=>__defProps(e,__getOwnPropDescs(r));(self.webpackChunk=self.webpackChunk||[]).push([[667],{143:(e,r,t)=>{var o,s=Object.create,a=Object.defineProperty,n=Object.getOwnPropertyDescriptor,p=Object.getOwnPropertyNames,l=Object.getPrototypeOf,i=Object.prototype.hasOwnProperty,u=(e,r,t,o)=>{if(r&&"object"==typeof r||"function"==typeof r)for(let s of p(r))i.call(e,s)||s===t||a(e,s,{get:()=>r[s],enumerable:!(o=n(r,s))||o.enumerable});return e},c=(e,r,t)=>(((e,r,t)=>{r in e?a(e,r,{enumerable:!0,configurable:!0,writable:!0,value:t}):e[r]=t})(e,"symbol"!=typeof r?r+"":r,t),t),d={};((e,r)=>{for(var t in r)a(e,t,{get:r[t],enumerable:!0})})(d,{default:()=>m}),e.exports=(o=d,u(a({},"__esModule",{value:!0}),o));var h=((e,r,t)=>(t=null!=e?s(l(e)):{},u(!r&&e&&e.__esModule?t:a(t,"default",{value:e,enumerable:!0}),e)))(t(7294)),y=t(8045),_=t(1776);class m extends h.Component{constructor(){super(...arguments),c(this,"callPlayer",y.callPlayer),c(this,"duration",null),c(this,"currentTime",null),c(this,"secondsLoaded",null),c(this,"mute",(()=>{})),c(this,"unmute",(()=>{})),c(this,"ref",(e=>{this.iframe=e}))}componentDidMount(){this.props.onMount&&this.props.onMount(this)}load(e){(0,y.getSDK)("https://widget.mixcloud.com/media/js/widgetApi.js","Mixcloud").then((e=>{this.player=e.PlayerWidget(this.iframe),this.player.ready.then((()=>{this.player.events.play.on(this.props.onPlay),this.player.events.pause.on(this.props.onPause),this.player.events.ended.on(this.props.onEnded),this.player.events.error.on(this.props.error),this.player.events.progress.on(((e,r)=>{this.currentTime=e,this.duration=r})),this.props.onReady()}))}),this.props.onError)}play(){this.callPlayer("play")}pause(){this.callPlayer("pause")}stop(){}seekTo(e,r=!0){this.callPlayer("seek",e),r||this.pause()}setVolume(e){}getDuration(){return this.duration}getCurrentTime(){return this.currentTime}getSecondsLoaded(){return null}render(){const{url:e,config:r}=this.props,t=e.match(_.MATCH_URL_MIXCLOUD)[1],o=(0,y.queryString)(__spreadProps(__spreadValues({},r.options),{feed:`/${t}/`}));return h.default.createElement("iframe",{key:t,ref:this.ref,style:{width:"100%",height:"100%"},src:`https://www.mixcloud.com/widget/iframe/?${o}`,frameBorder:"0",allow:"autoplay"})}}c(m,"displayName","Mixcloud"),c(m,"canPlay",_.canPlay.mixcloud),c(m,"loopOnEnded",!0)}}]);
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["reactPlayerMixcloud"], {
+  /***/
+  "./node_modules/react-player/lib/players/Mixcloud.js": (
+    /*!***********************************************************!*\
+      !*** ./node_modules/react-player/lib/players/Mixcloud.js ***!
+      \***********************************************************/
+    /***/
+    (module, __unused_webpack_exports, __webpack_require__) => {
+      var __create = Object.create;
+      var __defProp2 = Object.defineProperty;
+      var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+      var __getOwnPropNames = Object.getOwnPropertyNames;
+      var __getProtoOf = Object.getPrototypeOf;
+      var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+      var __defNormalProp2 = (obj, key, value) => key in obj ? __defProp2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+      var __export = (target, all) => {
+        for (var name in all)
+          __defProp2(target, name, { get: all[name], enumerable: true });
+      };
+      var __copyProps = (to, from, except, desc) => {
+        if (from && typeof from === "object" || typeof from === "function") {
+          for (let key of __getOwnPropNames(from))
+            if (!__hasOwnProp2.call(to, key) && key !== except)
+              __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        }
+        return to;
+      };
+      var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+        // If the importer is in node compatibility mode or this is not an ESM
+        // file that has been converted to a CommonJS file using a Babel-
+        // compatible transform (i.e. "__esModule" has not been set), then set
+        // "default" to the CommonJS "module.exports" for node compatibility.
+        isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
+        mod
+      ));
+      var __toCommonJS = (mod) => __copyProps(__defProp2({}, "__esModule", { value: true }), mod);
+      var __publicField = (obj, key, value) => {
+        __defNormalProp2(obj, typeof key !== "symbol" ? key + "" : key, value);
+        return value;
+      };
+      var Mixcloud_exports = {};
+      __export(Mixcloud_exports, {
+        default: () => Mixcloud
+      });
+      module.exports = __toCommonJS(Mixcloud_exports);
+      var import_react = __toESM(__webpack_require__(
+        /*! react */
+        "./node_modules/react/index.js"
+      ));
+      var import_utils = __webpack_require__(
+        /*! ../utils */
+        "./node_modules/react-player/lib/utils.js"
+      );
+      var import_patterns = __webpack_require__(
+        /*! ../patterns */
+        "./node_modules/react-player/lib/patterns.js"
+      );
+      const SDK_URL = "https://widget.mixcloud.com/media/js/widgetApi.js";
+      const SDK_GLOBAL = "Mixcloud";
+      class Mixcloud extends import_react.Component {
+        constructor() {
+          super(...arguments);
+          __publicField(this, "callPlayer", import_utils.callPlayer);
+          __publicField(this, "duration", null);
+          __publicField(this, "currentTime", null);
+          __publicField(this, "secondsLoaded", null);
+          __publicField(this, "mute", () => {
+          });
+          __publicField(this, "unmute", () => {
+          });
+          __publicField(this, "ref", (iframe) => {
+            this.iframe = iframe;
+          });
+        }
+        componentDidMount() {
+          this.props.onMount && this.props.onMount(this);
+        }
+        load(url) {
+          (0, import_utils.getSDK)(SDK_URL, SDK_GLOBAL).then((Mixcloud2) => {
+            this.player = Mixcloud2.PlayerWidget(this.iframe);
+            this.player.ready.then(() => {
+              this.player.events.play.on(this.props.onPlay);
+              this.player.events.pause.on(this.props.onPause);
+              this.player.events.ended.on(this.props.onEnded);
+              this.player.events.error.on(this.props.error);
+              this.player.events.progress.on((seconds, duration) => {
+                this.currentTime = seconds;
+                this.duration = duration;
+              });
+              this.props.onReady();
+            });
+          }, this.props.onError);
+        }
+        play() {
+          this.callPlayer("play");
+        }
+        pause() {
+          this.callPlayer("pause");
+        }
+        stop() {
+        }
+        seekTo(seconds, keepPlaying = true) {
+          this.callPlayer("seek", seconds);
+          if (!keepPlaying) {
+            this.pause();
+          }
+        }
+        setVolume(fraction) {
+        }
+        getDuration() {
+          return this.duration;
+        }
+        getCurrentTime() {
+          return this.currentTime;
+        }
+        getSecondsLoaded() {
+          return null;
+        }
+        render() {
+          const { url, config } = this.props;
+          const id = url.match(import_patterns.MATCH_URL_MIXCLOUD)[1];
+          const style = {
+            width: "100%",
+            height: "100%"
+          };
+          const query = (0, import_utils.queryString)(__spreadProps(__spreadValues({}, config.options), {
+            feed: `/${id}/`
+          }));
+          return /* @__PURE__ */ import_react.default.createElement(
+            "iframe",
+            {
+              key: id,
+              ref: this.ref,
+              style,
+              src: `https://www.mixcloud.com/widget/iframe/?${query}`,
+              frameBorder: "0",
+              allow: "autoplay"
+            }
+          );
+        }
+      }
+      __publicField(Mixcloud, "displayName", "Mixcloud");
+      __publicField(Mixcloud, "canPlay", import_patterns.canPlay.mixcloud);
+      __publicField(Mixcloud, "loopOnEnded", true);
+    }
+  )
+}]);

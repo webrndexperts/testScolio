@@ -155,14 +155,26 @@ class BenifitHomeController extends Controller
             $image->move(public_path('custom_images/non-treatment'), $imageName);
         }
 
+        // $extraVideoUrls = null;
+        // if ($request->filled('extra_video_urls')) {
+        //     $extraVideoUrls = array_values(
+        //         array_filter(
+        //             array_map('trim', explode(',', $request->extra_video_urls))
+        //         )
+        //     );
+        // }
+
+
         $extraVideoUrls = null;
+
         if ($request->filled('extra_video_urls')) {
             $extraVideoUrls = array_values(
                 array_filter(
-                    array_map('trim', explode(',', $request->extra_video_urls))
+                    array_map('trim', preg_split("/\r\n|\n|\r/", $request->extra_video_urls))
                 )
             );
         }
+
 
         $data = [
             'title' => !empty($request->title) ? $request->title : $page->title,
