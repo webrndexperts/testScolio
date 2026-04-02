@@ -84,6 +84,15 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
+        <div class="form-group">
+          <label for="intent">Intent <span style="font-size: 10px">(leave empty if not required)</span></label>
+          <select name="intent" id="intent" class="form-control">
+              <option value="">-- Select Intent --</option>
+              @foreach($intents as $intent)
+                  <option value="{{ $intent['name'] }}">{{ ucfirst($intent['name']) }}</option>
+              @endforeach
+          </select>
+          </div>
         <div class="form-group mb-3">
           <button type="reset" class="btn btn-warning">Reset</button>
            <button class="btn btn-success" type="submit">Publish</button>

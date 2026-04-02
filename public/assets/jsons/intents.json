@@ -1,0 +1,364 @@
+{
+  "intents": [
+    {
+      "id": 1,
+      "name": "general",
+      "label": {
+        "en": "General",
+        "es": "General",
+        "fr": "Général",
+        "de": "Allgemein",
+        "it": "Generale",
+        "pt": "Geral",
+        "ja": "一般",
+        "zh": "一般",
+        "id": "Umum"
+      }
+    },
+    {
+      "id": 2,
+      "name": "pricing",
+      "label": {
+        "en": "Pricing",
+        "es": "Precios",
+        "fr": "Tarification",
+        "de": "Preisgestaltung",
+        "it": "Prezzi",
+        "pt": "Preços",
+        "ja": "料金",
+        "zh": "定价",
+        "id": "Harga"
+      }
+    },
+    {
+      "id": 3,
+      "name": "consultation",
+      "label": {
+        "en": "Consultation",
+        "es": "Consulta",
+        "fr": "Consultation",
+        "de": "Beratung",
+        "it": "Consultazione",
+        "pt": "Consulta",
+        "ja": "相談",
+        "zh": "咨询",
+        "id": "Konsultasi"
+      }
+    },
+    {
+      "id": 4,
+      "name": "treatment",
+      "label": {
+        "en": "Treatment",
+        "es": "Tratamiento",
+        "fr": "Traitement",
+        "de": "Behandlung",
+        "it": "Trattamento",
+        "pt": "Tratamento",
+        "ja": "治療",
+        "zh": "治疗",
+        "id": "Perawatan"
+      }
+    },
+    {
+      "id": 5,
+      "name": "differentiation",
+      "label": {
+        "en": "Differentiation",
+        "es": "Diferenciación",
+        "fr": "Différenciation",
+        "de": "Differenzierung",
+        "it": "Differenziazione",
+        "pt": "Diferenciação",
+        "ja": "差別化",
+        "zh": "差异化",
+        "id": "Diferensiasi"
+      }
+    },
+    {
+      "id": 6,
+      "name": "results",
+      "label": {
+        "en": "Results",
+        "es": "Resultados",
+        "fr": "Résultats",
+        "de": "Ergebnisse",
+        "it": "Risultati",
+        "pt": "Resultados",
+        "ja": "結果",
+        "zh": "结果",
+        "id": "Hasil"
+      }
+    },
+    {
+      "id": 7,
+      "name": "brace",
+      "label": {
+        "en": "Brace",
+        "es": "Corsé",
+        "fr": "Corset",
+        "de": "Korsett",
+        "it": "Busto",
+        "pt": "Colete",
+        "ja": "ブレース",
+        "zh": "支架",
+        "id": "Penyangga"
+      }
+    },
+    {
+      "id": 8,
+      "name": "clinical",
+      "label": {
+        "en": "Clinical",
+        "es": "Clínico",
+        "fr": "Clinique",
+        "de": "Klinisch",
+        "it": "Clinico",
+        "pt": "Clínico",
+        "ja": "臨床",
+        "zh": "临床",
+        "id": "Klinis"
+      }
+    },
+    {
+      "id": 9,
+      "name": "expectation",
+      "label": {
+        "en": "Expectation",
+        "es": "Expectativa",
+        "fr": "Attente",
+        "de": "Erwartung",
+        "it": "Aspettativa",
+        "pt": "Expectativa",
+        "ja": "期待",
+        "zh": "期望",
+        "id": "Harapan"
+      }
+    },
+    {
+      "id": 10,
+      "name": "logistics",
+      "label": {
+        "en": "Logistics",
+        "es": "Logística",
+        "fr": "Logistique",
+        "de": "Logistik",
+        "it": "Logistica",
+        "pt": "Logística",
+        "ja": "ロジスティクス",
+        "zh": "物流",
+        "id": "Logistik"
+      }
+    },
+    {
+      "id": 11,
+      "name": "patient",
+      "label": {
+        "en": "Patient",
+        "es": "Paciente",
+        "fr": "Patient",
+        "de": "Patient",
+        "it": "Paziente",
+        "pt": "Paciente",
+        "ja": "患者",
+        "zh": "患者",
+        "id": "Pasien"
+      }
+    },
+    {
+      "id": 12,
+      "name": "objection",
+      "label": {
+        "en": "Objection",
+        "es": "Objeción",
+        "fr": "Objection",
+        "de": "Einwand",
+        "it": "Obiezione",
+        "pt": "Objeção",
+        "ja": "異議",
+        "zh": "异议",
+        "id": "Keberatan"
+      }
+    },
+    {
+      "id": 13,
+      "name": "lifestyle",
+      "label": {
+        "en": "Lifestyle",
+        "es": "Estilo de vida",
+        "fr": "Mode de vie",
+        "de": "Lebensstil",
+        "it": "Stile di vita",
+        "pt": "Estilo de vida",
+        "ja": "ライフスタイル",
+        "zh": "生活方式",
+        "id": "Gaya Hidup"
+      }
+    },
+    {
+      "id": 14,
+      "name": "exercise",
+      "label": {
+        "en": "Exercise",
+        "es": "Ejercicio",
+        "fr": "Exercice",
+        "de": "Übung",
+        "it": "Esercizio",
+        "pt": "Exercício",
+        "ja": "運動",
+        "zh": "锻炼",
+        "id": "Olahraga"
+      }
+    },
+    {
+      "id": 15,
+      "name": "progress",
+      "label": {
+        "en": "Progress",
+        "es": "Progreso",
+        "fr": "Progrès",
+        "de": "Fortschritt",
+        "it": "Progresso",
+        "pt": "Progresso",
+        "ja": "進捗",
+        "zh": "进度",
+        "id": "Kemajuan"
+      }
+    },
+    {
+      "id": 16,
+      "name": "international",
+      "label": {
+        "en": "International",
+        "es": "Internacional",
+        "fr": "International",
+        "de": "International",
+        "it": "Internazionale",
+        "pt": "Internacional",
+        "ja": "国際",
+        "zh": "国际",
+        "id": "Internasional"
+      }
+    },
+    {
+      "id": 17,
+      "name": "nutrition",
+      "label": {
+        "en": "Nutrition",
+        "es": "Nutrición",
+        "fr": "Nutrition",
+        "de": "Ernährung",
+        "it": "Nutrizione",
+        "pt": "Nutrição",
+        "ja": "栄養",
+        "zh": "营养",
+        "id": "Nutrisi"
+      }
+    },
+    {
+      "id": 18,
+      "name": "advanced",
+      "label": {
+        "en": "Advanced",
+        "es": "Avanzado",
+        "fr": "Avancé",
+        "de": "Fortgeschritten",
+        "it": "Avanzato",
+        "pt": "Avançado",
+        "ja": "高度な",
+        "zh": "高级",
+        "id": "Lanjutan"
+      }
+    },
+    {
+      "id": 19,
+      "name": "risk",
+      "label": {
+        "en": "Risk",
+        "es": "Riesgo",
+        "fr": "Risque",
+        "de": "Risiko",
+        "it": "Rischio",
+        "pt": "Risco",
+        "ja": "リスク",
+        "zh": "风险",
+        "id": "Risiko"
+      }
+    },
+    {
+      "id": 20,
+      "name": "screening",
+      "label": {
+        "en": "Screening",
+        "es": "Detección",
+        "fr": "Dépistage",
+        "de": "Screening",
+        "it": "Screening",
+        "pt": "Triagem",
+        "ja": "スクリーニング",
+        "zh": "筛查",
+        "id": "Pemeriksaan"
+      }
+    },
+    {
+      "id": 21,
+      "name": "commitment",
+      "label": {
+        "en": "Commitment",
+        "es": "Compromiso",
+        "fr": "Engagement",
+        "de": "Verpflichtung",
+        "it": "Impegno",
+        "pt": "Compromisso",
+        "ja": "コミットメント",
+        "zh": "承诺",
+        "id": "Komitmen"
+      }
+    },
+    {
+      "id": 22,
+      "name": "booking",
+      "label": {
+        "en": "Booking",
+        "es": "Reserva",
+        "fr": "Réservation",
+        "de": "Buchung",
+        "it": "Prenotazione",
+        "pt": "Reserva",
+        "ja": "予約",
+        "zh": "预订",
+        "id": "Pemesanan"
+      }
+    },
+    {
+      "id": 23,
+      "name": "closing",
+      "label": {
+        "en": "Closing",
+        "es": "Cierre",
+        "fr": "Conclusion",
+        "de": "Abschluss",
+        "it": "Chiusura",
+        "pt": "Encerramento",
+        "ja": "クロージング",
+        "zh": "结束",
+        "id": "Penutupan"
+      }
+    },
+    {
+      "id": 24,
+      "name": "conversion",
+      "label": {
+        "en": "Conversion",
+        "es": "Conversión",
+        "fr": "Conversion",
+        "de": "Konvertierung",
+        "it": "Conversione",
+        "pt": "Conversão",
+        "ja": "コンバージョン",
+        "zh": "转换",
+        "id": "Konversi"
+      }
+    }
+  ]
+}

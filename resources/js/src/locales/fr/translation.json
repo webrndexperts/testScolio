@@ -414,5 +414,14 @@
         "before": "Utilisez l’option",
         "highlight": "Filtrer par âge",
         "after": "pour explorer des cas d’amélioration de la scoliose chez des patients de votre tranche d’âge."
+    },
+    "faq": {
+        "pagination": {
+        "show": "Afficher",
+        "show10": "Afficher 10",
+        "show20": "Afficher 20",
+        "show50": "Afficher 50",
+        "showAll": "Tout afficher"
+        }
     }
 }

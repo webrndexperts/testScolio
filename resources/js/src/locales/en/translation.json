@@ -460,5 +460,14 @@
         "before": "Use the option",
         "highlight": "Filter by Age",
         "after": "to explore scoliosis improvement cases from patients in your age group."
+    },
+    "faq": {
+        "pagination": {
+            "show": "Show",
+            "show10": "Show 10",
+            "show20": "Show 20",
+            "show50": "Show 50",
+            "showAll": "Show All"
+        }
     }
 }

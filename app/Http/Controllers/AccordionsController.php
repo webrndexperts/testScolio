@@ -13,10 +13,30 @@ use Illuminate\Support\Str;
 
 class AccordionsController extends Controller
 {
-      // public function __construct()
-    //{
+    protected $intentJson;
+      public function __construct()
+    {
+        try {
+            $this->intentJson = file_get_contents(public_path('assets/jsons/intents.json'));
+        } catch (\Exception $e) {
+            $this->intentJson = []; // Set to an empty intents array
+        }
     //    $this->languages = Post::getListActive();
-   /// }
+    }
+
+    private function getIntentOrder($intentName)
+    {
+        static $intentMap = null;
+        if(!$intentName) return null; // Return null if intent name is not provided
+
+        if ($intentMap === null) {
+            $intentMap = collect(json_decode($this->intentJson, true)['intents'])
+                ->pluck('id', 'name')
+                ->toArray();
+        }
+
+        return $intentMap[$intentName] ?? null;
+    }
 
     /**
      * Display a listing of the resource.
@@ -56,7 +76,9 @@ class AccordionsController extends Controller
          $categories=AccordionsCategory::get();
          $users=User::get();
          $languages = Language::getListActive();
-         return view('backend.accordions.create')->with('users',$users)->with('categories',$categories)->with('languages',$languages);
+         
+         $intents = json_decode($this->intentJson, true)['intents'];
+         return view('backend.accordions.create')->with('users',$users)->with('categories',$categories)->with('languages',$languages)->with('intents',$intents);
      }
  
      /**
@@ -88,6 +110,8 @@ class AccordionsController extends Controller
      
 
 		$status_data = !empty($data['status']) ? $data['status'] : 'active';
+        $intent_data = !empty($data['intent']) ? $data['intent'] : null;
+        $intent_order = $this->getIntentOrder($intent_data);
 
          //dd($page);
          if (is_array($data['post']) || is_object($data['post'])) {
@@ -98,6 +122,8 @@ class AccordionsController extends Controller
                      'accordions_parent_id' => $page->id,
                      'lang'  => $code,
 					 'status'  => $status_data,
+                        'intent'  => $intent_data,
+                        'intent_order'  => $intent_order,
                      'title' => $value['title'],
                      'accordions_cat_id' => $value['post_cat_id'],
                      'description' => $value['description']
@@ -176,7 +202,9 @@ class AccordionsController extends Controller
          $categories=AccordionsCategory::get();
          $users=User::get();
          $languages = Language::getListActive();
-         return view('backend.accordions.edit')->with('categories',$categories)->with('users',$users)->with('post',$post)->with('languages',$languages);
+         
+         $intents = json_decode($this->intentJson, true)['intents'];
+         return view('backend.accordions.edit')->with('categories',$categories)->with('users',$users)->with('post',$post)->with('languages',$languages)->with('intents',$intents);
      }
  
      /**
@@ -201,6 +229,8 @@ class AccordionsController extends Controller
         
  
          $data=$request->all();
+         $data['intent_order'] = $this->getIntentOrder($data['intent']);
+        //  adding intent order in data array to update in database
       
          // return $data;
  

@@ -413,5 +413,14 @@
         "before": "Utilizza l'opzione",
         "highlight": "Filtra per età",
         "after": "per esplorare casi di miglioramento della scoliosi di pazienti nella tua fascia di età."
+    },
+    "faq": {
+        "pagination": {
+        "show": "Mostra",
+        "show10": "Mostra 10",
+        "show20": "Mostra 20",
+        "show50": "Mostra 50",
+        "showAll": "Mostra tutto"
+        }
     }
 }

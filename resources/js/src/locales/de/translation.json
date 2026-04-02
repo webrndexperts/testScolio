@@ -417,5 +417,14 @@
         "before": "Verwenden Sie die Option",
         "highlight": "Nach Alter filtern",
         "after": "um Skoliose-Verbesserungsfälle von Patienten Ihrer Altersgruppe zu erkunden."
+    },
+    "faq": {
+        "pagination": {
+        "show": "Anzeigen",
+        "show10": "10 anzeigen",
+        "show20": "20 anzeigen",
+        "show50": "50 anzeigen",
+        "showAll": "Alle anzeigen"
+        }
     }
 }

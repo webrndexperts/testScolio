@@ -414,5 +414,14 @@
         "before": "Gunakan opsi",
         "highlight": "Filter berdasarkan Usia",
         "after": "untuk menjelajahi kasus perbaikan skoliosis dari pasien dalam kelompok usia Anda."
+    },
+    "faq": {
+        "pagination": {
+        "show": "Tampilkan",
+        "show10": "Tampilkan 10",
+        "show20": "Tampilkan 20",
+        "show50": "Tampilkan 50",
+        "showAll": "Tampilkan semua"
+        }
     }
 }

@@ -415,5 +415,14 @@
         "before": "Utiliza la opción",
         "highlight": "Filtrar por edad",
         "after": "para explorar casos de mejora de escoliosis de pacientes de tu grupo de edad."
+    },
+    "faq": {
+        "pagination": {
+        "show": "Mostrar",
+        "show10": "Mostrar 10",
+        "show20": "Mostrar 20",
+        "show50": "Mostrar 50",
+        "showAll": "Mostrar todo"
+        }
     }
 }

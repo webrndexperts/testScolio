@@ -49,6 +49,19 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
+
+        <div class="form-group">
+          <label for="intent">Intent <span style="font-size: 10px">(leave empty if not required)</span></label>
+          <select name="intent" id="intent" class="form-control">
+              <option value="">-- Select Intent --</option>
+              @foreach($intents as $intent)
+                  <option value="{{ $intent['name'] }}" 
+                      @if(isset($post) && $post->intent == $intent['name']) selected @endif>
+                      {{ ucfirst($intent['name']) }}
+                  </option>
+              @endforeach
+          </select>
+        </div>
         <div class="form-group mb-3">
            <button class="btn btn-success" type="submit">Update</button>
         </div>
@@ -69,7 +82,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
 <script>
+  try {
     $('#lfm').filemanager('image');
+  } catch (error) {
+    console.info("File manager initialization failed:", error); 
+  }
 
     $(document).ready(function() {
     $('#summary').summernote({
